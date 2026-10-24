@@ -1,0 +1,136 @@
+# NostalgiaUI
+
+An open-source design system that lets any interface be rendered in the style of a past design era, using color palettes drawn from popular VS Code themes. Built on **Base UI** (the headless, unstyled React component library) and shipped with an **MCP server** so AI coding agents can use it directly.
+
+Owner: Josh Sylvester. License: MIT. Planned home: `nostalgiaui.sylvester.works` (subdomain of a domain Josh owns).
+
+## Why this project exists
+
+1. It's fun.
+2. A public GitHub project with Josh's name on it.
+3. Hands-on depth with agentic AI tooling: building and publishing an MCP server, and documenting it well.
+
+Because of goals 2 and 3, quality of the README, docs, commit history, and release notes matters as much as the code. Keep commits small and well described, and write a short decision note (in `docs/decisions/`) whenever a meaningful architectural choice is made.
+
+## Core concept: two independent axes
+
+Every rendered component is the product of two choices:
+
+- **Era** controls _shape and feel_: border radius, border style, bevels, shadows, gradients, textures, typography, spacing density, motion.
+- **Palette** controls _color only_, sourced from a VS Code theme.
+
+The axes must stay independent. Any palette must work in any era (Dracula in Classic Windows, Solarized in Frutiger Aero). If a change couples them, it's the wrong change.
+
+### Token layers
+
+1. **Palette primitives**: raw colors pulled from a VS Code theme (background, foreground, selection, and syntax colors such as keyword, string, function, comment, error).
+2. **Semantic tokens**: `surface`, `surface-raised`, `text`, `text-muted`, `accent`, `success`, `warning`, `danger`, `border`, and so on. Default mapping from syntax colors: keyword → accent, string → success, error → danger, comment → text-muted. Every era reads only from semantic tokens.
+3. **Era tokens**: radius, border, shadow, gradient, font, motion recipes.
+
+Era effects that need extra colors (90s bevel highlight and shadow edges, Web 2.0 gradient stops, neumorphic light and dark shadows) must be **derived with color math in OKLCH** from the semantic tokens, never hand-picked per palette. Otherwise palettes × eras becomes unmaintainable.
+
+## Era catalog
+
+Initial milestone uses only the first three marked ★. The rest come later.
+
+| Era                    | Period         | Signature traits                                                                            |
+| ---------------------- | -------------- | ------------------------------------------------------------------------------------------- |
+| ★ Classic Windows      | 1990s          | Gray chrome, 2px inset/outset bevels, zero radius, pixel-style system fonts, no transitions |
+| ★ Frutiger Aero / Aqua | 2000s          | Gloss with highlight band, translucency, bubbles, generous rounding, soft shadows           |
+| ★ Flat / Metro         | early 2010s    | Solid fills, bold type, tiles, no shadows or gradients                                      |
+| Terminal / CRT         | 1970s–80s      | Monospace, phosphor glow, scanlines                                                         |
+| Early Mac              | 1984–91        | 1-bit, dithered patterns, pixel fonts                                                       |
+| Web 1.0                | late 1990s     | Tiled backgrounds, blue underlined links, table-like layout                                 |
+| Web 2.0                | mid–late 2000s | Gradients, reflections, rounded badges                                                      |
+| Skeuomorphism          | ~2007–2012     | Textures, stitching, embossed text                                                          |
+| Material               | mid 2010s      | Elevation layers, ripples, purposeful motion                                                |
+| Neumorphism            | ~2020          | Soft extruded shadows (stress test for contrast)                                            |
+| Glassmorphism          | 2020s          | Frosted blur panels                                                                         |
+| Neubrutalism           | 2020s          | Thick black borders, hard offset shadows                                                    |
+
+## Palettes
+
+Initial milestone: **Dracula**, **Nord**, **Solarized Light** (include at least one light palette from day one so light/dark assumptions don't creep in).
+
+Later candidates: Gruvbox, Catppuccin, Tokyo Night, One Dark, Monokai.
+
+Before adding any palette, check the source theme's license and record it in `packages/tokens/palettes/<name>/SOURCE.md` with a link to the original repo. Prefer "inspired by <theme>" wording if the theme has its own branding.
+
+## Repo layout (pnpm monorepo)
+
+```
+packages/tokens      era + palette definitions; builds to CSS variables, Tailwind config, W3C design tokens JSON
+packages/react       Base UI components styled via tokens
+packages/importer    VS Code theme JSON → NostalgiaUI palette
+packages/mcp         MCP server
+apps/playground      Vite + React app with era and palette switchers (milestone 1)
+apps/docs            docs site for nostalgiaui.sylvester.works (later)
+docs/decisions       short architecture decision notes
+```
+
+npm scope: `@nostalgiaui/*` (confirm availability and create the npm org before first publish).
+
+## Suggested tooling
+
+Verify current versions and package names before installing; don't trust these from memory.
+
+- pnpm workspaces + Turborepo, TypeScript strict
+- Base UI for React (confirm the current npm package name on base-ui.com)
+- Tokens in W3C Design Tokens (DTCG) format, built with Style Dictionary
+- OKLCH color math with `culori` (or similar)
+- Vitest for unit tests, including automated WCAG contrast checks for every era × palette pair
+- `@modelcontextprotocol/sdk` (TypeScript) for the MCP server
+- GitHub Actions CI: lint, typecheck, test, build
+
+Dev machine is Windows; keep scripts cross-platform (no bash-only scripts in package.json).
+
+## Order of operations
+
+### Milestone 0: Scaffold
+
+- pnpm + Turborepo monorepo with the layout above (empty packages are fine)
+- TypeScript, ESLint, Prettier, Vitest wired up
+- MIT LICENSE, README with the project pitch and two-axis concept, CONTRIBUTING stub
+- GitHub Actions CI
+- First decision note: the two-axis model
+
+### Milestone 1: Prove the two axes
+
+- `packages/tokens`: 3 eras × 3 palettes (★ items above), semantic layer, derived colors via OKLCH
+- `packages/react`: Button, Input, Card, Tabs, Dialog on Base UI, styled only through tokens
+- `apps/playground`: the five components on one page, with era and palette dropdowns that switch live
+- Contrast tests pass for all 9 combinations
+- Done when: any era/palette pairing looks intentional, and adding a 4th palette requires zero era changes
+
+### Milestone 2: VS Code theme importer
+
+- `packages/importer`: read a VS Code theme JSON (`colors` + `tokenColors`), map to the semantic palette, report any roles it had to guess
+- CLI: `npx @nostalgiaui/importer ./my-theme.json`
+- Playground: drop in a theme file and preview it
+
+### Milestone 3: MCP server
+
+Tools:
+
+- `list_eras`, `list_palettes`
+- `get_tokens(era, palette, format)` with formats `css`, `tailwind`, `dtcg`
+- `get_component(name, era)` returns the styled component source
+- `import_vscode_theme(json)` returns a new palette
+- `check_contrast(era, palette)` flags accessibility problems
+
+Demo target: in Claude Code, "build me a settings page in Frutiger Aero with the Nord palette" works end to end. Document setup for Claude Code and Claude Desktop in the README.
+
+### Milestone 4: Docs, more eras, publish
+
+- `apps/docs` deployed to `nostalgiaui.sylvester.works`
+- Timeline slider demo: scrub through eras and watch the same UI morph
+- Expand the era catalog and palette list
+- Publish `@nostalgiaui/*` packages to npm and list the MCP server in the MCP registry
+
+## Working agreements
+
+- Avoid em-dashes in docs and READMEs (owner preference).
+- One milestone at a time; propose a short plan before starting each one.
+- Never style a component with raw color values; semantic tokens only.
+- Accessibility is a constraint, not a nice-to-have: keyboard behavior comes from Base UI, contrast is tested.
+- Keep the README current as milestones land.
