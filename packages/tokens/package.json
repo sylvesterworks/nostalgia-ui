@@ -1,0 +1,29 @@
+{
+  "name": "@nostalgiaui/tokens",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Era and palette definitions, built to CSS variables, Tailwind config, and DTCG tokens.",
+  "license": "MIT",
+  "author": "Josh Sylvester",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
