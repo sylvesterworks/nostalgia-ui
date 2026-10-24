@@ -28,3 +28,7 @@ A change that makes an era depend on a specific palette, or a palette depend on 
 ## Commit and PR style
 
 Describe what changed and why. A reader should be able to follow the history without opening the diff.
+
+## License
+
+By contributing you agree that your contributions are licensed under the MIT license that covers this project. NostalgiaUI is copyright 2026 Josh Sylvester and Sylvester Works LLC.

@@ -73,4 +73,4 @@ Individual tasks: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. Copyright 2026 Josh Sylvester and Sylvester Works LLC. See [LICENSE](LICENSE).
