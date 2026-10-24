@@ -1,0 +1,8 @@
+packages:
+  - packages/*
+  - apps/*
+
+catalog:
+  typescript: 6.0.3
+  vitest: ^5.0.5
+  '@types/node': ^26.6.5
