@@ -1,6 +1,7 @@
 export * from './types.js';
 export * from './color.js';
 export * from './semantic.js';
+export * from './audit.js';
 export { eras, ERA_IDS, getEra, classicWindows, frutigerAero, flatMetro } from './eras/index.js';
 export type { EraId } from './eras/index.js';
 export {
