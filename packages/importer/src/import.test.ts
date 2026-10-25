@@ -121,6 +121,20 @@ describe('structural hazards', () => {
   });
 });
 
+describe('the error role', () => {
+  it('prefers the workbench error colour over a white invalid.* foreground', () => {
+    const { primitives, report } = importVsCodeTheme(fixtures.errorAsWhiteText);
+    expect(primitives.error).toBe('#c24038');
+    expect(byName(report.primitives, 'error').source).toContain('editorError.foreground');
+  });
+
+  it('refuses a near-grey invalid.* foreground and derives instead', () => {
+    const { primitives, report } = importVsCodeTheme(fixtures.errorAsWhiteTextNoWorkbench);
+    expect(primitives.error).not.toBe('#ffffff');
+    expect(byName(report.primitives, 'error').provenance).toBe('derived');
+  });
+});
+
 describe('imported palettes feed the token layer', () => {
   const all = Object.entries(fixtures);
 

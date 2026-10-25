@@ -91,3 +91,20 @@ Test fixtures are synthesised in-repo rather than copied from published themes.
 Real theme files carry licence obligations and considerable bulk, and none of
 that buys test value: what needs exercising is the shape of the format, not any
 particular author's colour choices.
+
+## Addendum, 2026-10-25: the error role, learned from a real theme
+
+The first run on a published theme, One Dark Pro, resolved all eight
+primitives exactly and still produced a wrong palette: `error` came back
+`#ffffff`. The theme styles `invalid.illegal` as white text because in the
+editor it sits on a red fill, and the importer read only foregrounds.
+
+Two changes follow. The workbench's `editorError.foreground` (and
+`errorForeground`) are consulted before any `invalid.*` scope, since they are
+the colour a person would call the theme's red. And an `invalid.*` foreground
+with almost no chroma is treated as no match rather than as a colour, so the
+role derives from the keyword hue instead of becoming white or grey.
+
+The general lesson: an exact scope match is evidence that the theme styled
+that scope, not evidence that the styled value is a colour of the kind the
+role needs.

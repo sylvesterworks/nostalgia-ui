@@ -1,4 +1,4 @@
-import { isLight, mix, setHue } from '@nostalgiaui/tokens';
+import { chroma, isLight, mix, setHue } from '@nostalgiaui/tokens';
 import type { PalettePrimitives } from '@nostalgiaui/tokens';
 
 import { normaliseRules, resolveScope } from './scopes.js';
@@ -136,8 +136,37 @@ export function importVsCodeTheme(theme: unknown): ImportResult {
   const syntax: Partial<Record<SyntaxRole, string>> = {};
   const roles: readonly SyntaxRole[] = ['keyword', 'string', 'function', 'comment', 'error'];
 
+  // The workbench publishes an explicit error colour, and it is a better
+  // source for the error role than the invalid.* token scopes. One Dark Pro
+  // styles invalid.illegal as WHITE text, because in the editor it sits on a
+  // red fill; read as a palette colour that white would become the danger
+  // role. Its colors block carries editorError.foreground #c24038, which is
+  // the colour a person would call the theme's red.
+  const workbenchError =
+    colorAt(colors, 'editorError.foreground') ?? colorAt(colors, 'errorForeground');
+  if (workbenchError !== undefined) {
+    const value = stripAlpha(workbenchError);
+    syntax.error = value;
+    reports.push({
+      primitive: 'error',
+      value,
+      provenance: 'exact',
+      source: 'colors[editorError.foreground]',
+    });
+  }
+
   for (const role of roles) {
-    const match = resolveScope(rules, SCOPE_TARGETS[role]);
+    if (role === 'error' && syntax.error !== undefined) {
+      continue;
+    }
+    let match = resolveScope(rules, SCOPE_TARGETS[role]);
+
+    // An invalid.* foreground with almost no chroma is a text colour meant
+    // for a filled background, not the theme's error colour. Treat it as no
+    // match so the role derives from the keyword hue instead.
+    if (role === 'error' && match !== undefined && chroma(stripAlpha(match.color)) < 0.03) {
+      match = undefined;
+    }
 
     if (match !== undefined) {
       const value = stripAlpha(match.color);

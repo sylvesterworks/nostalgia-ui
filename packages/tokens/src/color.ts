@@ -316,3 +316,8 @@ export function setHue(color: string, degrees: number): string {
   const { l, c } = requireColor(color);
   return fromOklch({ l, c, h: ((degrees % 360) + 360) % 360 });
 }
+
+/** Chroma, 0 for greys. Used to tell a real colour from a tinted neutral. */
+export function chroma(color: string): number {
+  return requireColor(color).c;
+}

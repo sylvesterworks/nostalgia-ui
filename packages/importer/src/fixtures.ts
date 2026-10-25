@@ -147,3 +147,36 @@ export const siblingScopesOnly = {
     { scope: 'string.template', settings: { foreground: '#a6e3a1' } },
   ],
 };
+
+/**
+ * Error styled the way One Dark Pro does it: invalid.illegal is white text,
+ * because in the editor it sits on a red fill, while the workbench carries the
+ * real red under editorError.foreground.
+ */
+export const errorAsWhiteText = {
+  name: 'Fixture Error As White Text',
+  type: 'dark',
+  colors: {
+    'editor.background': '#282c34',
+    'editor.foreground': '#abb2bf',
+    'editorError.foreground': '#c24038',
+  },
+  tokenColors: [
+    { scope: 'keyword', settings: { foreground: '#c678dd' } },
+    { scope: 'invalid.illegal', settings: { foreground: '#ffffff' } },
+  ],
+};
+
+/** Same white invalid.illegal, but no workbench error colour to fall back on. */
+export const errorAsWhiteTextNoWorkbench = {
+  name: 'Fixture Error White No Workbench',
+  type: 'dark',
+  colors: {
+    'editor.background': '#282c34',
+    'editor.foreground': '#abb2bf',
+  },
+  tokenColors: [
+    { scope: 'keyword', settings: { foreground: '#c678dd' } },
+    { scope: 'invalid.illegal', settings: { foreground: '#ffffff' } },
+  ],
+};
