@@ -4,8 +4,20 @@
     "composite": true,
     "rootDir": "src",
     "outDir": "dist",
-    "tsBuildInfoFile": "dist/.tsbuildinfo"
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
+    "types": ["node"]
   },
   "include": ["src/**/*"],
-  "exclude": ["src/**/*.test.ts"]
+  "exclude": ["src/**/*.test.ts"],
+  "references": [
+    {
+      "path": "../tokens/tsconfig.build.json"
+    },
+    {
+      "path": "../react/tsconfig.build.json"
+    },
+    {
+      "path": "../importer/tsconfig.build.json"
+    }
+  ]
 }

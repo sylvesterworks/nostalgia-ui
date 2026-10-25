@@ -2,7 +2,7 @@
   "name": "@nostalgiaui/mcp",
   "version": "0.0.0",
   "private": true,
-  "description": "MCP server exposing NostalgiaUI eras, palettes, and components to AI agents.",
+  "description": "MCP server exposing NostalgiaUI eras, palettes, components and contrast checks to AI agents.",
   "license": "MIT",
   "author": "Josh Sylvester",
   "type": "module",
@@ -23,7 +23,19 @@
     "test": "vitest run --passWithNoTests"
   },
   "devDependencies": {
+    "@modelcontextprotocol/client": "2.4.0",
+    "@types/node": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.4.0",
+    "@nostalgiaui/importer": "workspace:*",
+    "@nostalgiaui/react": "workspace:*",
+    "@nostalgiaui/tokens": "workspace:*",
+    "zod": "4.6.7"
+  },
+  "bin": {
+    "nostalgiaui-mcp": "./dist/cli.js"
   }
 }

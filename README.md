@@ -2,7 +2,7 @@
 
 An open source design system that renders any interface in the style of a past design era, using color palettes drawn from popular VS Code themes. Built on [Base UI](https://base-ui.com) and shipped with an MCP server so AI coding agents can use it directly.
 
-> Status: milestone 2 complete. Three eras, three palettes, five components, a live playground, and a VS Code theme importer. The MCP server is milestone 3.
+> Status: milestone 3 complete. Three eras, three palettes, five components, a live playground, a VS Code theme importer, and an MCP server. Docs site, more eras and npm publishing are milestone 4.
 
 ## The two axes
 
@@ -104,6 +104,60 @@ anything was guessed, and `--out <dir>` scaffolds a palette module plus a
 
 The playground accepts a dropped theme file and previews it live against every
 era, with the same provenance table shown beside it.
+
+## Using it from an AI coding agent
+
+The MCP server exposes NostalgiaUI to any MCP client. Five tools:
+
+| Tool                  | What it answers                                                        |
+| --------------------- | ---------------------------------------------------------------------- |
+| `list_eras`           | the eras, with period and label                                        |
+| `list_palettes`       | the palettes, with light or dark appearance and source licence         |
+| `get_tokens`          | CSS variables, a Tailwind preset, or DTCG JSON for one era and palette |
+| `get_component`       | a component's imports, source, era-specific CSS and the traps to avoid |
+| `import_vscode_theme` | a palette from a VS Code theme, with a provenance report               |
+| `check_contrast`      | a WCAG audit of one era and palette pairing                            |
+
+The packages are not on npm yet (that is milestone 4), so for now build the
+repo and point your client at the built server.
+
+```bash
+pnpm install && pnpm build
+```
+
+### Claude Code
+
+From the repo root, the included `.mcp.json` registers the server at project
+scope automatically; Claude Code asks for approval the first time. To add it
+from anywhere else:
+
+```bash
+claude mcp add --transport stdio nostalgiaui -- node /absolute/path/to/nostalgia-ui/packages/mcp/dist/cli.js
+```
+
+Add `--scope user` to make it available in every project.
+
+### Claude Desktop
+
+Add the server under `mcpServers` in `claude_desktop_config.json`. The file
+lives at `~/Library/Application Support/Claude/` on macOS,
+`%AppData%\Claude\` on Windows, and `~/.config/Claude/` on Linux.
+
+```json
+{
+  "mcpServers": {
+    "nostalgiaui": {
+      "command": "node",
+      "args": ["/absolute/path/to/nostalgia-ui/packages/mcp/dist/cli.js"]
+    }
+  }
+}
+```
+
+Then ask for something like: build me a settings page in Frutiger Aero with
+the Nord palette. The agent should call `get_tokens` and `get_component`, and
+the returned notes tell it the things that are easy to get wrong, such as
+wrapping everything in `NostalgiaRoot`.
 
 ## Accessibility
 
