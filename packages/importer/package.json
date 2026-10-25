@@ -1,6 +1,6 @@
 {
   "name": "@nostalgiaui/importer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Convert a VS Code theme JSON into a NostalgiaUI palette.",
   "keywords": [
     "vscode-theme",
