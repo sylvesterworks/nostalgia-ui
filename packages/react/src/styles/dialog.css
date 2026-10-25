@@ -91,3 +91,44 @@
 [data-era='flat-metro'] .nui-DialogBackdrop {
   opacity: 0.8;
 }
+
+/* ---- Terminal / CRT ----------------------------------------------------- */
+
+[data-era='terminal-crt'] .nui-DialogPopup {
+  background: var(--nui-color-surface);
+  border-color: var(--nui-color-accent);
+  box-shadow: var(--nui-era-shadow-overlay);
+}
+
+[data-era='terminal-crt'] .nui-DialogTitle {
+  color: var(--nui-color-accent);
+  text-shadow: 0 0 8px var(--nui-era-glow);
+}
+
+[data-era='terminal-crt'] .nui-DialogBackdrop {
+  opacity: 0.75;
+}
+
+/* ---- Neubrutalism ------------------------------------------------------- */
+
+[data-era='neubrutalism'] .nui-DialogPopup {
+  border-color: var(--nui-era-ink);
+  box-shadow: var(--nui-era-shadow-overlay);
+}
+
+[data-era='neubrutalism'] .nui-DialogBackdrop {
+  opacity: 0.5;
+}
+
+/* ---- Neumorphism -------------------------------------------------------- */
+
+[data-era='neumorphism'] .nui-DialogPopup {
+  border: 0;
+  background: var(--nui-color-surface);
+  box-shadow: var(--nui-era-shadow-overlay);
+}
+
+[data-era='neumorphism'] .nui-DialogBackdrop {
+  background: var(--nui-color-surface);
+  opacity: 0.7;
+}

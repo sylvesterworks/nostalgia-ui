@@ -190,3 +190,96 @@
 [data-era='flat-metro'] .nui-Button--ghost:hover {
   background: var(--nui-era-surface-hover);
 }
+
+/* ---- Terminal / CRT: glowing monospace, no fills ------------------------ */
+
+[data-era='terminal-crt'] .nui-Button {
+  background: var(--nui-era-phosphor-fill);
+  border-color: var(--nui-color-accent);
+  color: var(--nui-color-accent);
+  box-shadow: var(--nui-era-shadow-raised);
+  text-shadow: 0 0 6px var(--nui-era-glow);
+}
+
+[data-era='terminal-crt'] .nui-Button--solid {
+  background: var(--nui-color-accent);
+  color: var(--nui-color-text-on-accent);
+  text-shadow: none;
+  box-shadow: 0 0 14px var(--nui-era-glow);
+}
+
+[data-era='terminal-crt'] .nui-Button--ghost {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+[data-era='terminal-crt'] .nui-Button:disabled,
+[data-era='terminal-crt'] .nui-Button--solid:disabled {
+  background: transparent;
+  border-color: var(--nui-color-border);
+  color: var(--nui-color-text-muted);
+  text-shadow: none;
+  box-shadow: none;
+}
+
+/* ---- Neubrutalism: thick ink border, hard offset shadow ------------------ */
+
+[data-era='neubrutalism'] .nui-Button {
+  border-color: var(--nui-era-ink);
+  box-shadow: var(--nui-era-shadow-hard);
+  background: var(--nui-color-surface-raised);
+  color: var(--nui-color-text);
+}
+
+[data-era='neubrutalism'] .nui-Button--solid {
+  background: var(--nui-color-accent);
+  color: var(--nui-color-text-on-accent);
+}
+
+[data-era='neubrutalism'] .nui-Button--ghost {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* Pressing collapses the shadow: the block moves down into its own shadow. */
+[data-era='neubrutalism'] .nui-Button:active {
+  box-shadow: var(--nui-era-shadow-hard-sm);
+  transform: translate(2px, 2px);
+}
+
+[data-era='neubrutalism'] .nui-Button:disabled,
+[data-era='neubrutalism'] .nui-Button--solid:disabled {
+  background: var(--nui-color-surface-sunken);
+  color: var(--nui-color-text-muted);
+  box-shadow: none;
+}
+
+/* ---- Neumorphism: the surface colour, extruded ------------------------- */
+
+[data-era='neumorphism'] .nui-Button {
+  border: 0;
+  background: var(--nui-color-surface);
+  color: var(--nui-color-text);
+  box-shadow: var(--nui-era-shadow-raised-sm);
+}
+
+[data-era='neumorphism'] .nui-Button--solid {
+  background: var(--nui-color-accent);
+  color: var(--nui-color-text-on-accent);
+}
+
+[data-era='neumorphism'] .nui-Button--ghost {
+  box-shadow: none;
+}
+
+/* Pressed means pressed INTO the surface. */
+[data-era='neumorphism'] .nui-Button:active {
+  box-shadow: var(--nui-era-shadow-inset);
+}
+
+[data-era='neumorphism'] .nui-Button:disabled,
+[data-era='neumorphism'] .nui-Button--solid:disabled {
+  background: var(--nui-color-surface);
+  color: var(--nui-color-text-muted);
+  box-shadow: none;
+}

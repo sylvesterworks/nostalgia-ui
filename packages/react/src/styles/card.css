@@ -66,3 +66,54 @@
   box-shadow: none;
   background: var(--nui-color-surface-raised);
 }
+
+/* ---- Terminal / CRT: a bordered panel with scanlines -------------------- */
+
+[data-era='terminal-crt'] .nui-Card {
+  position: relative;
+  background: var(--nui-color-surface);
+  border-color: var(--nui-color-accent);
+  box-shadow: var(--nui-era-shadow-raised);
+}
+
+[data-era='terminal-crt'] .nui-Card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    var(--nui-era-scanline) 2px,
+    var(--nui-era-scanline) 3px
+  );
+  pointer-events: none;
+}
+
+[data-era='terminal-crt'] .nui-CardTitle {
+  color: var(--nui-color-accent);
+  text-shadow: 0 0 8px var(--nui-era-glow);
+}
+
+/* ---- Neubrutalism ------------------------------------------------------- */
+
+[data-era='neubrutalism'] .nui-Card {
+  border-color: var(--nui-era-ink);
+  box-shadow: var(--nui-era-shadow-hard);
+}
+
+[data-era='neubrutalism'] .nui-Card--elevated {
+  box-shadow: var(--nui-era-shadow-hard-lg);
+}
+
+/* ---- Neumorphism -------------------------------------------------------- */
+
+[data-era='neumorphism'] .nui-Card {
+  border: 0;
+  background: var(--nui-color-surface);
+  box-shadow: var(--nui-era-shadow-raised);
+}
+
+[data-era='neumorphism'] .nui-Card--elevated {
+  box-shadow: var(--nui-era-shadow-overlay);
+}

@@ -11,9 +11,16 @@ import {
 } from './tools.js';
 
 describe('list_eras and list_palettes', () => {
-  it('list the three milestone eras with their periods', () => {
+  it('list every era in chronological order, with a period each', () => {
     const result = listEras();
-    expect(result.map((era) => era.id)).toEqual(['classic-windows', 'frutiger-aero', 'flat-metro']);
+    expect(result.map((era) => era.id)).toEqual([
+      'terminal-crt',
+      'classic-windows',
+      'frutiger-aero',
+      'flat-metro',
+      'neumorphism',
+      'neubrutalism',
+    ]);
     for (const era of result) {
       expect(era.period.length).toBeGreaterThan(0);
     }
@@ -24,6 +31,8 @@ describe('list_eras and list_palettes', () => {
     expect(byId['dracula']?.appearance).toBe('dark');
     expect(byId['nord']?.appearance).toBe('dark');
     expect(byId['solarized-light']?.appearance).toBe('light');
+    expect(byId['catppuccin-mocha']?.appearance).toBe('dark');
+    expect(byId['one-dark-pro']?.appearance).toBe('dark');
   });
 
   it('carry the source theme and licence, so an agent can attribute correctly', () => {

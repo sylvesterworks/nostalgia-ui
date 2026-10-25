@@ -2,7 +2,7 @@
 
 An open source design system that renders any interface in the style of a past design era, using color palettes drawn from popular VS Code themes. Built on [Base UI](https://base-ui.com) and shipped with an MCP server so AI coding agents can use it directly.
 
-> Status: milestone 4 in progress. The docs site and timeline demo are built; expanding the catalogue and publishing to npm come next.
+> Status: milestone 4 in progress. The docs site, timeline demo and an expanded catalogue of six eras and five palettes are done; publishing to npm comes next.
 
 ## The two axes
 
@@ -30,13 +30,13 @@ Keeping the axes apart is the central constraint of the project. Era effects tha
 
 Eras read only from semantic tokens. No component ever uses a raw color value.
 
-## Planned eras
+## Eras
 
-Milestone 1 ships Classic Windows, Frutiger Aero, and Flat / Metro. Terminal / CRT, Early Mac, Web 1.0, Web 2.0, Skeuomorphism, Material, Neumorphism, Glassmorphism, and Neubrutalism follow.
+Six so far, in chronological order: Terminal / CRT, Classic Windows, Frutiger Aero, Flat / Metro, Neumorphism, and Neubrutalism. Early Mac, Web 1.0, Web 2.0, Skeuomorphism, Material, and Glassmorphism are still to come.
 
-## Planned palettes
+## Palettes
 
-Milestone 1 ships Dracula, Nord, and Solarized Light. One light palette is included from day one so that light mode never becomes an afterthought.
+Dracula, Nord, Solarized Light, Catppuccin Mocha, and One Dark Pro, each with its source theme and licence recorded in `packages/tokens/palettes/<name>/SOURCE.md`. One light palette has been included from day one so that light mode never becomes an afterthought. One Dark Pro was produced by running the importer on the theme's own file, which was its first real-world test.
 
 ## Repo layout
 

@@ -118,3 +118,62 @@
 [data-era='flat-metro'] .nui-TabIndicator {
   height: 4px;
 }
+
+/* ---- Terminal / CRT ----------------------------------------------------- */
+
+[data-era='terminal-crt'] .nui-TabList {
+  border-bottom-color: var(--nui-color-accent);
+}
+
+[data-era='terminal-crt'] .nui-Tab[data-selected] {
+  color: var(--nui-color-accent);
+  text-shadow: 0 0 8px var(--nui-era-glow);
+}
+
+[data-era='terminal-crt'] .nui-TabIndicator {
+  height: 2px;
+  box-shadow: 0 0 8px var(--nui-era-glow);
+}
+
+/* ---- Neubrutalism: each tab is its own block ---------------------------- */
+
+[data-era='neubrutalism'] .nui-TabList {
+  border-bottom: 0;
+  gap: var(--nui-spacing-unit);
+}
+
+[data-era='neubrutalism'] .nui-Tab {
+  border: var(--nui-border-width) var(--nui-border-style) var(--nui-era-ink);
+  border-radius: var(--nui-radius-sm);
+  background: var(--nui-color-surface-raised);
+  color: var(--nui-color-text);
+}
+
+[data-era='neubrutalism'] .nui-Tab[data-selected] {
+  background: var(--nui-color-accent);
+  color: var(--nui-color-text-on-accent);
+  box-shadow: var(--nui-era-shadow-hard-sm);
+}
+
+[data-era='neubrutalism'] .nui-TabIndicator {
+  display: none;
+}
+
+/* ---- Neumorphism: the selected tab is pressed in ------------------------ */
+
+[data-era='neumorphism'] .nui-TabList {
+  border-bottom: 0;
+  gap: var(--nui-spacing-unit);
+}
+
+[data-era='neumorphism'] .nui-Tab {
+  border-radius: var(--nui-radius-sm);
+}
+
+[data-era='neumorphism'] .nui-Tab[data-selected] {
+  box-shadow: var(--nui-era-shadow-inset);
+}
+
+[data-era='neumorphism'] .nui-TabIndicator {
+  display: none;
+}

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { auditContrast } from './audit.js';
-import { contrastRatio, lightness } from './color.js';
+import { contrastRatio, isLight, lightness } from './color.js';
 import { eras } from './eras/index.js';
 import { palettes } from './palettes/index.js';
 import { toSemantic } from './semantic.js';
@@ -61,6 +61,21 @@ describe('every era and palette pairing', () => {
           semantic.surface.toLowerCase(),
         );
       }
+    });
+
+    it('derives ink that sits at the far end of the surface polarity', () => {
+      // Neubrutalism only. The ink was once a pale blue-grey on Solarized
+      // Light because the recipe keyed off the text instead of the surface.
+      const ink = derived['ink'];
+      if (ink === undefined) {
+        return;
+      }
+      if (isLight(semantic.surface)) {
+        expect(lightness(ink)).toBeLessThan(0.3);
+      } else {
+        expect(lightness(ink)).toBeGreaterThan(0.7);
+      }
+      expect(contrastRatio(ink, semantic.surface)).toBeGreaterThanOrEqual(7);
     });
 
     it('derives bevel edges that are distinguishable from each other', () => {

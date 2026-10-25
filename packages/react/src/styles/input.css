@@ -78,3 +78,57 @@
 [data-era='flat-metro'] .nui-Input--invalid {
   border-bottom-color: var(--nui-color-danger);
 }
+
+/* ---- Terminal / CRT: a prompt, not a field ------------------------------ */
+
+[data-era='terminal-crt'] .nui-Input {
+  background: transparent;
+  border-color: var(--nui-color-accent);
+  color: var(--nui-color-accent);
+  text-shadow: 0 0 6px var(--nui-era-glow-soft);
+  caret-color: var(--nui-color-accent);
+}
+
+[data-era='terminal-crt'] .nui-Input::placeholder {
+  color: var(--nui-color-text-muted);
+  text-shadow: none;
+}
+
+[data-era='terminal-crt'] .nui-Input:focus-visible {
+  box-shadow: var(--nui-era-shadow-raised);
+}
+
+[data-era='terminal-crt'] .nui-Input--invalid {
+  border-color: var(--nui-color-danger);
+  color: var(--nui-color-danger);
+}
+
+/* ---- Neubrutalism ------------------------------------------------------- */
+
+[data-era='neubrutalism'] .nui-Input {
+  border-color: var(--nui-era-ink);
+  background: var(--nui-color-surface-raised);
+  box-shadow: var(--nui-era-shadow-hard-sm);
+}
+
+[data-era='neubrutalism'] .nui-Input:focus-visible {
+  box-shadow: var(--nui-era-shadow-hard);
+}
+
+[data-era='neubrutalism'] .nui-Input--invalid {
+  border-color: var(--nui-color-danger);
+}
+
+/* ---- Neumorphism: a well pressed into the surface ----------------------- */
+
+[data-era='neumorphism'] .nui-Input {
+  border: 0;
+  background: var(--nui-color-surface);
+  box-shadow: var(--nui-era-shadow-inset);
+}
+
+[data-era='neumorphism'] .nui-Input--invalid {
+  box-shadow:
+    var(--nui-era-shadow-inset),
+    0 0 0 2px var(--nui-color-danger);
+}
