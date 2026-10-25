@@ -78,6 +78,25 @@
   color: var(--nui-color-text-on-accent);
 }
 
+/* The era's --solid rule outranks the base disabled rule on specificity, so
+ * disabled has to be restated here or the accent fill survives. */
+[data-era='classic-windows'] .nui-Button:disabled,
+[data-era='classic-windows'] .nui-Button--solid:disabled {
+  background: var(--nui-color-surface-sunken);
+  color: var(--nui-color-text-muted);
+}
+
+/* A disabled control was not pressable, so it keeps its resting bevel. */
+[data-era='classic-windows'] .nui-Button:disabled:active {
+  border-top-color: var(--nui-era-bevel-lighter);
+  border-left-color: var(--nui-era-bevel-lighter);
+  border-right-color: var(--nui-era-bevel-darker);
+  border-bottom-color: var(--nui-era-bevel-darker);
+  box-shadow:
+    inset 1px 1px 0 0 var(--nui-era-bevel-light),
+    inset -1px -1px 0 0 var(--nui-era-bevel-dark);
+}
+
 /* Pressed inverts the light source, which is the whole trick of the era. */
 [data-era='classic-windows'] .nui-Button:active {
   border-top-color: var(--nui-era-bevel-darker);
@@ -162,8 +181,10 @@
 }
 
 [data-era='flat-metro'] .nui-Button:disabled,
-[data-era='flat-metro'] .nui-Button--solid:disabled {
+[data-era='flat-metro'] .nui-Button--solid:disabled,
+[data-era='flat-metro'] .nui-Button--solid:disabled:hover {
   background: var(--nui-color-surface-sunken);
+  color: var(--nui-color-text-muted);
 }
 
 [data-era='flat-metro'] .nui-Button--ghost:hover {

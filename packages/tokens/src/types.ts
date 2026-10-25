@@ -9,7 +9,7 @@
  * attached to them. Every value is a CSS colour string as the source theme
  * wrote it.
  */
-export interface PalettePrimitives {
+export type PalettePrimitives = {
   /** Editor background. */
   readonly background: string;
   /** Default editor foreground. */
@@ -26,7 +26,7 @@ export interface PalettePrimitives {
   readonly comment: string;
   /** Syntax: errors and invalid tokens. */
   readonly error: string;
-}
+};
 
 export interface Palette {
   readonly id: string;

@@ -23,7 +23,14 @@
     "test": "vitest run --passWithNoTests"
   },
   "devDependencies": {
+    "@types/node": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
+  },
+  "dependencies": {
+    "@nostalgiaui/tokens": "workspace:*"
+  },
+  "bin": {
+    "nostalgiaui-import": "./dist/cli.js"
   }
 }

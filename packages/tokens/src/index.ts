@@ -19,4 +19,7 @@ export {
   emitPairingsCss,
   emitDtcg,
   emitTailwindPreset,
+  semanticVars,
+  eraVars,
+  pairingVars,
 } from './emit.js';

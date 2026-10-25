@@ -55,6 +55,9 @@ importers:
 
   apps/playground:
     dependencies:
+      '@nostalgiaui/importer':
+        specifier: workspace:*
+        version: link:../../packages/importer
       '@nostalgiaui/react':
         specifier: workspace:*
         version: link:../../packages/react
@@ -85,7 +88,14 @@ importers:
         version: 8.3.5(@types/node@26.6.5)(esbuild@0.28.2)(tsx@4.23.15)
 
   packages/importer:
+    dependencies:
+      '@nostalgiaui/tokens':
+        specifier: workspace:*
+        version: link:../tokens
     devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.6.5
       typescript:
         specifier: 'catalog:'
         version: 6.0.3

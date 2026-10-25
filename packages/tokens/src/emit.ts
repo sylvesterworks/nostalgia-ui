@@ -184,3 +184,39 @@ export function emitTailwindPreset(): string {
 function throwNoPalette(): Palette {
   throw new Error('No palettes are defined');
 }
+
+/**
+ * Runtime variable maps, for palettes that were never part of a build.
+ *
+ * The build emits CSS files for the palettes shipped in this package. A theme
+ * imported in the browser cannot go through that path, so these return the
+ * same variables as plain records for the caller to apply to an element.
+ *
+ * Deliberately no DOM here: this package has no DOM types and should stay
+ * usable in Node, so applying the result is the caller's job.
+ */
+export function semanticVars(palette: Palette): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(toSemantic(palette)).map(([key, value]) => [
+      PREFIX + '-color-' + kebab(key),
+      value,
+    ]),
+  );
+}
+
+/** Shape variables for one era. */
+export function eraVars(era: Era): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(era.shape).map(([key, value]) => [PREFIX + '-' + kebab(key), value]),
+  );
+}
+
+/** The derived colours for one era and palette pairing. */
+export function pairingVars(era: Era, palette: Palette): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(era.derive(toSemantic(palette))).map(([key, value]) => [
+      PREFIX + '-era-' + key,
+      value,
+    ]),
+  );
+}

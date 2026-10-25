@@ -303,3 +303,16 @@ export function darken(color: string, amount: number): string {
 export function hue(color: string): number {
   return requireColor(color).h;
 }
+
+/**
+ * Replace a colour's hue, keeping its lightness and chroma.
+ *
+ * Used by the importer when a theme publishes no colour for a role. Rotating
+ * an existing palette colour to the conventional hue for that role keeps the
+ * result in the theme's own tonal family, which is a better guess than a
+ * constant red or green that belongs to no palette.
+ */
+export function setHue(color: string, degrees: number): string {
+  const { l, c } = requireColor(color);
+  return fromOklch({ l, c, h: ((degrees % 360) + 360) % 360 });
+}

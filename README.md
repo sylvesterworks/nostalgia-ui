@@ -2,7 +2,7 @@
 
 An open source design system that renders any interface in the style of a past design era, using color palettes drawn from popular VS Code themes. Built on [Base UI](https://base-ui.com) and shipped with an MCP server so AI coding agents can use it directly.
 
-> Status: milestone 1 complete. Three eras, three palettes, five components and a live playground. The VS Code theme importer is milestone 2.
+> Status: milestone 2 complete. Three eras, three palettes, five components, a live playground, and a VS Code theme importer. The MCP server is milestone 3.
 
 ## The two axes
 
@@ -80,6 +80,30 @@ pnpm --filter @nostalgiaui/playground dev
 ```
 
 Individual tasks: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`.
+
+## Importing a VS Code theme
+
+```bash
+npx @nostalgiaui/importer ./my-theme.json
+```
+
+It prints the palette together with the provenance of every value, because a
+theme and a palette do not describe the same thing and the gap varies by theme:
+
+```
+   background  #0f1b24    exact      colors[editor.background]
+ ~ keyword     #7fd4ff    inherited  tokenColors scope keyword.operator.logical
+ ? string      #9eda9f    derived    keyword colour rotated to 145 degrees
+```
+
+`exact` came straight from the theme, `inherited` matched a related scope,
+`derived` was computed from another value in the same theme, and `fallback`
+means nothing in the theme could inform it. `--strict` exits non-zero if
+anything was guessed, and `--out <dir>` scaffolds a palette module plus a
+`SOURCE.md` stub with the licence line left blank for you to complete.
+
+The playground accepts a dropped theme file and previews it live against every
+era, with the same provenance table shown beside it.
 
 ## Accessibility
 

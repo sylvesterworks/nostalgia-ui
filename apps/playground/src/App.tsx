@@ -22,6 +22,9 @@ import {
 import { eras, palettes } from '@nostalgiaui/tokens';
 import { useState } from 'react';
 
+import { ImportedThemeVars, ThemeImport } from './ThemeImport.js';
+import type { ImportedTheme } from './ThemeImport.js';
+
 /**
  * The milestone's proof.
  *
@@ -33,6 +36,7 @@ import { useState } from 'react';
 export function App(): React.ReactElement {
   const [era, setEra] = useState<string>(eras[0]?.id ?? '');
   const [palette, setPalette] = useState<string>(palettes[0]?.id ?? '');
+  const [imported, setImported] = useState<ImportedTheme | null>(null);
 
   return (
     <>
@@ -52,7 +56,11 @@ export function App(): React.ReactElement {
 
         <label className="pg-Field">
           <span>Palette</span>
-          <select value={palette} onChange={(event) => setPalette(event.target.value)}>
+          <select
+            value={palette}
+            disabled={imported !== null}
+            onChange={(event) => setPalette(event.target.value)}
+          >
             {palettes.map((option) => (
               <option key={option.id} value={option.id}>
                 {option.label}
@@ -62,13 +70,17 @@ export function App(): React.ReactElement {
         </label>
 
         <code className="pg-Readout">
-          data-era=&quot;{era}&quot; data-palette=&quot;{palette}&quot;
+          data-era=&quot;{era}&quot;{' '}
+          {imported === null ? 'data-palette="' + palette + '"' : 'imported palette'}
         </code>
       </header>
 
       {/* NostalgiaRoot sets the two attributes that do all the work, and is
           also what portalled parts such as Dialog render back into. */}
+      <ThemeImport imported={imported} onImport={setImported} />
+
       <NostalgiaRoot era={era} palette={palette} className="pg-Stage">
+        <ImportedThemeVars imported={imported} eraId={era} />
         <section className="pg-Row">
           <Button variant="solid">Solid</Button>
           <Button variant="outline">Outline</Button>
