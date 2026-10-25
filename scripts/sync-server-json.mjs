@@ -5,6 +5,7 @@
 // runs as part of version-packages so the two can never drift. A test in
 // packages/mcp asserts the same thing, so a manual bump cannot slip past CI.
 import { readFile, writeFile } from 'node:fs/promises';
+import process from 'node:process';
 
 const pkg = JSON.parse(await readFile('packages/mcp/package.json', 'utf8'));
 const path = 'packages/mcp/server.json';
