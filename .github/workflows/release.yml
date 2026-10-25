@@ -49,10 +49,10 @@ jobs:
       - name: Version or publish
         uses: changesets/action@v2
         with:
-          version: pnpm run version-packages
-          publish: ${{ steps.token.outputs.present == 'true' && 'pnpm run release' || '' }}
-          commit: 'Version packages'
-          title: 'Version packages'
+          version-script: pnpm run version-packages
+          publish-script: ${{ steps.token.outputs.present == 'true' && 'pnpm run release' || '' }}
+          commit-message: 'Version packages'
+          pr-title: 'Version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
