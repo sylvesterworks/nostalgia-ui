@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import { Gallery } from '../islands/Gallery.js';
+import { eras } from '@nostalgiaui/tokens';
+---
+
+<Base title="Eras" description="Every era, rendering the same page.">
+  <h1>Eras</h1>
+  <p class="lede">
+    An era owns shape and feel. Each one below renders the identical settings page; the only thing
+    an era is allowed to change is how that page looks, never what it contains.
+  </p>
+  <table>
+    <thead><tr><th>Era</th><th>Period</th><th>Signature</th></tr></thead>
+    <tbody>
+      {eras.map((era) => (
+        <tr>
+          <td><a href={'#' + era.id}>{era.label}</a></td>
+          <td>{era.period}</td>
+          <td>
+            radius {era.shape.radiusMd}, border {era.shape.borderWidth}, motion {era.shape.motionDuration}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <Gallery by="era" client:load />
+</Base>

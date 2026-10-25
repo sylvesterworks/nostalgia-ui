@@ -2,7 +2,7 @@
 
 An open source design system that renders any interface in the style of a past design era, using color palettes drawn from popular VS Code themes. Built on [Base UI](https://base-ui.com) and shipped with an MCP server so AI coding agents can use it directly.
 
-> Status: milestone 3 complete. Three eras, three palettes, five components, a live playground, a VS Code theme importer, and an MCP server. Docs site, more eras and npm publishing are milestone 4.
+> Status: milestone 4 in progress. The docs site and timeline demo are built; expanding the catalogue and publishing to npm come next.
 
 ## The two axes
 
@@ -158,6 +158,26 @@ Then ask for something like: build me a settings page in Frutiger Aero with
 the Nord palette. The agent should call `get_tokens` and `get_component`, and
 the returned notes tell it the things that are easy to get wrong, such as
 wrapping everything in `NostalgiaRoot`.
+
+## Docs site
+
+The documentation lives in `apps/docs`, an Astro site with React islands for
+the live demos, and deploys to GitHub Pages from `main` through
+`.github/workflows/deploy-docs.yml`. It is served at
+nostalgiaui.sylvester.works once a CNAME record points `nostalgiaui` at
+`sylvesterworks.github.io`; until then it is reachable at the repository's
+`github.io` address.
+
+The site's component pages are generated from the same function the MCP
+server answers `get_component` with, so what a person reads and what an agent
+is told cannot drift apart.
+
+```bash
+pnpm --filter @nostalgiaui/docs dev
+```
+
+Astro is pinned to 7.3 because 7.4 requires Node 22.23.4 or newer. Moving to
+7.4 is a one line bump once the development machines are on that Node.
 
 ## Accessibility
 

@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { Gallery } from '../islands/Gallery.js';
+import { palettes, toSemantic } from '@nostalgiaui/tokens';
+
+const roles = ['surface', 'surfaceRaised', 'text', 'textMuted', 'accent', 'success', 'warning', 'danger'] as const;
+---
+
+<Base title="Palettes" description="Colour from VS Code themes, corrected to WCAG AA.">
+  <h1>Palettes</h1>
+  <p class="lede">
+    A palette owns colour and nothing else. Each is inspired by a VS Code theme, with its licence
+    recorded. The semantic colours below are what eras actually read; they are corrected to meet
+    WCAG AA while preserving the theme's hue, since hue is what makes a palette recognisable.
+  </p>
+  <div class="grid">
+    {palettes.map((palette) => {
+      const semantic = toSemantic(palette);
+      return (
+        <div class="tile">
+          <h3>{palette.label}</h3>
+          <p class="meta">
+            inspired by <a href={palette.source.url} rel="noreferrer">{palette.source.theme}</a>, {palette.source.license}
+          </p>
+          <div class="swatches">
+            {roles.map((role) => (
+              <span class="swatch" style={'background:' + semantic[role]} title={role + ' ' + semantic[role]} />
+            ))}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+  <Gallery by="palette" client:load />
+</Base>

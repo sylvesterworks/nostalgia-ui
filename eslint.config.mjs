@@ -10,6 +10,8 @@ export default tseslint.config(
       '**/.turbo/**',
       '**/coverage/**',
       '**/*.tsbuildinfo',
+      // Astro writes generated type files here; they are not ours to lint.
+      '**/.astro/**',
     ],
   },
   js.configs.recommended,

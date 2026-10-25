@@ -2,5 +2,27 @@
   "name": "@nostalgiaui/docs",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@astrojs/react": "7.1.1",
+    "@nostalgiaui/mcp": "workspace:*",
+    "@nostalgiaui/react": "workspace:*",
+    "@nostalgiaui/tokens": "workspace:*",
+    "astro": "7.3.8",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "oxc-transform-react": "^0.155.0",
+    "typescript": "catalog:"
+  },
+  "description": "Documentation site for nostalgiaui.sylvester.works, with the timeline demo.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "tsc -p tsconfig.json"
+  }
 }

@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import { Timeline } from '../islands/Timeline.js';
+---
+
+<Base title="Timeline" description="Scrub through design eras and watch the same page morph.">
+  <h1>Timeline</h1>
+  <p class="lede">
+    One settings page. Scrub the slider and watch it move through design history. Pick a
+    different palette and the shapes stay put while every colour changes.
+  </p>
+  <Timeline client:load />
+  <h2>What is actually changing</h2>
+  <p>
+    The slider sets one attribute, <code>data-era</code>, on the wrapper element. The palette
+    select sets another, <code>data-palette</code>. Every token is a CSS custom property scoped to
+    those attributes, so the morph is the browser resolving different variables, not React
+    rendering different components.
+  </p>
+  <p>
+    This is also why the dialog in the danger zone tab keeps its era: it renders back into that
+    same wrapper rather than into <code>document.body</code>, where the variables would not reach
+    it.
+  </p>
+</Base>

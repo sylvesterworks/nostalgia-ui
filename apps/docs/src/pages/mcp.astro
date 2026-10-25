@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="MCP server" description="Use NostalgiaUI from Claude Code or Claude Desktop.">
+  <h1>MCP server</h1>
+  <p class="lede">
+    The server exposes NostalgiaUI to any MCP client, so an AI coding agent can ask for the tokens
+    and component source it needs rather than guessing.
+  </p>
+
+  <h2>Tools</h2>
+  <table>
+    <thead><tr><th>Tool</th><th>Answers</th></tr></thead>
+    <tbody>
+      <tr><td><code>list_eras</code></td><td>the eras, with period and label</td></tr>
+      <tr><td><code>list_palettes</code></td><td>the palettes, with appearance and source licence</td></tr>
+      <tr><td><code>get_tokens</code></td><td>CSS variables, a Tailwind preset, or DTCG JSON for one pairing</td></tr>
+      <tr><td><code>get_component</code></td><td>imports, source, era CSS and the traps to avoid</td></tr>
+      <tr><td><code>import_vscode_theme</code></td><td>a palette from a VS Code theme, with provenance</td></tr>
+      <tr><td><code>check_contrast</code></td><td>a WCAG audit of one pairing</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Claude Code</h2>
+  <p>From a clone of the repo, the included <code>.mcp.json</code> registers the server automatically. From anywhere else:</p>
+  <pre><code>claude mcp add --transport stdio nostalgiaui -- node /absolute/path/to/nostalgia-ui/packages/mcp/dist/cli.js</code></pre>
+
+  <h2>Claude Desktop</h2>
+  <p>Add the server under <code>mcpServers</code> in <code>claude_desktop_config.json</code>.</p>
+  <pre><code>{`{
+  "mcpServers": {
+    "nostalgiaui": {
+      "command": "node",
+      "args": ["/absolute/path/to/nostalgia-ui/packages/mcp/dist/cli.js"]
+    }
+  }
+}`}</code></pre>
+
+  <h2>Try it</h2>
+  <p>
+    Ask: <em>build me a settings page in Frutiger Aero with the Nord palette</em>. The agent should
+    call <code>get_tokens</code> and <code>get_component</code>, and the notes in each answer tell
+    it the things that are easy to get wrong.
+  </p>
+  <p class="meta">
+    The packages are not on npm yet, so build the repo first with <code>pnpm install && pnpm build</code>.
+  </p>
+</Base>

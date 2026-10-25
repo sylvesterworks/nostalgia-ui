@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import { Timeline } from '../islands/Timeline.js';
+import { eras, palettes } from '@nostalgiaui/tokens';
+---
+
+<Base title="Overview">
+  <h1>NostalgiaUI</h1>
+  <p class="lede">
+    A design system that renders any interface in the style of a past design era, using colour
+    palettes drawn from popular VS Code themes. Built on Base UI, shipped with an MCP server.
+  </p>
+
+  <Timeline client:load />
+
+  <h2>Two independent axes</h2>
+  <p>Every rendered component is the product of two choices.</p>
+  <div class="grid">
+    <div class="tile">
+      <h3>Era controls shape and feel</h3>
+      <p class="meta">
+        Border radius, border style, bevels, shadows, gradients, typography, spacing density and
+        motion. An era never sets a colour.
+      </p>
+    </div>
+    <div class="tile">
+      <h3>Palette controls colour</h3>
+      <p class="meta">
+        Surfaces, text, accent and status colours, taken from a VS Code theme. A palette never sets
+        a shape.
+      </p>
+    </div>
+  </div>
+  <p>
+    Because the axes are independent, any palette works in any era, and the demo above changes a
+    single attribute on one wrapper element when you scrub. Nothing re-renders differently; the
+    browser resolves a different set of custom properties.
+  </p>
+  <p>
+    Era effects that need extra colours, such as a 90s bevel highlight or a glossy highlight band,
+    are derived in OKLCH from the palette's semantic colours rather than hand picked. That is what
+    keeps {eras.length} eras and {palettes.length} palettes from becoming {eras.length *
+      palettes.length} hand maintained themes.
+  </p>
+
+  <h2>Start here</h2>
+  <pre><code>pnpm add @nostalgiaui/react @nostalgiaui/tokens</code></pre>
+  <pre><code>{`import { Button, NostalgiaRoot } from '@nostalgiaui/react';
+import '@nostalgiaui/tokens/tokens.css';
+import '@nostalgiaui/react/styles.css';
+
+<NostalgiaRoot era="frutiger-aero" palette="nord">
+  <Button variant="solid">Click me</Button>
+</NostalgiaRoot>`}</code></pre>
+  <p class="meta">
+    The packages are not on npm yet. Until they are, clone the repo and use the workspace.
+  </p>
+</Base>

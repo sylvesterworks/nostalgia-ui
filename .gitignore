@@ -20,3 +20,6 @@ Thumbs.db
 *.log
 npm-debug.log*
 pnpm-debug.log*
+
+# Astro regenerates these on every build
+.astro/
