@@ -75,8 +75,8 @@ npm scope: `@nostalgiaui/*` (confirm availability and create the npm org before 
 Verify current versions and package names before installing; don't trust these from memory.
 
 - pnpm workspaces + Turborepo, TypeScript strict
-- Base UI for React (confirm the current npm package name on base-ui.com)
-- Tokens in W3C Design Tokens (DTCG) format, built with Style Dictionary
+- Base UI for React: `@base-ui/react`, pinned exact at 1.9.0 (the package was renamed from `@base-ui-components/react`, which is deprecated)
+- Tokens built by a small TypeScript script in `packages/tokens` (not Style Dictionary, see decision 0002), emitting CSS variables, a Tailwind preset, and W3C Design Tokens (DTCG) JSON
 - OKLCH color math with `culori` (or similar)
 - Vitest for unit tests, including automated WCAG contrast checks for every era × palette pair
 - `@modelcontextprotocol/server` and `@modelcontextprotocol/client` (TypeScript) for the MCP server; the older `@modelcontextprotocol/sdk` is still on npm but its hand-wired stdio transport only serves 2025-era clients
@@ -86,7 +86,7 @@ Dev machine is Windows; keep scripts cross-platform (no bash-only scripts in pac
 
 ## Order of operations
 
-### Milestone 0: Scaffold
+### Milestone 0: Scaffold (done)
 
 - pnpm + Turborepo monorepo with the layout above (empty packages are fine)
 - TypeScript, ESLint, Prettier, Vitest wired up
@@ -94,7 +94,7 @@ Dev machine is Windows; keep scripts cross-platform (no bash-only scripts in pac
 - GitHub Actions CI
 - First decision note: the two-axis model
 
-### Milestone 1: Prove the two axes
+### Milestone 1: Prove the two axes (done)
 
 - `packages/tokens`: 3 eras × 3 palettes (★ items above), semantic layer, derived colors via OKLCH
 - `packages/react`: Button, Input, Card, Tabs, Dialog on Base UI, styled only through tokens
@@ -102,13 +102,13 @@ Dev machine is Windows; keep scripts cross-platform (no bash-only scripts in pac
 - Contrast tests pass for all 9 combinations
 - Done when: any era/palette pairing looks intentional, and adding a 4th palette requires zero era changes
 
-### Milestone 2: VS Code theme importer
+### Milestone 2: VS Code theme importer (done)
 
-- `packages/importer`: read a VS Code theme JSON (`colors` + `tokenColors`), map to the semantic palette, report any roles it had to guess
+- `packages/importer`: read a VS Code theme JSON (`colors` + `tokenColors`), map to palette primitives (the semantic layer then derives the rest), report the provenance of every value
 - CLI: `npx @nostalgiaui/importer ./my-theme.json`
 - Playground: drop in a theme file and preview it
 
-### Milestone 3: MCP server
+### Milestone 3: MCP server (done, except the in-Claude-Code demo, which is unverified)
 
 Tools:
 
@@ -120,7 +120,7 @@ Tools:
 
 Demo target: in Claude Code, "build me a settings page in Frutiger Aero with the Nord palette" works end to end. Document setup for Claude Code and Claude Desktop in the README.
 
-### Milestone 4: Docs, more eras, publish
+### Milestone 4: Docs, more eras, publish (next)
 
 - `apps/docs` deployed to `nostalgiaui.sylvester.works`
 - Timeline slider demo: scrub through eras and watch the same UI morph
