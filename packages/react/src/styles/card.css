@@ -1,0 +1,68 @@
+/*
+ * Card. Mostly a surface plus the era's elevation idea, which differs sharply:
+ * a bevelled panel, a floating glossy pane, or a flat tile with no shadow at
+ * all. Flat / Metro deliberately has nothing to say about elevation.
+ */
+
+.nui-Card {
+  padding: calc(var(--nui-spacing-unit) * 3 * var(--nui-density-scale));
+  border-radius: var(--nui-radius-lg);
+  border: var(--nui-border-width) var(--nui-border-style) var(--nui-color-border);
+  background: var(--nui-color-surface-raised);
+  color: var(--nui-color-text);
+}
+
+.nui-Card--elevated {
+  box-shadow: var(--nui-era-shadow-raised);
+}
+
+.nui-CardTitle {
+  margin: 0 0 var(--nui-spacing-unit) 0;
+  font-family: var(--nui-font-sans);
+  font-weight: var(--nui-font-weight-bold);
+  text-transform: var(--nui-text-transform);
+  color: var(--nui-color-text);
+}
+
+.nui-CardBody {
+  margin: 0;
+  color: var(--nui-color-text-muted);
+}
+
+[data-era='classic-windows'] .nui-Card {
+  background: var(--nui-era-control-face);
+  border-top-color: var(--nui-era-bevel-lighter);
+  border-left-color: var(--nui-era-bevel-lighter);
+  border-right-color: var(--nui-era-bevel-darker);
+  border-bottom-color: var(--nui-era-bevel-darker);
+}
+
+[data-era='frutiger-aero'] .nui-Card {
+  position: relative;
+  overflow: hidden;
+  border-color: var(--nui-era-glass-border);
+  background: var(--nui-era-glass-fill);
+  backdrop-filter: blur(6px);
+}
+
+[data-era='frutiger-aero'] .nui-Card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 70% 0;
+  background: linear-gradient(to bottom, var(--nui-era-gloss-top), var(--nui-era-gloss-bottom));
+  pointer-events: none;
+}
+
+[data-era='flat-metro'] .nui-Card {
+  border: 0;
+  box-shadow: none;
+  background: var(--nui-era-surface-hover);
+}
+
+/* The era forbids shadows, so an "elevated" flat card can only distinguish
+ * itself by fill. This is the honest reading of the era rather than smuggling
+ * a shadow back in. */
+[data-era='flat-metro'] .nui-Card--elevated {
+  box-shadow: none;
+  background: var(--nui-color-surface-raised);
+}

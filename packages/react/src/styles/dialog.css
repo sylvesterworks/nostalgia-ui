@@ -1,0 +1,93 @@
+/*
+ * Dialog. Base UI handles the portal, focus trap, scroll lock and dismissal.
+ * The era decides what a window looks like, and in Classic Windows that
+ * includes a title bar, which is a real structural difference expressed
+ * entirely in CSS.
+ */
+
+.nui-DialogBackdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--nui-color-selection);
+  opacity: 0.6;
+}
+
+.nui-DialogPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  min-width: 20rem;
+  max-width: min(32rem, calc(100vw - 2rem));
+  padding: calc(var(--nui-spacing-unit) * 3 * var(--nui-density-scale));
+  border-radius: var(--nui-radius-lg);
+  border: var(--nui-border-width) var(--nui-border-style) var(--nui-color-border);
+  background: var(--nui-color-surface-raised);
+  color: var(--nui-color-text);
+  box-shadow: var(--nui-era-shadow-overlay);
+}
+
+.nui-DialogTitle {
+  margin: 0 0 var(--nui-spacing-unit) 0;
+  font-weight: var(--nui-font-weight-bold);
+  text-transform: var(--nui-text-transform);
+}
+
+.nui-DialogDescription {
+  margin: 0 0 calc(var(--nui-spacing-unit) * 3) 0;
+  color: var(--nui-color-text-muted);
+}
+
+/* ---- Classic Windows: a bevelled window with a filled title bar --------- */
+
+[data-era='classic-windows'] .nui-DialogPopup {
+  padding: 0;
+  background: var(--nui-era-control-face);
+  border-top-color: var(--nui-era-bevel-lighter);
+  border-left-color: var(--nui-era-bevel-lighter);
+  border-right-color: var(--nui-era-bevel-darker);
+  border-bottom-color: var(--nui-era-bevel-darker);
+}
+
+/* The title bar. Styling the Title part into a chrome bar rather than
+ * rendering an extra element keeps the markup identical across eras. */
+[data-era='classic-windows'] .nui-DialogTitle {
+  margin: 0;
+  padding: calc(var(--nui-spacing-unit) * 0.75) var(--nui-spacing-unit);
+  background: var(--nui-era-titlebar-fill);
+  color: var(--nui-era-titlebar-text);
+}
+
+[data-era='classic-windows'] .nui-DialogDescription {
+  margin: 0;
+  padding: calc(var(--nui-spacing-unit) * 3);
+}
+
+[data-era='classic-windows'] .nui-DialogBackdrop {
+  opacity: 0.35;
+}
+
+/* ---- Frutiger Aero: floating frosted pane ------------------------------- */
+
+[data-era='frutiger-aero'] .nui-DialogPopup {
+  border-color: var(--nui-era-glass-border);
+  background: var(--nui-era-glass-fill);
+  backdrop-filter: blur(12px);
+}
+
+[data-era='frutiger-aero'] .nui-DialogBackdrop {
+  opacity: 0.45;
+  backdrop-filter: blur(2px);
+}
+
+/* ---- Flat / Metro: a plain rectangle, no shadow ------------------------- */
+
+[data-era='flat-metro'] .nui-DialogPopup {
+  border: 0;
+  box-shadow: none;
+  background: var(--nui-color-surface-raised);
+}
+
+[data-era='flat-metro'] .nui-DialogBackdrop {
+  opacity: 0.8;
+}

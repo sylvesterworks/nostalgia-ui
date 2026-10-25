@@ -1,0 +1,171 @@
+/*
+ * Button. The era differences here are the clearest demonstration of the two
+ * axes: the same element is a bevelled grey box, a glossy capsule, or a flat
+ * tile, and nothing but CSS changes between them.
+ */
+
+.nui-Button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nui-spacing-unit);
+  padding: calc(var(--nui-spacing-unit) * 1.5 * var(--nui-density-scale))
+    calc(var(--nui-spacing-unit) * 3 * var(--nui-density-scale));
+  border-radius: var(--nui-radius-md);
+  border: var(--nui-border-width) var(--nui-border-style) var(--nui-color-border);
+  background: var(--nui-color-surface-raised);
+  color: var(--nui-color-text);
+  font-weight: var(--nui-font-weight-bold);
+  text-transform: var(--nui-text-transform);
+  cursor: pointer;
+  box-shadow: var(--nui-era-shadow-raised);
+}
+
+.nui-Button--solid {
+  background: var(--nui-color-accent);
+  color: var(--nui-color-text-on-accent);
+  border-color: var(--nui-color-accent);
+}
+
+.nui-Button--outline {
+  background: transparent;
+  border-color: var(--nui-color-accent);
+  color: var(--nui-color-accent);
+}
+
+.nui-Button--ghost {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/*
+ * Disabled drops the accent fill entirely rather than muting the text on top
+ * of it. Muted text over a saturated accent was close to illegible on
+ * Solarized Light. WCAG exempts disabled controls from contrast rules, but
+ * unreadable is still unreadable, so the fill goes quiet instead of the text.
+ */
+.nui-Button:disabled,
+.nui-Button--solid:disabled,
+.nui-Button--outline:disabled {
+  cursor: not-allowed;
+  background: var(--nui-color-surface-sunken);
+  border-color: var(--nui-color-border);
+  color: var(--nui-color-text-muted);
+  box-shadow: none;
+}
+
+/* ---- Classic Windows: a 2px bevel implying a light source top-left ------- */
+
+[data-era='classic-windows'] .nui-Button {
+  background: var(--nui-era-control-face);
+  color: var(--nui-color-text);
+  border-style: solid;
+  border-width: var(--nui-border-width);
+  border-top-color: var(--nui-era-bevel-lighter);
+  border-left-color: var(--nui-era-bevel-lighter);
+  border-right-color: var(--nui-era-bevel-darker);
+  border-bottom-color: var(--nui-era-bevel-darker);
+  /* The inner ring of the double bevel, which is what made the edge read as
+   * two steps deep rather than one. */
+  box-shadow:
+    inset 1px 1px 0 0 var(--nui-era-bevel-light),
+    inset -1px -1px 0 0 var(--nui-era-bevel-dark);
+}
+
+[data-era='classic-windows'] .nui-Button--solid {
+  background: var(--nui-color-accent);
+  color: var(--nui-color-text-on-accent);
+}
+
+/* Pressed inverts the light source, which is the whole trick of the era. */
+[data-era='classic-windows'] .nui-Button:active {
+  border-top-color: var(--nui-era-bevel-darker);
+  border-left-color: var(--nui-era-bevel-darker);
+  border-right-color: var(--nui-era-bevel-lighter);
+  border-bottom-color: var(--nui-era-bevel-lighter);
+  box-shadow:
+    inset 1px 1px 0 0 var(--nui-era-bevel-dark),
+    inset -1px -1px 0 0 var(--nui-era-bevel-light);
+}
+
+/* ---- Frutiger Aero: gloss band over a rounded capsule ------------------- */
+
+[data-era='frutiger-aero'] .nui-Button {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--nui-radius-pill);
+  border-color: var(--nui-era-glass-border);
+  background: var(--nui-era-glass-fill);
+}
+
+[data-era='frutiger-aero'] .nui-Button--solid {
+  background: var(--nui-era-accent-vivid);
+}
+
+/* The highlight band. A pseudo-element rather than a background gradient so
+ * it composites over whichever fill the variant chose. */
+[data-era='frutiger-aero'] .nui-Button::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 50% 0;
+  background: linear-gradient(
+    to bottom,
+    var(--nui-era-gloss-top),
+    var(--nui-era-gloss-mid) 70%,
+    var(--nui-era-gloss-bottom)
+  );
+  pointer-events: none;
+}
+
+/* The weaker lower sheen, which implies curvature. */
+[data-era='frutiger-aero'] .nui-Button::after {
+  content: '';
+  position: absolute;
+  inset: 70% 0 0 0;
+  background: linear-gradient(to top, var(--nui-era-sheen-bottom), var(--nui-era-gloss-bottom));
+  pointer-events: none;
+}
+
+[data-era='frutiger-aero'] .nui-Button:disabled {
+  background: var(--nui-color-surface-sunken);
+}
+
+[data-era='frutiger-aero'] .nui-Button:disabled::before,
+[data-era='frutiger-aero'] .nui-Button:disabled::after {
+  display: none;
+}
+
+[data-era='frutiger-aero'] .nui-Button:active {
+  box-shadow: var(--nui-era-shadow-raised);
+  transform: translateY(1px);
+}
+
+/* ---- Flat / Metro: solid tiles, interaction in the fill ----------------- */
+
+[data-era='flat-metro'] .nui-Button {
+  border: 0;
+  box-shadow: none;
+  background: var(--nui-era-surface-hover);
+}
+
+[data-era='flat-metro'] .nui-Button--solid {
+  background: var(--nui-era-tile-fill);
+}
+
+[data-era='flat-metro'] .nui-Button--solid:hover {
+  background: var(--nui-era-tile-hover);
+}
+
+[data-era='flat-metro'] .nui-Button--solid:active {
+  background: var(--nui-era-tile-active);
+}
+
+[data-era='flat-metro'] .nui-Button:disabled,
+[data-era='flat-metro'] .nui-Button--solid:disabled {
+  background: var(--nui-color-surface-sunken);
+}
+
+[data-era='flat-metro'] .nui-Button--ghost:hover {
+  background: var(--nui-era-surface-hover);
+}

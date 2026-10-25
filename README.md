@@ -2,7 +2,7 @@
 
 An open source design system that renders any interface in the style of a past design era, using color palettes drawn from popular VS Code themes. Built on [Base UI](https://base-ui.com) and shipped with an MCP server so AI coding agents can use it directly.
 
-> Status: milestone 0. The repo is scaffolded, the design is settled, and the first tokens and components land in milestone 1.
+> Status: milestone 1 complete. Three eras, three palettes, five components and a live playground. The VS Code theme importer is milestone 2.
 
 ## The two axes
 
@@ -50,6 +50,25 @@ apps/docs            docs site for nostalgiaui.sylvester.works (milestone 4)
 docs/decisions       architecture decision notes
 ```
 
+## Usage
+
+```tsx
+import { Button, NostalgiaRoot } from '@nostalgiaui/react';
+import '@nostalgiaui/tokens/tokens.css';
+import '@nostalgiaui/react/styles.css';
+
+<NostalgiaRoot era="frutiger-aero" palette="nord">
+  <Button variant="solid">Click me</Button>
+</NostalgiaRoot>;
+```
+
+Changing either prop changes one attribute. Nothing re-renders differently and
+no markup changes: the whole visual difference is CSS resolving a different set
+of custom properties.
+
+`NostalgiaRoot` is also what portalled parts render into. Base UI sends Dialog
+to `document.body` by default, which would escape the token scope entirely.
+
 ## Development
 
 Requires Node 22 or newer and pnpm 11.
@@ -57,9 +76,26 @@ Requires Node 22 or newer and pnpm 11.
 ```bash
 pnpm install
 pnpm check      # lint, typecheck, test, build
+pnpm --filter @nostalgiaui/playground dev
 ```
 
 Individual tasks: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`.
+
+## Accessibility
+
+Contrast is tested across every era and palette pairing, because derived
+colours only exist once both axes are chosen and so cannot be checked from
+either axis alone.
+
+The published VS Code themes are not WCAG compliant in every role once used as
+UI colours. Measured against their own backgrounds, Nord's comment colour
+reaches 2.43:1 and Solarized Light's body text 4.13:1, muted text 2.48:1,
+string 2.93:1 and yellow 2.98:1. The semantic layer corrects tone to meet AA
+while preserving hue and chroma, since hue is what makes a palette
+recognisable.
+
+A test also fails the build if any component stylesheet contains a hex value,
+a colour function or a named CSS colour.
 
 ## Roadmap
 

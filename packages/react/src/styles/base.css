@@ -1,0 +1,42 @@
+/*
+ * Shared foundation. Every value here resolves to a token, so this file
+ * contains no colour and no shape of its own.
+ */
+
+.nui-root {
+  background: var(--nui-color-surface);
+  color: var(--nui-color-text);
+  font-family: var(--nui-font-sans);
+  font-weight: var(--nui-font-weight-normal);
+  letter-spacing: var(--nui-letter-spacing);
+}
+
+.nui-Button,
+.nui-Input,
+.nui-Card,
+.nui-Tab,
+.nui-DialogPopup {
+  box-sizing: border-box;
+  font-family: var(--nui-font-sans);
+  letter-spacing: var(--nui-letter-spacing);
+  transition-duration: var(--nui-motion-duration);
+  transition-timing-function: var(--nui-motion-easing);
+  transition-property: background-color, border-color, box-shadow, color;
+}
+
+/* One focus treatment, shaped per era by the focus tokens. */
+.nui-Button:focus-visible,
+.nui-Input:focus-visible,
+.nui-Tab:focus-visible,
+.nui-DialogClose:focus-visible {
+  outline: var(--nui-focus-width) solid var(--nui-era-focus-color);
+  outline-offset: var(--nui-focus-offset);
+}
+
+/* Classic Windows used a dotted rectangle inside the control, not an outline
+ * ring around it. The offset token is negative for that era, which pulls the
+ * rectangle inward. */
+[data-era='classic-windows'] .nui-Button:focus-visible,
+[data-era='classic-windows'] .nui-Tab:focus-visible {
+  outline-style: dotted;
+}

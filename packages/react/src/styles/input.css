@@ -1,0 +1,80 @@
+/*
+ * Input. The era difference worth noticing: Classic Windows renders a field as
+ * SUNKEN, which is the inverse of its raised button, using the same two bevel
+ * colours swapped. Frutiger Aero renders the same field as inset glass.
+ */
+
+.nui-Input {
+  display: block;
+  width: 100%;
+  padding: calc(var(--nui-spacing-unit) * 1.25 * var(--nui-density-scale))
+    calc(var(--nui-spacing-unit) * 1.5 * var(--nui-density-scale));
+  border-radius: var(--nui-radius-sm);
+  border: var(--nui-border-width) var(--nui-border-style) var(--nui-color-border);
+  background: var(--nui-color-surface-sunken);
+  color: var(--nui-color-text);
+  font-family: var(--nui-font-sans);
+  font-weight: var(--nui-font-weight-normal);
+}
+
+.nui-Input::placeholder {
+  color: var(--nui-color-text-muted);
+}
+
+.nui-Input--invalid {
+  border-color: var(--nui-color-danger);
+}
+
+/* ---- Classic Windows: sunken field, light source still top-left --------- */
+
+[data-era='classic-windows'] .nui-Input {
+  border-top-color: var(--nui-era-bevel-darker);
+  border-left-color: var(--nui-era-bevel-darker);
+  border-right-color: var(--nui-era-bevel-lighter);
+  border-bottom-color: var(--nui-era-bevel-lighter);
+  box-shadow:
+    inset 1px 1px 0 0 var(--nui-era-bevel-dark),
+    inset -1px -1px 0 0 var(--nui-era-bevel-light);
+}
+
+[data-era='classic-windows'] .nui-Input--invalid {
+  border-color: var(--nui-color-danger);
+  box-shadow: inset 0 0 0 1px var(--nui-color-danger);
+}
+
+/* ---- Frutiger Aero: inset glass with a soft inner shadow ---------------- */
+
+[data-era='frutiger-aero'] .nui-Input {
+  border-radius: var(--nui-radius-md);
+  border-color: var(--nui-era-glass-border);
+  background: var(--nui-era-glass-fill);
+  box-shadow: inset 0 2px 4px var(--nui-era-gloss-mid);
+}
+
+[data-era='frutiger-aero'] .nui-Input:focus-visible {
+  box-shadow:
+    inset 0 2px 4px var(--nui-era-gloss-mid),
+    0 0 0 4px var(--nui-era-accent-gloss-bottom);
+}
+
+[data-era='frutiger-aero'] .nui-Input--invalid {
+  box-shadow: inset 0 2px 4px var(--nui-era-gloss-mid);
+  border-color: var(--nui-color-danger);
+}
+
+/* ---- Flat / Metro: a single solid boundary, no depth -------------------- */
+
+[data-era='flat-metro'] .nui-Input {
+  border: 0;
+  border-bottom: 2px solid var(--nui-era-divider);
+  background: var(--nui-era-surface-hover);
+  box-shadow: none;
+}
+
+[data-era='flat-metro'] .nui-Input:focus-visible {
+  border-bottom-color: var(--nui-color-accent);
+}
+
+[data-era='flat-metro'] .nui-Input--invalid {
+  border-bottom-color: var(--nui-color-danger);
+}

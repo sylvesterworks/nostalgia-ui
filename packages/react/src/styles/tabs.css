@@ -1,0 +1,120 @@
+/*
+ * Tabs. Base UI's Indicator publishes the active tab's geometry as CSS
+ * variables, so each era decides whether the indicator slides or jumps. That
+ * is a motion decision, which belongs to the era axis.
+ */
+
+.nui-Tabs {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--nui-spacing-unit) * 2);
+}
+
+.nui-TabList {
+  position: relative;
+  display: flex;
+  gap: var(--nui-spacing-unit);
+  border-bottom: var(--nui-border-width) var(--nui-border-style) var(--nui-color-border);
+}
+
+.nui-Tab {
+  padding: calc(var(--nui-spacing-unit) * 1.5 * var(--nui-density-scale))
+    calc(var(--nui-spacing-unit) * 2.5 * var(--nui-density-scale));
+  border: 0;
+  border-radius: var(--nui-radius-sm) var(--nui-radius-sm) 0 0;
+  background: transparent;
+  color: var(--nui-color-text-muted);
+  font-family: var(--nui-font-sans);
+  font-weight: var(--nui-font-weight-normal);
+  text-transform: var(--nui-text-transform);
+  cursor: pointer;
+}
+
+.nui-Tab[data-selected] {
+  color: var(--nui-color-text);
+  font-weight: var(--nui-font-weight-bold);
+}
+
+.nui-TabIndicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--nui-color-accent);
+  /* Geometry published by Base UI's Indicator part. */
+  translate: var(--active-tab-left) 0;
+  width: var(--active-tab-width);
+  transition-duration: var(--nui-motion-duration);
+  transition-timing-function: var(--nui-motion-easing);
+  transition-property: translate, width;
+}
+
+.nui-TabPanel {
+  color: var(--nui-color-text);
+}
+
+/* ---- Classic Windows: notched folder tabs, no motion -------------------- */
+
+[data-era='classic-windows'] .nui-TabList {
+  gap: 0;
+  border-bottom-color: var(--nui-era-bevel-darker);
+}
+
+[data-era='classic-windows'] .nui-Tab {
+  background: var(--nui-era-control-face);
+  border: var(--nui-border-width) var(--nui-border-style) transparent;
+  border-top-color: var(--nui-era-bevel-lighter);
+  border-left-color: var(--nui-era-bevel-lighter);
+  border-right-color: var(--nui-era-bevel-darker);
+  margin-right: -1px;
+}
+
+[data-era='classic-windows'] .nui-Tab[data-selected] {
+  background: var(--nui-color-surface-raised);
+  /* The selected tab grows upward and merges with the panel below it. */
+  margin-bottom: -2px;
+  padding-bottom: calc(var(--nui-spacing-unit) * 2 * var(--nui-density-scale));
+}
+
+/* The era had no animation, so the indicator is hidden rather than animated
+ * instantly: a 0ms slide is still a slide conceptually. */
+[data-era='classic-windows'] .nui-TabIndicator {
+  display: none;
+}
+
+/* ---- Frutiger Aero: glossy pill tabs ----------------------------------- */
+
+[data-era='frutiger-aero'] .nui-TabList {
+  border-bottom-color: var(--nui-era-glass-border);
+}
+
+[data-era='frutiger-aero'] .nui-Tab[data-selected] {
+  border-radius: var(--nui-radius-pill) var(--nui-radius-pill) 0 0;
+  background: linear-gradient(to bottom, var(--nui-era-gloss-top), var(--nui-era-gloss-bottom));
+}
+
+[data-era='frutiger-aero'] .nui-TabIndicator {
+  height: 3px;
+  border-radius: var(--nui-radius-pill);
+  background: var(--nui-era-accent-vivid);
+}
+
+/* ---- Flat / Metro: type-led, thick indicator ---------------------------- */
+
+[data-era='flat-metro'] .nui-TabList {
+  gap: calc(var(--nui-spacing-unit) * 2);
+  border-bottom-color: var(--nui-era-divider);
+}
+
+[data-era='flat-metro'] .nui-Tab {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+[data-era='flat-metro'] .nui-Tab:hover {
+  color: var(--nui-color-text);
+}
+
+[data-era='flat-metro'] .nui-TabIndicator {
+  height: 4px;
+}
