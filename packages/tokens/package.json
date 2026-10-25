@@ -12,18 +12,29 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    }
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./palettes.css": "./dist/palettes.css",
+    "./eras.css": "./dist/eras.css",
+    "./pairings.css": "./dist/pairings.css",
+    "./tokens.dtcg.json": "./dist/tokens.dtcg.json",
+    "./tailwind-preset": "./dist/tailwind-preset.js"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc -b tsconfig.build.json",
+    "build": "tsc -b tsconfig.build.json && node dist/cli.js",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run --passWithNoTests"
   },
   "devDependencies": {
+    "@types/culori": "4.0.1",
+    "@types/node": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
+  },
+  "dependencies": {
+    "culori": "4.0.2"
   }
 }

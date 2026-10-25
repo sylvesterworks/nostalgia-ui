@@ -2,6 +2,14 @@ packages:
   - packages/*
   - apps/*
 
+# pnpm 11 blocks dependency install scripts unless they are allowed here.
+# esbuild arrives transitively via vitest -> vite and runs a postinstall to
+# place its platform binary, so it is allowed by name rather than by turning
+# the protection off wholesale. The setting was called onlyBuiltDependencies
+# before pnpm 11.
+allowBuilds:
+  esbuild: true
+
 catalog:
   typescript: 6.0.3
   vitest: ^5.0.5

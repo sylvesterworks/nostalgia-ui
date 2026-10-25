@@ -1,12 +1,22 @@
-/**
- * Era ids available in milestone 1. The era axis controls shape and feel only.
- */
-export const ERAS = ['classic-windows', 'frutiger-aero', 'flat-metro'] as const;
-
-/**
- * Palette ids available in milestone 1. The palette axis controls color only.
- */
-export const PALETTES = ['dracula', 'nord', 'solarized-light'] as const;
-
-export type EraId = (typeof ERAS)[number];
-export type PaletteId = (typeof PALETTES)[number];
+export * from './types.js';
+export * from './color.js';
+export * from './semantic.js';
+export { eras, ERA_IDS, getEra, classicWindows, frutigerAero, flatMetro } from './eras/index.js';
+export type { EraId } from './eras/index.js';
+export {
+  palettes,
+  PALETTE_IDS,
+  getPalette,
+  dracula,
+  nord,
+  solarizedLight,
+} from './palettes/index.js';
+export type { PaletteId } from './palettes/index.js';
+export {
+  PREFIX,
+  emitPalettesCss,
+  emitErasCss,
+  emitPairingsCss,
+  emitDtcg,
+  emitTailwindPreset,
+} from './emit.js';
