@@ -1,0 +1,22 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.sylvesterworks/nostalgiaui",
+  "description": "Design tokens, component source and WCAG contrast checks for rendering any UI in a past design era, from Classic Windows to Neubrutalism, in palettes drawn from VS Code themes.",
+  "repository": {
+    "url": "https://github.com/sylvesterworks/nostalgia-ui",
+    "source": "github",
+    "subfolder": "packages/mcp"
+  },
+  "websiteUrl": "https://nostalgiaui.sylvester.works",
+  "version": "0.0.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@nostalgiaui/mcp",
+      "version": "0.0.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

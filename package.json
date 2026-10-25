@@ -19,7 +19,7 @@
     "format:check": "prettier --check .",
     "check": "pnpm run build && pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test",
     "changeset": "changeset",
-    "version-packages": "changeset version && pnpm install --lockfile-only",
+    "version-packages": "changeset version && node scripts/sync-server-json.mjs && pnpm install --lockfile-only",
     "release": "pnpm run build && changeset publish",
     "publish:dry-run": "pnpm -r publish --dry-run --no-git-checks --access public"
   },

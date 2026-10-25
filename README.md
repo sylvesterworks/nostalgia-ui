@@ -118,8 +118,9 @@ The MCP server exposes NostalgiaUI to any MCP client. Five tools:
 | `import_vscode_theme` | a palette from a VS Code theme, with a provenance report               |
 | `check_contrast`      | a WCAG audit of one era and palette pairing                            |
 
-The packages are not on npm yet (that is milestone 4), so for now build the
-repo and point your client at the built server.
+The packages are not on npm yet, so for now build the repo and point your
+client at the built server. Once published, the server will also be listed in
+the MCP Registry as `io.github.sylvesterworks/nostalgiaui`.
 
 ```bash
 pnpm install && pnpm build

@@ -59,6 +59,19 @@ npm only includes a licence file that sits in the package folder. The tokens
 package also ships `palettes/**/SOURCE.md`, since a palette's provenance is
 part of what a consumer is licensing.
 
+### The MCP registry listing is data in the repo, published after npm
+
+`packages/mcp/server.json` is the registry listing. It is committed rather than
+generated on the publisher's machine, so it is reviewed like any other change.
+Its `name` is `io.github.sylvesterworks/nostalgiaui`, which is the namespace
+GitHub authentication grants to the sylvesterworks account, and `package.json`
+carries the same value under `mcpName` so the registry can verify ownership
+against the npm package.
+
+The registry refuses a listing whose version does not exist on npm, so the
+listing can only be published after the package is. `version-packages` keeps
+`server.json` in step with `package.json`, and a test fails CI if they drift.
+
 ## Consequences
 
 The npm organisation `@nostalgiaui` has to be created by the owner before the
