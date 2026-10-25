@@ -14,15 +14,20 @@ follow, every time.
 
 ## Decisions
 
-### Changesets, with the GitHub changelog formatter
+### Changesets, with the default changelog formatter
 
 Each change that should appear in a release note gets a small markdown file
 naming the packages it touches and the bump. The release workflow turns
 pending changesets into a "Version Packages" pull request; merging it applies
 the bumps and changelogs. Nothing is versioned by hand.
 
-The changelog formatter links each entry to its pull request and author,
-which is the difference between a changelog and a list of version numbers.
+The GitHub changelog formatter was tried first and rejected. It links each
+entry to its pull request, which sounds worth having, but it needs a GitHub
+token merely to version, and it failed the first release run for that reason.
+Commits on this project land directly on main, so there are no pull request
+numbers to link anyway. The default formatter needs nothing and loses nothing
+here. A changeset summary therefore has to carry its own context: it is the
+whole entry a reader sees.
 
 ### Independent versions
 
