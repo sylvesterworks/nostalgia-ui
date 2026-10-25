@@ -2,7 +2,7 @@
 
 An open source design system that renders any interface in the style of a past design era, using color palettes drawn from popular VS Code themes. Built on [Base UI](https://base-ui.com) and shipped with an MCP server so AI coding agents can use it directly.
 
-> Status: milestone 4 in progress. The docs site, timeline demo and an expanded catalogue of six eras and five palettes are done; publishing to npm comes next.
+> Status: milestone 4 complete. Six eras, five palettes, five components, a VS Code theme importer, an MCP server, a docs site at nostalgiaui.sylvester.works, and all four packages published to npm.
 
 ## The two axes
 
@@ -118,22 +118,16 @@ The MCP server exposes NostalgiaUI to any MCP client. Five tools:
 | `import_vscode_theme` | a palette from a VS Code theme, with a provenance report               |
 | `check_contrast`      | a WCAG audit of one era and palette pairing                            |
 
-The packages are not on npm yet, so for now build the repo and point your
-client at the built server. Once published, the server will also be listed in
-the MCP Registry as `io.github.sylvesterworks/nostalgiaui`.
-
-```bash
-pnpm install && pnpm build
-```
+All four packages are on npm. The MCP server will also be listed in the MCP
+Registry as `io.github.sylvesterworks/nostalgiaui`.
 
 ### Claude Code
 
-From the repo root, the included `.mcp.json` registers the server at project
-scope automatically; Claude Code asks for approval the first time. To add it
-from anywhere else:
+From a clone of the repo, the included `.mcp.json` registers the built server
+at project scope automatically. From anywhere else:
 
 ```bash
-claude mcp add --transport stdio nostalgiaui -- node /absolute/path/to/nostalgia-ui/packages/mcp/dist/cli.js
+claude mcp add --transport stdio nostalgiaui -- npx -y @nostalgiaui/mcp
 ```
 
 Add `--scope user` to make it available in every project.
@@ -148,8 +142,8 @@ lives at `~/Library/Application Support/Claude/` on macOS,
 {
   "mcpServers": {
     "nostalgiaui": {
-      "command": "node",
-      "args": ["/absolute/path/to/nostalgia-ui/packages/mcp/dist/cli.js"]
+      "command": "npx",
+      "args": ["-y", "@nostalgiaui/mcp"]
     }
   }
 }

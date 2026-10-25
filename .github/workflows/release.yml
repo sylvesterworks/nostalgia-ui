@@ -4,8 +4,10 @@ on:
   push:
     branches: [main]
 
-# The changesets action needs to open and update a pull request, and npm
-# provenance needs an OIDC token.
+# contents and pull-requests: the changesets action pushes a branch and opens
+# the Version Packages pull request. id-token: npm Trusted Publishing, which
+# exchanges a GitHub OIDC token for publish rights, so no npm token is stored
+# anywhere. Provenance attestations are generated automatically.
 permissions:
   contents: write
   pull-requests: write
@@ -32,28 +34,17 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      # Publishing needs an npm token held as a repository secret, which only
-      # the repository owner can add. Until it exists this workflow still
-      # opens the "Version Packages" pull request, so changelogs and version
-      # bumps accrue, and simply does not publish.
-      - name: Check for an npm token
-        id: token
-        run: |
-          if [ -n "${{ secrets.NPM_TOKEN }}" ]; then
-            echo "present=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "present=false" >> "$GITHUB_OUTPUT"
-            echo "NPM_TOKEN is not set; versioning only, no publish."
-          fi
-
+      # With pending changesets this opens or refreshes the Version Packages
+      # pull request. With none, and a version on main that is not yet on
+      # npm, it publishes. Each package's trusted publisher on npm is bound to
+      # this repository and this workflow file, so publishing works from here
+      # and nowhere else.
       - name: Version or publish
         uses: changesets/action@v2
         with:
           version-script: pnpm run version-packages
-          publish-script: ${{ steps.token.outputs.present == 'true' && 'pnpm run release' || '' }}
+          publish-script: pnpm run release
           commit-message: 'Version packages'
           pr-title: 'Version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: 'true'

@@ -3,6 +3,12 @@
 Design tokens for NostalgiaUI: eras, palettes, and the OKLCH colour maths that
 derives one from the other.
 
+## Install
+
+```bash
+pnpm add @nostalgiaui/tokens
+```
+
 Every rendered component in NostalgiaUI is the product of two independent
 choices. An **era** controls shape and feel. A **palette** controls colour,
 drawn from a VS Code theme. This package defines both and builds them into CSS

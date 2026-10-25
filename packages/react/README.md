@@ -4,6 +4,12 @@ Button, Input, Card, Tabs and Dialog on [Base UI](https://base-ui.com), styled
 only through NostalgiaUI tokens. Keyboard behaviour, focus management and
 dismissal come from Base UI; this package adds class names and nothing else.
 
+## Install
+
+```bash
+pnpm add @nostalgiaui/react @nostalgiaui/tokens
+```
+
 ```tsx
 import { Button, NostalgiaRoot } from '@nostalgiaui/react';
 import '@nostalgiaui/tokens/tokens.css';

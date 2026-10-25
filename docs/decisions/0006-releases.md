@@ -37,13 +37,29 @@ empty releases of the latter to track the former. Internal dependency ranges
 are updated on patch bumps so a consumer installing one package gets the
 matching others.
 
-### Publishing is gated on a secret, and the workflow degrades rather than fails
+### Publishing uses npm Trusted Publishing, so no token exists
 
-Publishing to npm needs a token that only the repository owner can add. Until
-it exists the release workflow still opens the version pull request, so
-changelogs and bumps accrue, and simply does not publish. That keeps the
-release history honest from the first commit rather than from the first time
-someone had a token to hand.
+The first design gated publishing on an `NPM_TOKEN` secret. npm's own guidance
+when generating such a token says to use Trusted Publishing for CI instead,
+and it is right: a long-lived token is a thing to leak and rotate, and this
+project had already spent an hour cleaning a leaked credential out of a
+transcript once.
+
+Trusted Publishing binds each package on npm to this repository and this
+workflow file. The workflow exchanges a GitHub OIDC token for publish rights at
+run time, which is why it holds `id-token: write`, and provenance attestations
+are generated automatically. There is no secret anywhere.
+
+The one cost is sequencing. Trusted Publishing is configured on a package's
+settings page, so the package has to exist first. 0.1.0 was therefore
+published once by hand from a logged-in machine, after which each package's
+trusted publisher was configured and every later release publishes from CI.
+The first CI publish validates the configuration; npm expires an unvalidated
+configuration after two days.
+
+pnpm's publish command attaches provenance on its own under trusted
+publishing, and `changeset publish` delegates to it when pnpm is detected, so
+the release script did not change.
 
 ### A dry run in CI
 
