@@ -26,6 +26,13 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      # Build first. Type-aware lint rules and typecheck both need the
+      # workspace packages' generated .d.ts files, which do not exist in a
+      # clean checkout. Linting first makes cross-package imports resolve to
+      # `any` and fails the no-unsafe-* rules.
+      - name: Build
+        run: pnpm run build
+
       - name: Lint
         run: pnpm run lint
 
@@ -37,6 +44,3 @@ jobs:
 
       - name: Test
         run: pnpm run test
-
-      - name: Build
-        run: pnpm run build
