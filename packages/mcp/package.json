@@ -1,6 +1,6 @@
 {
   "name": "@nostalgiaui/mcp",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "mcpName": "io.github.sylvesterworks/nostalgiaui",
   "description": "MCP server exposing NostalgiaUI eras, palettes, components and contrast checks to AI agents.",
   "keywords": [

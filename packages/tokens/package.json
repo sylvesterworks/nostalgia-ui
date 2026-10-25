@@ -1,6 +1,6 @@
 {
   "name": "@nostalgiaui/tokens",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Era and palette definitions, built to CSS variables, Tailwind config, and DTCG tokens.",
   "keywords": [
     "design-tokens",
