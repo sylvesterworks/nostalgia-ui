@@ -1,5 +1,13 @@
 # @nostalgiaui/react
 
+## 0.1.1
+
+### Patch Changes
+
+- 992a870: Add install and usage commands to each package README, now that the packages are on npm. This is also the first release published from CI through npm Trusted Publishing, with provenance and no stored token.
+- Updated dependencies [992a870]
+  - @nostalgiaui/tokens@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
