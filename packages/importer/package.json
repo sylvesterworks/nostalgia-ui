@@ -1,10 +1,24 @@
 {
   "name": "@nostalgiaui/importer",
   "version": "0.0.0",
-  "private": true,
   "description": "Convert a VS Code theme JSON into a NostalgiaUI palette.",
+  "keywords": [
+    "vscode-theme",
+    "palette",
+    "design-tokens",
+    "cli"
+  ],
   "license": "MIT",
   "author": "Josh Sylvester",
+  "homepage": "https://nostalgiaui.sylvester.works",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sylvesterworks/nostalgia-ui.git",
+    "directory": "packages/importer"
+  },
+  "bugs": {
+    "url": "https://github.com/sylvesterworks/nostalgia-ui/issues"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -14,23 +28,32 @@
       "default": "./dist/index.js"
     }
   },
+  "bin": {
+    "nostalgiaui-import": "./dist/cli.js"
+  },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc -b tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run --passWithNoTests"
   },
+  "dependencies": {
+    "@nostalgiaui/tokens": "workspace:*"
+  },
   "devDependencies": {
     "@types/node": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
-  },
-  "dependencies": {
-    "@nostalgiaui/tokens": "workspace:*"
-  },
-  "bin": {
-    "nostalgiaui-import": "./dist/cli.js"
   }
 }

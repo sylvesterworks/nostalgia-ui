@@ -1,10 +1,27 @@
 {
   "name": "@nostalgiaui/tokens",
   "version": "0.0.0",
-  "private": true,
   "description": "Era and palette definitions, built to CSS variables, Tailwind config, and DTCG tokens.",
+  "keywords": [
+    "design-tokens",
+    "design-system",
+    "css-variables",
+    "oklch",
+    "vscode-theme",
+    "dtcg",
+    "tailwind"
+  ],
   "license": "MIT",
   "author": "Josh Sylvester",
+  "homepage": "https://nostalgiaui.sylvester.works",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sylvesterworks/nostalgia-ui.git",
+    "directory": "packages/tokens"
+  },
+  "bugs": {
+    "url": "https://github.com/sylvesterworks/nostalgia-ui/issues"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -21,20 +38,32 @@
     "./tailwind-preset": "./dist/tailwind-preset.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "palettes",
+    "README.md",
+    "LICENSE"
   ],
+  "sideEffects": [
+    "./dist/*.css"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc -b tsconfig.build.json && node dist/cli.js",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "culori": "4.0.2"
   },
   "devDependencies": {
     "@types/culori": "4.0.1",
     "@types/node": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
-  },
-  "dependencies": {
-    "culori": "4.0.2"
   }
 }

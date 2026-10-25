@@ -33,6 +33,12 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      # Everything a publish would do except the upload: packs each public
+      # package and validates its manifest, so a broken files list or a
+      # workspace: range that failed to resolve fails here, not on release day.
+      - name: Publish dry run
+        run: pnpm run publish:dry-run
+
       - name: Lint
         run: pnpm run lint
 

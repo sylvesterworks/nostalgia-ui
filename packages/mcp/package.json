@@ -1,10 +1,25 @@
 {
   "name": "@nostalgiaui/mcp",
   "version": "0.0.0",
-  "private": true,
   "description": "MCP server exposing NostalgiaUI eras, palettes, components and contrast checks to AI agents.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "design-system",
+    "ai-agents",
+    "claude"
+  ],
   "license": "MIT",
   "author": "Josh Sylvester",
+  "homepage": "https://nostalgiaui.sylvester.works",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sylvesterworks/nostalgia-ui.git",
+    "directory": "packages/mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/sylvesterworks/nostalgia-ui/issues"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -14,19 +29,25 @@
       "default": "./dist/index.js"
     }
   },
+  "bin": {
+    "nostalgiaui-mcp": "./dist/cli.js"
+  },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc -b tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run --passWithNoTests"
-  },
-  "devDependencies": {
-    "@modelcontextprotocol/client": "2.4.0",
-    "@types/node": "catalog:",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "2.4.0",
@@ -35,7 +56,10 @@
     "@nostalgiaui/tokens": "workspace:*",
     "zod": "4.6.7"
   },
-  "bin": {
-    "nostalgiaui-mcp": "./dist/cli.js"
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.4.0",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

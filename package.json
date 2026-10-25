@@ -17,9 +17,15 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm run build && pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test"
+    "check": "pnpm run build && pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test",
+    "changeset": "changeset",
+    "version-packages": "changeset version && pnpm install --lockfile-only",
+    "release": "pnpm run build && changeset publish",
+    "publish:dry-run": "pnpm -r publish --dry-run --no-git-checks --access public"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "1.0.1",
+    "@changesets/cli": "3.0.3",
     "@eslint/js": "^10.0.1",
     "@types/node": "catalog:",
     "eslint": "^10.13.0",

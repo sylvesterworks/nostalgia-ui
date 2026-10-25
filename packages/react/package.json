@@ -1,10 +1,26 @@
 {
   "name": "@nostalgiaui/react",
   "version": "0.0.0",
-  "private": true,
   "description": "Base UI components styled entirely through NostalgiaUI tokens.",
+  "keywords": [
+    "react",
+    "components",
+    "design-system",
+    "base-ui",
+    "retro",
+    "nostalgia"
+  ],
   "license": "MIT",
   "author": "Josh Sylvester",
+  "homepage": "https://nostalgiaui.sylvester.works",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sylvesterworks/nostalgia-ui.git",
+    "directory": "packages/react"
+  },
+  "bugs": {
+    "url": "https://github.com/sylvesterworks/nostalgia-ui/issues"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,20 +36,23 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
+  "sideEffects": [
+    "./dist/styles.css"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc -b tsconfig.build.json && node dist/cli.js",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run --passWithNoTests"
-  },
-  "devDependencies": {
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "react": "19.3.1",
-    "react-dom": "19.3.1",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
   },
   "dependencies": {
     "@base-ui/react": "1.9.0",
@@ -42,5 +61,13 @@
   "peerDependencies": {
     "react": "^19",
     "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

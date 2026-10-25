@@ -1,0 +1,8 @@
+{
+  "changelog": ["@changesets/changelog-github", { "repo": "sylvesterworks/nostalgia-ui" }],
+  "commit": false,
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}

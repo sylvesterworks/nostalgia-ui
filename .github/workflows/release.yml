@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+# The changesets action needs to open and update a pull request, and npm
+# provenance needs an OIDC token.
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # Publishing needs an npm token held as a repository secret, which only
+      # the repository owner can add. Until it exists this workflow still
+      # opens the "Version Packages" pull request, so changelogs and version
+      # bumps accrue, and simply does not publish.
+      - name: Check for an npm token
+        id: token
+        run: |
+          if [ -n "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "NPM_TOKEN is not set; versioning only, no publish."
+          fi
+
+      - name: Version or publish
+        uses: changesets/action@v2
+        with:
+          version: pnpm run version-packages
+          publish: ${{ steps.token.outputs.present == 'true' && 'pnpm run release' || '' }}
+          commit: 'Version packages'
+          title: 'Version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: 'true'
