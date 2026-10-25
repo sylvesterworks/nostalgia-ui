@@ -79,7 +79,7 @@ Verify current versions and package names before installing; don't trust these f
 - Tokens in W3C Design Tokens (DTCG) format, built with Style Dictionary
 - OKLCH color math with `culori` (or similar)
 - Vitest for unit tests, including automated WCAG contrast checks for every era × palette pair
-- `@modelcontextprotocol/sdk` (TypeScript) for the MCP server
+- `@modelcontextprotocol/server` and `@modelcontextprotocol/client` (TypeScript) for the MCP server; the older `@modelcontextprotocol/sdk` is still on npm but its hand-wired stdio transport only serves 2025-era clients
 - GitHub Actions CI: lint, typecheck, test, build
 
 Dev machine is Windows; keep scripts cross-platform (no bash-only scripts in package.json).
