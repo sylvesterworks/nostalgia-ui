@@ -1,5 +1,11 @@
 # @nostalgiaui/react
 
+## 0.1.3
+
+### Patch Changes
+
+- 51a1654: Compose class names with clsx instead of a hand-rolled array filter and join. Rendered class names are unchanged.
+
 ## 0.1.2
 
 ### Patch Changes
