@@ -1,5 +1,12 @@
 # @nostalgiaui/importer
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [9087d95]
+  - @nostalgiaui/tokens@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

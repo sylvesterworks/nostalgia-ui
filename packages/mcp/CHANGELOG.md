@@ -1,5 +1,17 @@
 # @nostalgiaui/mcp
 
+## 0.1.2
+
+### Patch Changes
+
+- 1e16014: `get_component` notes are now specific to each component. NostalgiaRoot carries the full guidance that applies everywhere; every other component gets a one line reminder plus notes that could apply to nothing else, including how to put an era-styled Button into DialogTrigger, DialogClose and Tab with the `render` prop.
+- bfcf4dc: `get_component` now keeps comments that sit inside a CSS rule, drops only the section-divider comments outside rules, and leaves no blank lines behind. The tool description says the CSS is a filtered view of the stylesheet.
+- 9087d95: Add a `danger` Button variant for destructive actions. It reads the palette's own error colour and a new `text-on-danger` semantic token, and each era gives it the same treatment it gives a solid button: Frutiger Aero gloss, Classic Windows bevel, Flat / Metro hover and active fills, Neubrutalism hard shadow. The contrast audit, and therefore `check_contrast`, now covers text on the danger fill in every pairing.
+- Updated dependencies [9087d95]
+  - @nostalgiaui/react@0.1.2
+  - @nostalgiaui/tokens@0.1.2
+  - @nostalgiaui/importer@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes
