@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { createContext, useContext, useState } from 'react';
 import type * as React from 'react';
 
@@ -46,7 +47,7 @@ export function NostalgiaRoot(props: NostalgiaRootProps): React.ReactElement {
       ref={setContainer}
       data-era={era}
       data-palette={palette}
-      className={['nui-root', className].filter(Boolean).join(' ')}
+      className={clsx('nui-root', className)}
     >
       <ContainerContext.Provider value={container}>{children}</ContainerContext.Provider>
     </div>

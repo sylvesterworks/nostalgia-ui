@@ -1,5 +1,6 @@
 import { useRender } from '@base-ui/react/use-render';
 import { mergeProps } from '@base-ui/react/merge-props';
+import { clsx } from 'clsx';
 import type * as React from 'react';
 
 export interface CardProps extends React.ComponentPropsWithoutRef<'div'> {
@@ -21,9 +22,7 @@ export function Card(props: CardProps): React.ReactElement | null {
     defaultTagName: 'div',
     props: mergeProps<'div'>(
       {
-        className: ['nui-Card', elevated ? 'nui-Card--elevated' : undefined, className]
-          .filter(Boolean)
-          .join(' '),
+        className: clsx('nui-Card', elevated && 'nui-Card--elevated', className),
       },
       rest,
     ),
@@ -32,9 +31,10 @@ export function Card(props: CardProps): React.ReactElement | null {
 
 export function CardTitle(props: React.ComponentPropsWithoutRef<'h3'>): React.ReactElement {
   const { className, ...rest } = props;
-  return <h3 {...rest} className={['nui-CardTitle', className].filter(Boolean).join(' ')} />;
+  return <h3 {...rest} className={clsx('nui-CardTitle', className)} />;
 }
 
 export function CardBody(props: React.ComponentPropsWithoutRef<'div'>): React.ReactElement {
-  return <div {...props} className={['nui-CardBody', props.className].filter(Boolean).join(' ')} />;
+  const { className, ...rest } = props;
+  return <div {...rest} className={clsx('nui-CardBody', className)} />;
 }

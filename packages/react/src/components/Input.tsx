@@ -1,4 +1,5 @@
 import { Input as BaseInput } from '@base-ui/react/input';
+import { clsx } from 'clsx';
 import type * as React from 'react';
 
 export interface InputProps extends React.ComponentProps<typeof BaseInput> {
@@ -9,15 +10,15 @@ export interface InputProps extends React.ComponentProps<typeof BaseInput> {
 
 export function Input(props: InputProps): React.ReactElement {
   const { invalid = false, className, ...rest } = props;
-  const classes = ['nui-Input', invalid ? 'nui-Input--invalid' : undefined]
-    .filter(Boolean)
-    .join(' ');
+  // Base UI also accepts className as a function of state; only a string can
+  // be merged here, so a function is left as-is and the static classes win.
+  const classes = clsx('nui-Input', invalid && 'nui-Input--invalid');
 
   return (
     <BaseInput
       {...rest}
       data-invalid={invalid ? '' : undefined}
-      className={typeof className === 'string' ? classes + ' ' + className : classes}
+      className={typeof className === 'string' ? clsx(classes, className) : classes}
     />
   );
 }
