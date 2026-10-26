@@ -67,7 +67,8 @@ describe('server.json', () => {
     const { server } = await load();
     expect(server.$schema).toContain('server.schema.json');
     expect(server.description.length).toBeGreaterThan(20);
-    expect(server.description.length).toBeLessThanOrEqual(300);
+    // The registry rejects a description over 100 characters with a 422.
+    expect(server.description.length).toBeLessThanOrEqual(100);
     expect(server.repository.source).toBe('github');
     expect(server.repository.url).toBe('https://github.com/sylvesterworks/nostalgia-ui');
   });
