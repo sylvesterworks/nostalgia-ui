@@ -134,3 +134,10 @@ Demo target: in Claude Code, "build me a settings page in Frutiger Aero with the
 - Never style a component with raw color values; semantic tokens only.
 - Accessibility is a constraint, not a nice-to-have: keyboard behavior comes from Base UI, contrast is tested.
 - Keep the README current as milestones land.
+
+## Work items
+
+- Outstanding work lives in GitHub Issues, not in markdown files in the repo. `docs/decisions/` is for permanent decision records only.
+- Every issue carries one type label (`bug`, `enhancement`, `documentation`, `accessibility`) and one priority label (`P1` do next, `P2` do soon, `P3` when convenient). Items raised from inside the project, including anything Claude finds while testing, also carry `internal`.
+- When testing or a demo run turns up a gap, open an issue for it with `gh issue create` rather than noting it in a report or a doc. Each issue says what is wrong, what to do, and what done looks like.
+- "Fix #N" means: read it with `gh issue view N`, branch from main as `issue-N-short-slug`, do the work, and open a PR whose body contains `Closes #N` so the issue closes on merge.
