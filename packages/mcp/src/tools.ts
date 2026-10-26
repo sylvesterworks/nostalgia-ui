@@ -241,19 +241,60 @@ export function getComponent(name: string, eraId: string): ComponentAnswer {
   const named = EXPORTS[name] ?? [name];
   const { base, era: eraCss } = splitCssByEra(entry.css, era.id);
 
-  const notes: string[] = [
-    'Every component must render inside <NostalgiaRoot era="' +
-      era.id +
-      '" palette="..."> or inside an element carrying data-era and data-palette. Outside one, the token variables do not resolve and the component renders unstyled.',
-    'Import the two stylesheets once, at the application root. Components carry class names only and never import CSS themselves.',
-  ];
-  if (name === 'Dialog') {
+  const notes: string[] = [];
+
+  // Guidance that applies to everything is stated in full on NostalgiaRoot,
+  // which every consumer has to read first, and as a one line reminder on
+  // the others, so a component's own notes are not buried under boilerplate.
+  if (name === 'NostalgiaRoot') {
     notes.push(
-      'DialogPortal renders into the nearest NostalgiaRoot rather than document.body. Without a NostalgiaRoot ancestor the dialog portals to the body, escapes the token scope, and appears with no surface, border or title bar.',
+      'Every component must render inside <NostalgiaRoot era="' +
+        era.id +
+        '" palette="..."> or inside an element carrying data-era and data-palette. Outside one, the token variables do not resolve and the component renders unstyled.',
+      'Import the two stylesheets once, at the application root: @nostalgiaui/tokens/tokens.css then @nostalgiaui/react/styles.css. Components carry class names only and never import CSS themselves.',
+      'Changing era or palette changes one attribute each. Nothing re-renders differently; the browser resolves a different set of custom properties.',
+      'Portalled parts (Dialog) render back into this element rather than document.body, which is why it publishes its own element through context.',
+    );
+  } else {
+    notes.push(
+      'Must render inside NostalgiaRoot (see get_component for NostalgiaRoot), with both stylesheets imported once at the root.',
     );
   }
-  if (name === 'Tabs') {
-    notes.push('TabIndicator must be placed inside TabList, not beside it.');
+
+  switch (name) {
+    case 'Button':
+      notes.push(
+        'Variants are solid, outline and ghost; that is the whole set. type defaults to "button", so a submit button needs type="submit" explicitly.',
+        'render swaps the rendered element while keeping the styling: render={<a href="..." />} for a link, and the reverse direction, render={<Button variant="solid" />} on a Base UI part such as DialogTrigger, DialogClose or Tab, is how to put an era-styled button in a slot.',
+      );
+      break;
+    case 'Input':
+      notes.push(
+        'invalid is the only extra prop. It adds the nui-Input--invalid class and sets data-invalid, which the era stylesheets key on.',
+        'This is a bare <input> with no label of its own. Supply a <label htmlFor> that matches the id you pass, or wrap it in a label, or the field has no accessible name.',
+      );
+      break;
+    case 'Card':
+      notes.push(
+        'Card has no header slot. CardTitle and CardBody are siblings placed by the caller, in that order. Anything after CardBody, such as a form or a button row, needs its own spacing; the card only pads its edges.',
+        "elevated adds the era's raised shadow. Flat / Metro forbids shadows, so it distinguishes an elevated card by fill instead.",
+      );
+      break;
+    case 'Tabs':
+      notes.push(
+        "Inside Tabs, TabIndicator must be placed inside TabList, not beside it. It positions itself from the active tab's geometry, which only TabList publishes.",
+        'Tab accepts render, so render={<a href="..." />} makes link tabs and render={<Button variant="ghost" />} styles a tab as a button.',
+      );
+      break;
+    case 'Dialog':
+      notes.push(
+        'DialogPortal renders into the nearest NostalgiaRoot rather than document.body. Without a NostalgiaRoot ancestor the dialog portals to the body, escapes the token scope, and appears with no surface, border or title bar.',
+        'DialogTrigger and DialogClose render a plain <button> carrying only the nui-DialogTrigger or nui-DialogClose class. For an era-styled button in those slots, pass render={<Button variant="..." />}; the same render prop works on Tab.',
+        'Order inside DialogPopup is DialogTitle, DialogDescription, then your actions. Classic Windows styles DialogTitle into the title bar, so it must come first.',
+      );
+      break;
+    default:
+      break;
   }
 
   return {
