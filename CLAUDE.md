@@ -108,7 +108,7 @@ Dev machine is Windows; keep scripts cross-platform (no bash-only scripts in pac
 - CLI: `npx @nostalgiaui/importer ./my-theme.json`
 - Playground: drop in a theme file and preview it
 
-### Milestone 3: MCP server (done, except the in-Claude-Code demo, which is unverified)
+### Milestone 3: MCP server (done; the in-Claude-Code demo was verified against the published 0.1.1 server)
 
 Tools:
 
@@ -120,7 +120,7 @@ Tools:
 
 Demo target: in Claude Code, "build me a settings page in Frutiger Aero with the Nord palette" works end to end. Document setup for Claude Code and Claude Desktop in the README.
 
-### Milestone 4: Docs, more eras, publish (next)
+### Milestone 4: Docs, more eras, publish (done)
 
 - `apps/docs` deployed to `nostalgiaui.sylvester.works`
 - Timeline slider demo: scrub through eras and watch the same UI morph
