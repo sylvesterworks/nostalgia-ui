@@ -95,7 +95,7 @@ export function createServer(): McpServer {
     'get_component',
     {
       description:
-        'Source for one component styled for one era: the import lines, the TSX wrapper, the stylesheet rules that apply everywhere, the rules scoped to that era, and notes on what is easy to get wrong. Components must render inside NostalgiaRoot.',
+        'Source for one component styled for one era: the import lines, the TSX wrapper, the stylesheet rules that apply everywhere, the rules scoped to that era, and notes on what is easy to get wrong. The CSS is a filtered view of the stylesheet, not a verbatim copy: rules for other eras and section-divider comments are removed, while comments inside rules are kept. Components must render inside NostalgiaRoot.',
       inputSchema: z.object({
         name: z
           .string()

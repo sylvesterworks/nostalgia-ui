@@ -6,6 +6,7 @@ export {
   importTheme,
   listEras,
   listPalettes,
+  splitCssByEra,
   TOKEN_FORMATS,
   ToolError,
 } from './tools.js';
