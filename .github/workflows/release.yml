@@ -66,6 +66,23 @@ jobs:
         run: |
           curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar xz mcp-publisher
 
+      # npm takes a little while to serve a version it has just accepted, and
+      # the registry verifies the listing against npm at publish time. The
+      # first 0.1.2 run failed with a 404 from npm for a version that had
+      # been published seconds earlier, so wait until npm serves it.
+      - name: Wait for npm to serve the version
+        if: steps.changesets.outputs.published == 'true' || github.event_name == 'workflow_dispatch'
+        working-directory: packages/mcp
+        run: |
+          version=$(node -p "require('./package.json').version")
+          for i in $(seq 1 30); do
+            if npm view "@nostalgiaui/mcp@$version" version >/dev/null 2>&1; then
+              echo "npm serves @nostalgiaui/mcp@$version"; exit 0
+            fi
+            echo "waiting for @nostalgiaui/mcp@$version on npm ($i)"; sleep 10
+          done
+          echo "npm never served @nostalgiaui/mcp@$version" >&2; exit 1
+
       - name: Authenticate to the MCP Registry
         if: steps.changesets.outputs.published == 'true' || github.event_name == 'workflow_dispatch'
         run: ./mcp-publisher login github-oidc
