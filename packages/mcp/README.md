@@ -36,16 +36,8 @@ building the library.
 Full documentation at [nostalgiaui.sylvester.works](https://nostalgiaui.sylvester.works).
 MIT, copyright Josh Sylvester and Sylvester Works LLC.
 
-## Publishing to the MCP Registry
+## MCP Registry
 
-The registry hosts metadata only, so the npm package must be published first.
-Then, from this directory, as the sylvesterworks GitHub account:
-
-```bash
-mcp-publisher login github
-mcp-publisher publish
-```
-
-`server.json` here is the listing. Its `name` must equal `mcpName` in
-`package.json`, and its versions must match what is on npm; a test enforces
-both, and `pnpm version-packages` keeps the version in step.
+Listed as `io.github.sylvesterworks/nostalgiaui`. The listing is
+`server.json` in this package and is published by the release workflow after
+each npm publish, authenticated through GitHub OIDC; nothing is done by hand.

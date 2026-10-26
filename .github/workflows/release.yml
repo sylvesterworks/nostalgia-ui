@@ -3,11 +3,16 @@ name: Release
 on:
   push:
     branches: [main]
+  # Manual run: re-publishes the MCP Registry listing for whatever version is
+  # on main. Used once to list the first release, which was published to npm
+  # before this step existed.
+  workflow_dispatch:
 
 # contents and pull-requests: the changesets action pushes a branch and opens
-# the Version Packages pull request. id-token: npm Trusted Publishing, which
-# exchanges a GitHub OIDC token for publish rights, so no npm token is stored
-# anywhere. Provenance attestations are generated automatically.
+# the Version Packages pull request. id-token: both npm Trusted Publishing and
+# the MCP Registry authenticate this workflow through a GitHub OIDC token, so
+# no token is stored anywhere. Provenance attestations are generated
+# automatically.
 permissions:
   contents: write
   pull-requests: write
@@ -40,6 +45,8 @@ jobs:
       # this repository and this workflow file, so publishing works from here
       # and nowhere else.
       - name: Version or publish
+        id: changesets
+        if: github.event_name == 'push'
         uses: changesets/action@v2
         with:
           version-script: pnpm run version-packages
@@ -48,3 +55,22 @@ jobs:
           pr-title: 'Version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # The MCP Registry hosts metadata that points at the npm package, so the
+      # listing is published only after npm has the version. The registry
+      # verifies the package's mcpName against server.json's name, and the
+      # OIDC login grants the io.github.sylvesterworks/ namespace because this
+      # repository belongs to that organisation.
+      - name: Install mcp-publisher
+        if: steps.changesets.outputs.published == 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar xz mcp-publisher
+
+      - name: Authenticate to the MCP Registry
+        if: steps.changesets.outputs.published == 'true' || github.event_name == 'workflow_dispatch'
+        run: ./mcp-publisher login github-oidc
+
+      - name: Publish the listing to the MCP Registry
+        if: steps.changesets.outputs.published == 'true' || github.event_name == 'workflow_dispatch'
+        working-directory: packages/mcp
+        run: ../../mcp-publisher publish
