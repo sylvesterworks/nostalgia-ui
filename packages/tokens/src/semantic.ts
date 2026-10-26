@@ -54,6 +54,8 @@ export function toSemantic(palette: Palette): SemanticColors {
     // only 2.97:1 against either. readableOn walks a tinted lightness ramp
     // instead, so every palette can clear WCAG AA here.
     textOnAccent: readableOn(ensureContrast(p.keyword, surface, 3), p.foreground),
+    // A danger fill is a text background too, for destructive buttons.
+    textOnDanger: readableOn(ensureContrast(p.error, surface, 3), p.foreground),
 
     accent: ensureContrast(p.keyword, surface, 3),
     success: ensureContrast(p.string, surface, 3),

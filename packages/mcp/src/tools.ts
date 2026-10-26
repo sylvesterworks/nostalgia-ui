@@ -264,7 +264,7 @@ export function getComponent(name: string, eraId: string): ComponentAnswer {
   switch (name) {
     case 'Button':
       notes.push(
-        'Variants are solid, outline and ghost; that is the whole set. type defaults to "button", so a submit button needs type="submit" explicitly.',
+        'Variants are solid, outline, ghost and danger; that is the whole set. danger is the destructive action and reads the palette\'s own error colour. type defaults to "button", so a submit button needs type="submit" explicitly.',
         'render swaps the rendered element while keeping the styling: render={<a href="..." />} for a link, and the reverse direction, render={<Button variant="solid" />} on a Base UI part such as DialogTrigger, DialogClose or Tab, is how to put an era-styled button in a slot.',
       );
       break;
