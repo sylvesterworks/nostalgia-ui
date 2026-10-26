@@ -7,6 +7,7 @@ import {
   importTheme,
   listEras,
   listPalettes,
+  splitCssByEra,
   ToolError,
 } from './tools.js';
 
@@ -156,5 +157,57 @@ describe('check_contrast', () => {
     if (first === undefined) return;
     expect(first.label.length).toBeGreaterThan(0);
     expect(first.ratio).toBeGreaterThan(1);
+  });
+});
+
+describe('splitCssByEra', () => {
+  const css = [
+    '/* ---- section divider naming an era ---- */',
+    '.nui-Thing {',
+    '  color: var(--nui-color-text);',
+    '  /* geometry published by Base UI */',
+    '  width: var(--active-tab-width);',
+    '}',
+    '',
+    "[data-era='flat-metro'] .nui-Thing {",
+    '  border: 0;',
+    '}',
+    "[data-era='classic-windows'] .nui-Thing {",
+    '  border: 2px solid var(--nui-era-bevel-light);',
+    '}',
+  ].join('\n');
+
+  it('keeps a comment that sits inside a rule', () => {
+    const { base } = splitCssByEra(css, 'flat-metro');
+    expect(base).toContain('/* geometry published by Base UI */');
+  });
+
+  it('drops a section-divider comment that sits outside any rule', () => {
+    const { base, era } = splitCssByEra(css, 'flat-metro');
+    expect(base + era).not.toContain('section divider');
+  });
+
+  it('leaves no blank line inside any rule', () => {
+    const { base, era } = splitCssByEra(css, 'flat-metro');
+    for (const block of [base, era]) {
+      for (const line of block.split('\n')) {
+        expect(line.trim().length, 'blank line in: ' + block).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('returns only the requested era', () => {
+    const { era } = splitCssByEra(css, 'flat-metro');
+    expect(era).toContain('flat-metro');
+    expect(era).not.toContain('classic-windows');
+  });
+
+  it('matches the real Tabs stylesheet: indicator block intact, no blank line', () => {
+    const answer = getComponent('Tabs', 'flat-metro');
+    const block = (answer.baseCss.split('.nui-TabIndicator {')[1]?.split('}')[0] ?? '').trim();
+    expect(block).toContain('--active-tab');
+    for (const line of block.split('\n')) {
+      expect(line.trim().length, 'blank line in TabIndicator block').toBeGreaterThan(0);
+    }
   });
 });

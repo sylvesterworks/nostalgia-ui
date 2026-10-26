@@ -177,18 +177,50 @@ export interface ComponentAnswer {
  * Split a stylesheet into the rules that apply everywhere and the rules
  * scoped to one era. Other eras' rules are dropped, since an agent working in
  * Frutiger Aero gains nothing from reading the Classic Windows bevel rules.
+ *
+ * Comments are handled by position rather than deleted wholesale. A comment
+ * outside any rule block is a section divider naming an era or a component;
+ * that information is redundant once rules are grouped by era, so it goes.
+ * A comment inside a rule block explains a declaration (which variables Base
+ * UI publishes, why a shadow is inset) and is exactly what an agent reading
+ * the CSS as reference needs, so it stays. Whitespace-only lines left behind
+ * are removed so no rule contains a blank line.
  */
-function splitCssByEra(css: string, eraId: string): { base: string; era: string } {
-  const withoutComments = css.replace(/\/\*[\s\S]*?\*\//g, '');
-  const rules = withoutComments.match(/[^{}]+\{[^{}]*\}/g) ?? [];
+export function splitCssByEra(css: string, eraId: string): { base: string; era: string } {
+  // Drop comments at brace depth 0 only.
+  let depth = 0;
+  let out = '';
+  let i = 0;
+  while (i < css.length) {
+    if (css.startsWith('/*', i)) {
+      const close = css.indexOf('*/', i + 2);
+      const endIdx = close === -1 ? css.length : close + 2;
+      if (depth > 0) {
+        out += css.slice(i, endIdx);
+      }
+      i = endIdx;
+      continue;
+    }
+    const ch = css[i] ?? '';
+    if (ch === '{') depth += 1;
+    if (ch === '}') depth = Math.max(0, depth - 1);
+    out += ch;
+    i += 1;
+  }
+
+  const rules = out.match(/[^{}]+\{[^{}]*\}/g) ?? [];
   const base: string[] = [];
   const era: string[] = [];
   for (const rule of rules) {
-    const trimmed = rule.trim();
-    if (!trimmed.includes('[data-era=')) {
-      base.push(trimmed);
-    } else if (trimmed.includes("[data-era='" + eraId + "']")) {
-      era.push(trimmed);
+    const cleaned = rule
+      .trim()
+      .split('\n')
+      .filter((line) => line.trim().length > 0)
+      .join('\n');
+    if (!cleaned.includes('[data-era=')) {
+      base.push(cleaned);
+    } else if (cleaned.includes("[data-era='" + eraId + "']")) {
+      era.push(cleaned);
     }
   }
   return { base: base.join('\n\n'), era: era.join('\n\n') };
