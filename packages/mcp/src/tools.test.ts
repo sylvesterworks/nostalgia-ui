@@ -123,7 +123,7 @@ describe('get_component', () => {
   it('gives every component at least one note that names it and could apply to nothing else', () => {
     const distinctive: Record<string, string> = {
       NostalgiaRoot: 'Changing era or palette changes one attribute',
-      Button: 'Variants are solid, outline and ghost',
+      Button: 'Variants are solid, outline, ghost and danger',
       Input: 'invalid is the only extra prop',
       Card: 'Card has no header slot',
       Tabs: 'Inside Tabs, TabIndicator must be placed inside TabList',
@@ -177,6 +177,13 @@ describe('check_contrast', () => {
         expect(audit.passes, era.id + ' x ' + palette.id).toBe(true);
       }
     }
+  });
+
+  it('audits text on the danger fill, since a danger button is a text background', () => {
+    const audit = checkContrast('flat-metro', 'solarized-light');
+    const finding = audit.findings.find((f) => f.id === 'text-on-danger');
+    expect(finding).toBeDefined();
+    expect(finding?.passes).toBe(true);
   });
 
   it('returns findings a person can act on', () => {

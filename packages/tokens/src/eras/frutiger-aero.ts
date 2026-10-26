@@ -51,6 +51,10 @@ export const frutigerAero: Era = {
       'accent-gloss-top': withAlpha(raise(s.accent, 0.35), 0.75),
       'accent-gloss-bottom': withAlpha(sink(s.accent, 0.1), 0.2),
       'accent-vivid': scaleChroma(s.accent, 1.15),
+      // The same treatment for a destructive fill, derived the same way.
+      'danger-vivid': scaleChroma(s.danger, 1.15),
+      'danger-gloss-top': withAlpha(raise(s.danger, 0.35), 0.75),
+      'danger-gloss-bottom': withAlpha(sink(s.danger, 0.1), 0.2),
       'focus-color': s.accent,
     };
   },

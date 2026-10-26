@@ -39,6 +39,15 @@
   box-shadow: none;
 }
 
+/* A destructive action. Reads only the danger tokens, so every palette's own
+ * error colour carries it, and every era below gives it the same treatment it
+ * gives a solid button. */
+.nui-Button--danger {
+  background: var(--nui-color-danger);
+  color: var(--nui-color-text-on-danger);
+  border-color: var(--nui-color-danger);
+}
+
 /*
  * Disabled drops the accent fill entirely rather than muting the text on top
  * of it. Muted text over a saturated accent was close to illegible on
@@ -47,7 +56,8 @@
  */
 .nui-Button:disabled,
 .nui-Button--solid:disabled,
-.nui-Button--outline:disabled {
+.nui-Button--outline:disabled,
+.nui-Button--danger:disabled {
   cursor: not-allowed;
   background: var(--nui-color-surface-sunken);
   border-color: var(--nui-color-border);
@@ -78,10 +88,16 @@
   color: var(--nui-color-text-on-accent);
 }
 
+[data-era='classic-windows'] .nui-Button--danger {
+  background: var(--nui-color-danger);
+  color: var(--nui-color-text-on-danger);
+}
+
 /* The era's --solid rule outranks the base disabled rule on specificity, so
  * disabled has to be restated here or the accent fill survives. */
 [data-era='classic-windows'] .nui-Button:disabled,
-[data-era='classic-windows'] .nui-Button--solid:disabled {
+[data-era='classic-windows'] .nui-Button--solid:disabled,
+[data-era='classic-windows'] .nui-Button--danger:disabled {
   background: var(--nui-color-surface-sunken);
   color: var(--nui-color-text-muted);
 }
@@ -120,6 +136,11 @@
 
 [data-era='frutiger-aero'] .nui-Button--solid {
   background: var(--nui-era-accent-vivid);
+}
+
+[data-era='frutiger-aero'] .nui-Button--danger {
+  background: var(--nui-era-danger-vivid);
+  color: var(--nui-color-text-on-danger);
 }
 
 /* The highlight band. A pseudo-element rather than a background gradient so
@@ -180,9 +201,24 @@
   background: var(--nui-era-tile-active);
 }
 
+[data-era='flat-metro'] .nui-Button--danger {
+  background: var(--nui-color-danger);
+  color: var(--nui-color-text-on-danger);
+}
+
+[data-era='flat-metro'] .nui-Button--danger:hover {
+  background: var(--nui-era-danger-hover);
+}
+
+[data-era='flat-metro'] .nui-Button--danger:active {
+  background: var(--nui-era-danger-active);
+}
+
 [data-era='flat-metro'] .nui-Button:disabled,
 [data-era='flat-metro'] .nui-Button--solid:disabled,
-[data-era='flat-metro'] .nui-Button--solid:disabled:hover {
+[data-era='flat-metro'] .nui-Button--solid:disabled:hover,
+[data-era='flat-metro'] .nui-Button--danger:disabled,
+[data-era='flat-metro'] .nui-Button--danger:disabled:hover {
   background: var(--nui-color-surface-sunken);
   color: var(--nui-color-text-muted);
 }
@@ -208,13 +244,21 @@
   box-shadow: 0 0 14px var(--nui-era-glow);
 }
 
+[data-era='terminal-crt'] .nui-Button--danger {
+  background: var(--nui-color-danger);
+  border-color: var(--nui-color-danger);
+  color: var(--nui-color-text-on-danger);
+  text-shadow: none;
+}
+
 [data-era='terminal-crt'] .nui-Button--ghost {
   border-color: transparent;
   box-shadow: none;
 }
 
 [data-era='terminal-crt'] .nui-Button:disabled,
-[data-era='terminal-crt'] .nui-Button--solid:disabled {
+[data-era='terminal-crt'] .nui-Button--solid:disabled,
+[data-era='terminal-crt'] .nui-Button--danger:disabled {
   background: transparent;
   border-color: var(--nui-color-border);
   color: var(--nui-color-text-muted);
@@ -236,6 +280,11 @@
   color: var(--nui-color-text-on-accent);
 }
 
+[data-era='neubrutalism'] .nui-Button--danger {
+  background: var(--nui-color-danger);
+  color: var(--nui-color-text-on-danger);
+}
+
 [data-era='neubrutalism'] .nui-Button--ghost {
   border-color: transparent;
   box-shadow: none;
@@ -248,7 +297,8 @@
 }
 
 [data-era='neubrutalism'] .nui-Button:disabled,
-[data-era='neubrutalism'] .nui-Button--solid:disabled {
+[data-era='neubrutalism'] .nui-Button--solid:disabled,
+[data-era='neubrutalism'] .nui-Button--danger:disabled {
   background: var(--nui-color-surface-sunken);
   color: var(--nui-color-text-muted);
   box-shadow: none;
@@ -268,6 +318,11 @@
   color: var(--nui-color-text-on-accent);
 }
 
+[data-era='neumorphism'] .nui-Button--danger {
+  background: var(--nui-color-danger);
+  color: var(--nui-color-text-on-danger);
+}
+
 [data-era='neumorphism'] .nui-Button--ghost {
   box-shadow: none;
 }
@@ -278,7 +333,8 @@
 }
 
 [data-era='neumorphism'] .nui-Button:disabled,
-[data-era='neumorphism'] .nui-Button--solid:disabled {
+[data-era='neumorphism'] .nui-Button--solid:disabled,
+[data-era='neumorphism'] .nui-Button--danger:disabled {
   background: var(--nui-color-surface);
   color: var(--nui-color-text-muted);
   box-shadow: none;

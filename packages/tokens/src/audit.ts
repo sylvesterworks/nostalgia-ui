@@ -100,6 +100,14 @@ const CHECKS: readonly Check[] = [
     level: 'AA',
   },
   {
+    id: 'text-on-danger',
+    label: 'Text on a danger fill',
+    foreground: 'textOnDanger',
+    background: 'danger',
+    required: AA_TEXT,
+    level: 'AA',
+  },
+  {
     id: 'success-on-surface',
     label: 'Success colour against the surface',
     foreground: 'success',

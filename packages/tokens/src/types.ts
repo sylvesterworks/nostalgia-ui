@@ -58,6 +58,7 @@ export type SemanticColors = {
   readonly text: string;
   readonly textMuted: string;
   readonly textOnAccent: string;
+  readonly textOnDanger: string;
   readonly accent: string;
   readonly success: string;
   readonly warning: string;

@@ -85,6 +85,7 @@ export function App(): React.ReactElement {
           <Button variant="solid">Solid</Button>
           <Button variant="outline">Outline</Button>
           <Button variant="ghost">Ghost</Button>
+          <Button variant="danger">Danger</Button>
           <Button variant="solid" disabled>
             Disabled
           </Button>

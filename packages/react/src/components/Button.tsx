@@ -2,7 +2,7 @@ import { useRender } from '@base-ui/react/use-render';
 import { mergeProps } from '@base-ui/react/merge-props';
 import type * as React from 'react';
 
-export type ButtonVariant = 'solid' | 'outline' | 'ghost';
+export type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'danger';
 
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   /** Visual weight. Every variant is styled only through era and palette tokens. */

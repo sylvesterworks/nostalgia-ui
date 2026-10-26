@@ -88,3 +88,24 @@ describe('component stylesheets', () => {
     }
   });
 });
+
+describe('button variants', () => {
+  it('styles the danger variant in every era, through tokens only', async () => {
+    const sheets = await readStylesheets();
+    const button = sheets.find(([name]) => name === 'button.css')?.[1] ?? '';
+    expect(button).toContain('.nui-Button--danger {');
+    for (const era of [
+      'classic-windows',
+      'frutiger-aero',
+      'flat-metro',
+      'terminal-crt',
+      'neubrutalism',
+      'neumorphism',
+    ]) {
+      expect(button, 'no danger rule for ' + era).toContain(
+        "[data-era='" + era + "'] .nui-Button--danger",
+      );
+    }
+    expect(button).toContain('--nui-color-text-on-danger');
+  });
+});

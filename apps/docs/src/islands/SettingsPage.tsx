@@ -69,7 +69,7 @@ export function SettingsPage(): React.ReactElement {
             <CardBody>These actions cannot be undone.</CardBody>
             <div style={{ marginTop: '0.75rem' }}>
               <Dialog>
-                <DialogTrigger render={<Button variant="outline">Delete account</Button>} />
+                <DialogTrigger render={<Button variant="danger">Delete account</Button>} />
                 <DialogPortal>
                   <DialogBackdrop />
                   <DialogPopup>
@@ -86,7 +86,7 @@ export function SettingsPage(): React.ReactElement {
                       }}
                     >
                       <DialogClose render={<Button variant="ghost">Keep it</Button>} />
-                      <DialogClose render={<Button variant="solid">Delete</Button>} />
+                      <DialogClose render={<Button variant="danger">Delete</Button>} />
                     </div>
                   </DialogPopup>
                 </DialogPortal>

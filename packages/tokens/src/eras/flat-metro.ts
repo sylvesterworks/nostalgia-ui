@@ -39,6 +39,8 @@ export const flatMetro: Era = {
     'tile-fill': s.accent,
     'tile-hover': raise(s.accent, 0.08),
     'tile-active': sink(s.accent, 0.08),
+    'danger-hover': raise(s.danger, 0.08),
+    'danger-active': sink(s.danger, 0.08),
     'surface-hover': raise(s.surface, 0.06),
     'surface-active': sink(s.surface, 0.05),
     divider: raise(s.surface, 0.12),
