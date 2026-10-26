@@ -1,6 +1,6 @@
 {
   "name": "@nostalgiaui/react",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Base UI components styled entirely through NostalgiaUI tokens.",
   "keywords": [
     "react",
