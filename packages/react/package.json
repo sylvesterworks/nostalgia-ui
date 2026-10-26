@@ -57,7 +57,8 @@
   },
   "dependencies": {
     "@base-ui/react": "1.9.0",
-    "@nostalgiaui/tokens": "workspace:*"
+    "@nostalgiaui/tokens": "workspace:*",
+    "clsx": "2.1.1"
   },
   "peerDependencies": {
     "react": "^19",

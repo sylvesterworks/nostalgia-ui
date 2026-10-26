@@ -1,5 +1,6 @@
 import { useRender } from '@base-ui/react/use-render';
 import { mergeProps } from '@base-ui/react/merge-props';
+import { clsx } from 'clsx';
 import type * as React from 'react';
 
 export type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'danger';
@@ -25,7 +26,7 @@ export function Button(props: ButtonProps): React.ReactElement | null {
     defaultTagName: 'button',
     props: mergeProps<'button'>(
       {
-        className: ['nui-Button', 'nui-Button--' + variant, className].filter(Boolean).join(' '),
+        className: clsx('nui-Button', 'nui-Button--' + variant, className),
         type: 'button',
       },
       rest,
