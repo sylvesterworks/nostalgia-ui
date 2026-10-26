@@ -120,6 +120,36 @@ describe('get_component', () => {
     }
   });
 
+  it('gives every component at least one note that names it and could apply to nothing else', () => {
+    const distinctive: Record<string, string> = {
+      NostalgiaRoot: 'Changing era or palette changes one attribute',
+      Button: 'Variants are solid, outline and ghost',
+      Input: 'invalid is the only extra prop',
+      Card: 'Card has no header slot',
+      Tabs: 'Inside Tabs, TabIndicator must be placed inside TabList',
+      Dialog: 'DialogTrigger and DialogClose render a plain <button>',
+    };
+    for (const [name, phrase] of Object.entries(distinctive)) {
+      const notes = getComponent(name, 'frutiger-aero').notes.join(' ');
+      expect(notes, name + ' lacks its distinctive note').toContain(phrase);
+      expect(notes).toContain(name === 'NostalgiaRoot' ? 'NostalgiaRoot' : name);
+    }
+  });
+
+  it('tells a Dialog reader how to put a styled Button in the trigger and close slots', () => {
+    const notes = getComponent('Dialog', 'classic-windows').notes.join(' ');
+    expect(notes).toContain('render={<Button variant=');
+    expect(notes).toContain('DialogClose');
+  });
+
+  it('states the full root guidance once, on NostalgiaRoot, and a reminder elsewhere', () => {
+    const root = getComponent('NostalgiaRoot', 'flat-metro').notes.join(' ');
+    expect(root).toContain('Import the two stylesheets once');
+    const button = getComponent('Button', 'flat-metro').notes.join(' ');
+    expect(button).not.toContain('Import the two stylesheets once');
+    expect(button).toContain('both stylesheets imported once');
+  });
+
   it('rejects an unknown component with the list of valid ones', () => {
     expect(() => getComponent('Carousel', 'flat-metro')).toThrow(/Button/);
   });
