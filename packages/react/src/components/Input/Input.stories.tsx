@@ -31,3 +31,8 @@ export const WithLabel: Story = {
     </div>
   ),
 };
+
+/** Don't: rely on the placeholder as the only label. Compare WithLabel. */
+export const DontPlaceholderAsLabel: Story = {
+  args: { placeholder: 'Email', 'aria-label': undefined },
+};

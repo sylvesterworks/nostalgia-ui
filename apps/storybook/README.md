@@ -14,15 +14,17 @@ story renders inside one `NostalgiaRoot` set from them.
 
 - Component source in `packages/react/src`: yes. The Vite config aliases
   `@nostalgiaui/react` and `@nostalgiaui/tokens` to their source.
-- Component stylesheets in `packages/react/src/styles`: yes. The preview
-  imports them from source.
+- Component stylesheets, in each component's folder and in
+  `packages/react/src/styles/foundations.css`: yes. The preview imports them
+  from source.
 - `@nostalgiaui/tokens/tokens.css`: no. It is generated from TypeScript by the
   tokens build, so an era or palette change needs
   `pnpm --filter @nostalgiaui/tokens build`.
 
 ## Where stories live
 
-Next to the component, as `packages/react/src/components/<Name>.stories.tsx`.
+In the component's folder, as
+`packages/react/src/components/<Name>/<Name>.stories.tsx`.
 The react package excludes them from its build, so they never ship.
 
 ## Versions

@@ -1,16 +1,16 @@
-export { NostalgiaRoot, useNostalgiaContainer } from './components/NostalgiaRoot.js';
-export type { NostalgiaRootProps } from './components/NostalgiaRoot.js';
+export { NostalgiaRoot, useNostalgiaContainer } from './components/NostalgiaRoot/index.js';
+export type { NostalgiaRootProps } from './components/NostalgiaRoot/index.js';
 
-export { Button } from './components/Button.js';
-export type { ButtonProps, ButtonVariant } from './components/Button.js';
+export { Button } from './components/Button/index.js';
+export type { ButtonProps, ButtonVariant } from './components/Button/index.js';
 
-export { Input } from './components/Input.js';
-export type { InputProps } from './components/Input.js';
+export { Input } from './components/Input/index.js';
+export type { InputProps } from './components/Input/index.js';
 
-export { Card, CardTitle, CardBody } from './components/Card.js';
-export type { CardProps } from './components/Card.js';
+export { Card, CardTitle, CardBody } from './components/Card/index.js';
+export type { CardProps } from './components/Card/index.js';
 
-export { Tabs, TabList, Tab, TabIndicator, TabPanel } from './components/Tabs.js';
+export { Tabs, TabList, Tab, TabIndicator, TabPanel } from './components/Tabs/index.js';
 
 export {
   Dialog,
@@ -21,4 +21,4 @@ export {
   DialogTitle,
   DialogDescription,
   DialogClose,
-} from './components/Dialog.js';
+} from './components/Dialog/index.js';

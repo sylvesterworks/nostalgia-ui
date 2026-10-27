@@ -73,7 +73,7 @@ A stylesheet built on NostalgiaUI may use, anywhere:
   `--nui-era-shadow-overlay`, `--nui-era-focus-color`)
 
 It may use any other `--nui-era-*` token only inside a rule scoped to the era
-that defines it, exactly as `packages/react/src/styles` does:
+that defines it, exactly as the stylesheets in `packages/react/src/components` do:
 
 ```css
 .my-Panel {

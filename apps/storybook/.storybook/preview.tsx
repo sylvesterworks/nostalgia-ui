@@ -10,12 +10,13 @@ import '@nostalgiaui/tokens/tokens.css';
 // The component stylesheets come straight from source, so a CSS edit hot
 // reloads. Same order as STYLE_ORDER in packages/react/src/cli.ts, which is
 // the order dist/styles.css concatenates them in.
-import '../../../packages/react/src/styles/base.css';
-import '../../../packages/react/src/styles/button.css';
-import '../../../packages/react/src/styles/input.css';
-import '../../../packages/react/src/styles/card.css';
-import '../../../packages/react/src/styles/tabs.css';
-import '../../../packages/react/src/styles/dialog.css';
+import '../../../packages/react/src/components/NostalgiaRoot/NostalgiaRoot.css';
+import '../../../packages/react/src/styles/foundations.css';
+import '../../../packages/react/src/components/Button/Button.css';
+import '../../../packages/react/src/components/Input/Input.css';
+import '../../../packages/react/src/components/Card/Card.css';
+import '../../../packages/react/src/components/Tabs/Tabs.css';
+import '../../../packages/react/src/components/Dialog/Dialog.css';
 
 import './preview.css';
 
@@ -30,16 +31,22 @@ function pick(value: unknown, fallback: string): string {
  * Every story renders inside one NostalgiaRoot, set from the toolbar. That is
  * the same contract a consumer has, so a story that looks right here looks
  * right in an application.
+ *
+ * A story can opt out with `parameters: { nostalgiaRoot: false }`. Only the
+ * "don't render outside a root" example does, to show what that looks like.
  */
-const withNostalgiaRoot: Decorator = (Story, context) => (
-  <NostalgiaRoot
-    era={pick(context.globals['era'], firstEra)}
-    palette={pick(context.globals['palette'], firstPalette)}
-    className="sb-Stage"
-  >
+const withNostalgiaRoot: Decorator = (Story, context) =>
+  context.parameters['nostalgiaRoot'] === false ? (
     <Story />
-  </NostalgiaRoot>
-);
+  ) : (
+    <NostalgiaRoot
+      era={pick(context.globals['era'], firstEra)}
+      palette={pick(context.globals['palette'], firstPalette)}
+      className="sb-Stage"
+    >
+      <Story />
+    </NostalgiaRoot>
+  );
 
 const preview: Preview = {
   decorators: [withNostalgiaRoot],

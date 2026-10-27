@@ -1,8 +1,8 @@
 import { ERA_IDS, PALETTE_IDS } from '@nostalgiaui/tokens';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Button } from './Button.js';
-import { Card, CardBody, CardTitle } from './Card.js';
+import { Button } from '../Button/index.js';
+import { Card, CardBody, CardTitle } from '../Card/index.js';
 import { NostalgiaRoot } from './NostalgiaRoot.js';
 
 const meta = {
@@ -40,5 +40,22 @@ export const Nesting: Story = {
         </Card>
       </NostalgiaRoot>
     </div>
+  ),
+};
+
+/**
+ * Don't: render components with no NostalgiaRoot above them. This story opts
+ * out of the Storybook decorator, so nothing sets data-era or data-palette
+ * and the token variables do not resolve. Compare Nesting.
+ */
+export const DontOutsideRoot: Story = {
+  parameters: { nostalgiaRoot: false },
+  render: () => (
+    <Card elevated>
+      <CardTitle>No root</CardTitle>
+      <CardBody>
+        No era and no palette reach this card. <Button variant="solid">A button</Button>
+      </CardBody>
+    </Card>
   ),
 };
