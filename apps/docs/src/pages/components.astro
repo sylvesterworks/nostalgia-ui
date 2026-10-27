@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getComponent, listEras } from '@nostalgiaui/mcp';
+import { foundations } from '@nostalgiaui/react/manifest';
 
 // The component docs come from the same function the MCP server answers
 // get_component with, so what a person reads here and what an agent is told
@@ -17,13 +18,21 @@ const entries = names.map((name) => getComponent(name, firstEra));
     and dismissal come from Base UI. Components carry class names only and never name a colour; a
     test fails the build if one does.
   </p>
+  <h2 id="every-component">Every component</h2>
+  <ul>
+    {foundations.rules.map((rule) => (
+      <li>
+        <strong>{rule.title}.</strong> {rule.description}
+      </li>
+    ))}
+  </ul>
   {entries.map((entry) => (
     <section>
       <h2 id={entry.name.toLowerCase()}>{entry.name}</h2>
       <pre><code>{entry.imports}</code></pre>
       <h3>Worth knowing</h3>
       <ul>
-        {entry.notes.map((note) => <li>{note}</li>)}
+        {entry.doc.notes.map((note) => <li>{note}</li>)}
       </ul>
       <details>
         <summary>Source</summary>

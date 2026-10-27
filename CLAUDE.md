@@ -114,7 +114,7 @@ Tools:
 
 - `list_eras`, `list_palettes`
 - `get_tokens(era, palette, format)` with formats `css`, `tailwind`, `dtcg`
-- `get_component(name, era)` returns the styled component source
+- `get_component(name, era, section?)` returns the styled component source, props tables and structured doc, or one doc section (decision 0011)
 - `import_vscode_theme(json)` returns a new palette
 - `check_contrast(era, palette)` flags accessibility problems
 

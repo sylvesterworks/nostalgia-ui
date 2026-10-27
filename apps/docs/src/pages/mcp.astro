@@ -16,7 +16,7 @@ import Base from '../layouts/Base.astro';
       <tr><td><code>list_eras</code></td><td>the eras, with period and label</td></tr>
       <tr><td><code>list_palettes</code></td><td>the palettes, with appearance and source licence</td></tr>
       <tr><td><code>get_tokens</code></td><td>CSS variables, a Tailwind preset, or DTCG JSON for one pairing</td></tr>
-      <tr><td><code>get_component</code></td><td>imports, source, era CSS and the traps to avoid</td></tr>
+      <tr><td><code>get_component</code></td><td>import, source, era CSS, props tables and the structured doc, or one section of it</td></tr>
       <tr><td><code>import_vscode_theme</code></td><td>a palette from a VS Code theme, with provenance</td></tr>
       <tr><td><code>check_contrast</code></td><td>a WCAG audit of one pairing</td></tr>
     </tbody>
@@ -40,8 +40,9 @@ import Base from '../layouts/Base.astro';
   <h2>Try it</h2>
   <p>
     Ask: <em>build me a settings page in Frutiger Aero with the Nord palette</em>. The agent should
-    call <code>get_tokens</code> and <code>get_component</code>, and the notes in each answer tell
-    it the things that are easy to get wrong.
+    call <code>get_tokens</code> and <code>get_component</code>. The server's instructions state
+    the rules every component shares, and each component's doc names the things that are easy
+    to get wrong.
   </p>
   <p class="meta">
     The packages are not on npm yet, so build the repo first with <code>pnpm install && pnpm build</code>.

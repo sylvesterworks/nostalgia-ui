@@ -1,6 +1,7 @@
 import { importVsCodeTheme } from '@nostalgiaui/importer';
 import type { ImportReport } from '@nostalgiaui/importer';
-import { manifest } from '@nostalgiaui/react/manifest';
+import { foundations, manifest } from '@nostalgiaui/react/manifest';
+import type { ManifestEntry } from '@nostalgiaui/react/manifest';
 import {
   auditContrast,
   emitDtcg,
@@ -139,29 +140,30 @@ export function getTokens(eraId: string, paletteId: string, format: TokenFormat)
 
 // --- get_component ---------------------------------------------------------
 
-/** Named exports an agent needs for each component. */
-const EXPORTS: Record<string, readonly string[]> = {
-  NostalgiaRoot: ['NostalgiaRoot'],
-  Button: ['Button'],
-  Input: ['Input'],
-  Card: ['Card', 'CardTitle', 'CardBody'],
-  Tabs: ['Tabs', 'TabList', 'Tab', 'TabIndicator', 'TabPanel'],
-  Dialog: [
-    'Dialog',
-    'DialogPortal',
-    'DialogTrigger',
-    'DialogBackdrop',
-    'DialogPopup',
-    'DialogTitle',
-    'DialogDescription',
-    'DialogClose',
-  ],
-};
+type ComponentDoc = ManifestEntry['doc'];
+type PropsTable = ManifestEntry['props'];
+
+/**
+ * The sections of a component's doc (decision 0007), each selectable on its
+ * own so an agent can ask for exactly what it needs.
+ */
+export const COMPONENT_SECTIONS = [
+  'summary',
+  'anatomy',
+  'props',
+  'patterns',
+  'doAndDont',
+  'accessibility',
+  'extensibility',
+  'eraNotes',
+  'notes',
+] as const;
+export type ComponentSection = (typeof COMPONENT_SECTIONS)[number];
 
 export interface ComponentAnswer {
   readonly name: string;
   readonly era: string;
-  /** The import lines a consumer needs, including the stylesheets. */
+  /** The import line for the family's parts. The stylesheets are in the server instructions. */
   readonly imports: string;
   /** The TSX source of the wrapper. */
   readonly source: string;
@@ -169,8 +171,38 @@ export interface ComponentAnswer {
   readonly baseCss: string;
   /** Rules scoped to the requested era only. */
   readonly eraCss: string;
-  /** Things that are easy to get wrong, stated up front. */
-  readonly notes: readonly string[];
+  /** One props table per part, extracted from the TypeScript types. */
+  readonly props: PropsTable;
+  /** The structured doc, with `eraNotes` narrowed to the requested era. */
+  readonly doc: ComponentDoc;
+}
+
+export interface ComponentSectionAnswer {
+  readonly name: string;
+  readonly era: string;
+  readonly section: ComponentSection;
+  /**
+   * That section of the doc. For `props`, the extracted tables plus the doc's
+   * guidance on when to use each prop.
+   */
+  readonly content: unknown;
+}
+
+/**
+ * What the server tells every client once, at initialization: the rules that
+ * apply to every component, read from the foundations doc so this text and
+ * the docs never disagree. Per-component answers no longer repeat them.
+ */
+export function serverInstructions(): string {
+  return [
+    'NostalgiaUI renders React components in the style of a past design era, with colors from a VS Code theme.',
+    foundations.summary,
+    '',
+    'Rules for every component:',
+    ...foundations.rules.map((rule) => '- ' + rule.title + ': ' + rule.description),
+    '',
+    'Call list_eras and list_palettes to choose a pairing, get_tokens for its variables, and get_component for a component. Pass get_component a section to receive only that part of its doc.',
+  ].join('\n');
 }
 
 /**
@@ -226,7 +258,28 @@ export function splitCssByEra(css: string, eraId: string): { base: string; era: 
   return { base: base.join('\n\n'), era: era.join('\n\n') };
 }
 
-export function getComponent(name: string, eraId: string): ComponentAnswer {
+/** The doc as an agent working in one era needs it: only that era's note. */
+function forEra(doc: ComponentDoc, eraId: string): ComponentDoc {
+  const note = (doc.eraNotes as Readonly<Record<string, string | undefined>>)[eraId];
+  return { ...doc, eraNotes: note === undefined ? {} : { [eraId]: note } };
+}
+
+export function getComponent(name: string, eraId: string): ComponentAnswer;
+export function getComponent(
+  name: string,
+  eraId: string,
+  section: ComponentSection,
+): ComponentSectionAnswer;
+export function getComponent(
+  name: string,
+  eraId: string,
+  section?: ComponentSection,
+): ComponentAnswer | ComponentSectionAnswer;
+export function getComponent(
+  name: string,
+  eraId: string,
+  section?: ComponentSection,
+): ComponentAnswer | ComponentSectionAnswer {
   const era = requireEra(eraId);
   const entry = manifest.find((item) => item.name === name);
   if (entry === undefined) {
@@ -237,78 +290,36 @@ export function getComponent(name: string, eraId: string): ComponentAnswer {
         manifest.map((item) => item.name).join(', '),
     );
   }
+  if (section !== undefined && !COMPONENT_SECTIONS.includes(section)) {
+    throw new ToolError(
+      'Unknown section "' + String(section) + '". Valid sections: ' + COMPONENT_SECTIONS.join(', '),
+    );
+  }
 
-  const named = EXPORTS[name] ?? [name];
+  const doc = forEra(entry.doc, era.id);
+
+  if (section !== undefined) {
+    return {
+      name,
+      era: era.id,
+      section,
+      content: section === 'props' ? { tables: entry.props, guidance: doc.props } : doc[section],
+    };
+  }
+
   const { base, era: eraCss } = splitCssByEra(entry.css, era.id);
-
-  const notes: string[] = [];
-
-  // Guidance that applies to everything is stated in full on NostalgiaRoot,
-  // which every consumer has to read first, and as a one line reminder on
-  // the others, so a component's own notes are not buried under boilerplate.
-  if (name === 'NostalgiaRoot') {
-    notes.push(
-      'Every component must render inside <NostalgiaRoot era="' +
-        era.id +
-        '" palette="..."> or inside an element carrying data-era and data-palette. Outside one, the token variables do not resolve and the component renders unstyled.',
-      'Import the two stylesheets once, at the application root: @nostalgiaui/tokens/tokens.css then @nostalgiaui/react/styles.css. Components carry class names only and never import CSS themselves.',
-      'Changing era or palette changes one attribute each. Nothing re-renders differently; the browser resolves a different set of custom properties.',
-      'Portalled parts (Dialog) render back into this element rather than document.body, which is why it publishes its own element through context.',
-    );
-  } else {
-    notes.push(
-      'Must render inside NostalgiaRoot (see get_component for NostalgiaRoot), with both stylesheets imported once at the root.',
-    );
-  }
-
-  switch (name) {
-    case 'Button':
-      notes.push(
-        'Variants are solid, outline, ghost and danger; that is the whole set. danger is the destructive action and reads the palette\'s own error colour. type defaults to "button", so a submit button needs type="submit" explicitly.',
-        'render swaps the rendered element while keeping the styling: render={<a href="..." />} for a link, and the reverse direction, render={<Button variant="solid" />} on a Base UI part such as DialogTrigger, DialogClose or Tab, is how to put an era-styled button in a slot.',
-      );
-      break;
-    case 'Input':
-      notes.push(
-        'invalid is the only extra prop. It adds the nui-Input--invalid class and sets data-invalid, which the era stylesheets key on.',
-        'This is a bare <input> with no label of its own. Supply a <label htmlFor> that matches the id you pass, or wrap it in a label, or the field has no accessible name.',
-      );
-      break;
-    case 'Card':
-      notes.push(
-        'Card has no header slot. CardTitle and CardBody are siblings placed by the caller, in that order. Anything after CardBody, such as a form or a button row, needs its own spacing; the card only pads its edges.',
-        "elevated adds the era's raised shadow. Flat / Metro forbids shadows, so it distinguishes an elevated card by fill instead.",
-      );
-      break;
-    case 'Tabs':
-      notes.push(
-        "Inside Tabs, TabIndicator must be placed inside TabList, not beside it. It positions itself from the active tab's geometry, which only TabList publishes.",
-        'Tab accepts render, so render={<a href="..." />} makes link tabs and render={<Button variant="ghost" />} styles a tab as a button.',
-      );
-      break;
-    case 'Dialog':
-      notes.push(
-        'DialogPortal renders into the nearest NostalgiaRoot rather than document.body. Without a NostalgiaRoot ancestor the dialog portals to the body, escapes the token scope, and appears with no surface, border or title bar.',
-        'DialogTrigger and DialogClose render a plain <button> carrying only the nui-DialogTrigger or nui-DialogClose class. For an era-styled button in those slots, pass render={<Button variant="..." />}; the same render prop works on Tab.',
-        'Order inside DialogPopup is DialogTitle, DialogDescription, then your actions. Classic Windows styles DialogTitle into the title bar, so it must come first.',
-      );
-      break;
-    default:
-      break;
-  }
-
   return {
     name,
     era: era.id,
-    imports: [
-      'import { ' + named.join(', ') + " } from '@nostalgiaui/react';",
-      "import '@nostalgiaui/tokens/tokens.css';",
-      "import '@nostalgiaui/react/styles.css';",
-    ].join('\n'),
+    imports:
+      'import { ' +
+      doc.anatomy.map((part) => part.name).join(', ') +
+      " } from '@nostalgiaui/react';",
     source: entry.source,
     baseCss: base,
     eraCss,
-    notes,
+    props: entry.props,
+    doc,
   };
 }
 

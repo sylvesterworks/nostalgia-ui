@@ -96,6 +96,22 @@ describe('the server over stdio', () => {
     expect(answer.eraCss).toContain("[data-era='frutiger-aero']");
   });
 
+  it('answers get_component with only the section asked for', async () => {
+    const result = await client.callTool({
+      name: 'get_component',
+      arguments: { name: 'Button', era: 'flat-metro', section: 'accessibility' },
+    });
+    const answer = JSON.parse(firstText(result)) as { section: string; content: unknown };
+    expect(Object.keys(answer).sort()).toEqual(['content', 'era', 'name', 'section']);
+    expect(Array.isArray(answer.content)).toBe(true);
+  });
+
+  it('sends instructions with the rules every component shares', () => {
+    const instructions = client.getInstructions() ?? '';
+    expect(instructions).toContain('Render inside NostalgiaRoot');
+    expect(instructions).toContain('@nostalgiaui/react/styles.css');
+  });
+
   it('answers import_vscode_theme from a JSON string', async () => {
     const theme = JSON.stringify({
       name: 'Wire Test',

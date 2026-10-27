@@ -110,14 +110,14 @@ table shown beside it.
 
 The MCP server exposes NostalgiaUI to any MCP client. Five tools:
 
-| Tool                  | What it answers                                                        |
-| --------------------- | ---------------------------------------------------------------------- |
-| `list_eras`           | the eras, with period and label                                        |
-| `list_palettes`       | the palettes, with light or dark appearance and source licence         |
-| `get_tokens`          | CSS variables, a Tailwind preset, or DTCG JSON for one era and palette |
-| `get_component`       | a component's imports, source, era-specific CSS and the traps to avoid |
-| `import_vscode_theme` | a palette from a VS Code theme, with a provenance report               |
-| `check_contrast`      | a WCAG audit of one era and palette pairing                            |
+| Tool                  | What it answers                                                                 |
+| --------------------- | ------------------------------------------------------------------------------- |
+| `list_eras`           | the eras, with period and label                                                 |
+| `list_palettes`       | the palettes, with light or dark appearance and source licence                  |
+| `get_tokens`          | CSS variables, a Tailwind preset, or DTCG JSON for one era and palette          |
+| `get_component`       | a component's import, source, era CSS, props tables and doc, or one doc section |
+| `import_vscode_theme` | a palette from a VS Code theme, with a provenance report                        |
+| `check_contrast`      | a WCAG audit of one era and palette pairing                                     |
 
 All four packages are on npm. The MCP server will also be listed in the MCP
 Registry as `io.github.sylvesterworks/nostalgiaui`.

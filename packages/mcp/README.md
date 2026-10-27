@@ -28,10 +28,14 @@ In `claude_desktop_config.json`:
 }
 ```
 
-`get_component` returns more than source: the import lines, the era-specific
-CSS, and notes naming what is easy to get wrong, such as rendering outside
-`NostalgiaRoot`. Those notes correspond to bugs that were actually hit while
-building the library.
+`get_component` returns more than source: the import line, the era-specific
+CSS, a props table for each part extracted from the TypeScript types, and the
+component's structured doc. The doc covers anatomy, patterns, do and don't
+pairs, accessibility, extensibility, notes for the requested era, and notes
+naming what is easy to get wrong. Pass `section`, for example
+`accessibility`, to receive only that part. The rules every component shares,
+such as rendering inside `NostalgiaRoot`, are sent once as the server's
+instructions rather than repeated in each answer.
 
 Full documentation at [nostalgiaui.sylvester.works](https://nostalgiaui.sylvester.works).
 MIT, copyright Josh Sylvester and Sylvester Works LLC.
