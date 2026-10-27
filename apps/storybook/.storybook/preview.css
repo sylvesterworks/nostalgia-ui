@@ -1,0 +1,11 @@
+/*
+ * Storybook chrome only. The stage is the themed region; it takes its
+ * background and text from the active palette through base.css, and only
+ * gets padding and a minimum height here so a story is not flush with the
+ * canvas edge.
+ */
+.sb-Stage {
+  padding: 1.5rem;
+  min-height: 100vh;
+  box-sizing: border-box;
+}

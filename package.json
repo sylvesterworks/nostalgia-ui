@@ -12,6 +12,7 @@
   },
   "scripts": {
     "build": "turbo run build",
+    "dev": "pnpm --filter @nostalgiaui/storybook dev",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
     "lint": "eslint .",

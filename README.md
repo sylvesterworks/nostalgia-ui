@@ -42,10 +42,10 @@ Dracula, Nord, Solarized Light, Catppuccin Mocha, and One Dark Pro, each with it
 
 ```
 packages/tokens      era and palette definitions, built to CSS variables, Tailwind config, DTCG JSON
-packages/react       Base UI components styled via tokens
+packages/react       Base UI components styled via tokens, with stories beside each component
 packages/importer    VS Code theme JSON to NostalgiaUI palette
 packages/mcp         MCP server
-apps/playground      era and palette switchers (milestone 1)
+apps/storybook       Storybook, the local development surface, with era and palette toolbars
 apps/docs            docs site for nostalgiaui.sylvester.works (milestone 4)
 docs/decisions       architecture decision notes
 ```
@@ -76,7 +76,7 @@ Requires Node 22 or newer and pnpm 11.
 ```bash
 pnpm install
 pnpm check      # lint, typecheck, test, build
-pnpm --filter @nostalgiaui/playground dev
+pnpm dev        # Storybook on http://localhost:6006, hot reloads component edits
 ```
 
 Individual tasks: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`.
@@ -102,8 +102,9 @@ means nothing in the theme could inform it. `--strict` exits non-zero if
 anything was guessed, and `--out <dir>` scaffolds a palette module plus a
 `SOURCE.md` stub with the licence line left blank for you to complete.
 
-The playground accepts a dropped theme file and previews it live against every
-era, with the same provenance table shown beside it.
+The [Palettes page](https://nostalgiaui.sylvester.works/palettes/#import)
+accepts a theme file and previews it live in any era, with the same provenance
+table shown beside it.
 
 ## Using it from an AI coding agent
 

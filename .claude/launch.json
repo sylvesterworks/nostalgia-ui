@@ -2,10 +2,16 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "playground",
+      "name": "storybook",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["--filter", "@nostalgiaui/playground", "run", "dev"],
-      "port": 5173
+      "runtimeArgs": ["--filter", "@nostalgiaui/storybook", "run", "dev", "--ci"],
+      "port": 6006
+    },
+    {
+      "name": "docs",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@nostalgiaui/docs", "run", "preview"],
+      "port": 4321
     }
   ]
 }
