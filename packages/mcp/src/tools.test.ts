@@ -1,15 +1,19 @@
+import { foundations } from '@nostalgiaui/react/manifest';
 import { describe, expect, it } from 'vitest';
 
 import {
   checkContrast,
+  COMPONENT_SECTIONS,
   getComponent,
   getTokens,
   importTheme,
   listEras,
   listPalettes,
+  serverInstructions,
   splitCssByEra,
   ToolError,
 } from './tools.js';
+import type { ComponentSection } from './tools.js';
 
 describe('list_eras and list_palettes', () => {
   it('list every era in chronological order, with a period each', () => {
@@ -83,11 +87,30 @@ describe('get_tokens', () => {
   });
 });
 
+const COMPONENTS = ['NostalgiaRoot', 'Button', 'Input', 'Card', 'Tabs', 'Dialog'] as const;
+
+/** Each family's name, as a pattern that matches its parts too. */
+const FAMILY_PATTERNS: Readonly<Record<string, RegExp>> = {
+  NostalgiaRoot: /\bNostalgiaRoot\b/,
+  Button: /\bButton\b/,
+  Input: /\bInput\b/,
+  Card: /\bCard\w*/,
+  Tabs: /\bTab\w*/,
+  Dialog: /\bDialog\w*/,
+};
+
+/** Every string anywhere inside a value. */
+function allStrings(value: unknown): string[] {
+  if (typeof value === 'string') return [value];
+  if (Array.isArray(value)) return value.flatMap(allStrings);
+  if (value !== null && typeof value === 'object') return Object.values(value).flatMap(allStrings);
+  return [];
+}
+
 describe('get_component', () => {
-  it('returns imports, source, and both css layers', () => {
+  it('returns the import line, source, and both css layers', () => {
     const answer = getComponent('Button', 'classic-windows');
-    expect(answer.imports).toContain("import { Button } from '@nostalgiaui/react';");
-    expect(answer.imports).toContain("import '@nostalgiaui/tokens/tokens.css';");
+    expect(answer.imports).toBe("import { Button } from '@nostalgiaui/react';");
     expect(answer.source).toContain('export function Button');
     expect(answer.baseCss).toContain('.nui-Button {');
     expect(answer.eraCss).toContain("[data-era='classic-windows']");
@@ -100,58 +123,118 @@ describe('get_component', () => {
     expect(answer.baseCss).not.toContain('[data-era=');
   });
 
-  it('lists every named export a composite component needs', () => {
+  it('imports every part in the doc anatomy', () => {
     const answer = getComponent('Dialog', 'frutiger-aero');
-    for (const name of ['DialogPortal', 'DialogPopup', 'DialogTitle', 'DialogClose']) {
-      expect(answer.imports).toContain(name);
+    for (const part of answer.doc.anatomy) {
+      expect(answer.imports).toContain(part.name);
     }
+    expect(answer.imports).toContain('DialogPortal');
+  });
+
+  it('carries the props table of every part', () => {
+    const answer = getComponent('Tabs', 'flat-metro');
+    expect(Object.keys(answer.props)).toEqual(answer.doc.anatomy.map((part) => part.name));
+    const variant = getComponent('Button', 'flat-metro').props['Button']?.find(
+      (row) => row.name === 'variant',
+    );
+    expect(variant?.default).toBe("'solid'");
+    expect(variant?.type).toBe('"solid" | "outline" | "ghost" | "danger"');
+  });
+
+  it("narrows eraNotes to the requested era's note", () => {
+    const classic = getComponent('Tabs', 'classic-windows').doc.eraNotes;
+    expect(Object.keys(classic)).toEqual(['classic-windows']);
+    expect(getComponent('Tabs', 'frutiger-aero').doc.eraNotes).toEqual({});
+  });
+
+  it('returns only the requested section', () => {
+    const answer = getComponent('Button', 'flat-metro', 'accessibility');
+    expect(Object.keys(answer).sort()).toEqual(['content', 'era', 'name', 'section']);
+    expect(answer.section).toBe('accessibility');
+    expect(answer.content).toEqual(getComponent('Button', 'flat-metro').doc.accessibility);
+  });
+
+  it('answers the props section with the tables and the guidance', () => {
+    const answer = getComponent('Input', 'flat-metro', 'props');
+    const full = getComponent('Input', 'flat-metro');
+    expect(answer.content).toEqual({ tables: full.props, guidance: full.doc.props });
+  });
+
+  it('answers every section for every component', () => {
+    for (const name of COMPONENTS) {
+      for (const section of COMPONENT_SECTIONS) {
+        expect(
+          getComponent(name, 'neumorphism', section).content,
+          name + ' ' + section,
+        ).toBeDefined();
+      }
+    }
+  });
+
+  it('rejects an unknown section with the list of valid ones', () => {
+    expect(() => getComponent('Button', 'flat-metro', 'colors' as ComponentSection)).toThrow(
+      /accessibility/,
+    );
   });
 
   it('warns about the portal trap on Dialog specifically', () => {
     const dialog = getComponent('Dialog', 'flat-metro');
-    expect(dialog.notes.join(' ')).toContain('document.body');
+    expect(dialog.doc.notes.join(' ')).toContain('document.body');
     const button = getComponent('Button', 'flat-metro');
-    expect(button.notes.join(' ')).not.toContain('document.body');
-  });
-
-  it('always says components must sit inside NostalgiaRoot', () => {
-    for (const name of ['Button', 'Input', 'Card', 'Tabs', 'Dialog']) {
-      expect(getComponent(name, 'flat-metro').notes.join(' ')).toContain('NostalgiaRoot');
-    }
-  });
-
-  it('gives every component at least one note that names it and could apply to nothing else', () => {
-    const distinctive: Record<string, string> = {
-      NostalgiaRoot: 'Changing era or palette changes one attribute',
-      Button: 'Variants are solid, outline, ghost and danger',
-      Input: 'invalid is the only extra prop',
-      Card: 'Card has no header slot',
-      Tabs: 'Inside Tabs, TabIndicator must be placed inside TabList',
-      Dialog: 'DialogTrigger and DialogClose render a plain <button>',
-    };
-    for (const [name, phrase] of Object.entries(distinctive)) {
-      const notes = getComponent(name, 'frutiger-aero').notes.join(' ');
-      expect(notes, name + ' lacks its distinctive note').toContain(phrase);
-      expect(notes).toContain(name === 'NostalgiaRoot' ? 'NostalgiaRoot' : name);
-    }
+    expect(button.doc.notes.join(' ')).not.toContain('document.body');
   });
 
   it('tells a Dialog reader how to put a styled Button in the trigger and close slots', () => {
-    const notes = getComponent('Dialog', 'classic-windows').notes.join(' ');
+    const notes = getComponent('Dialog', 'classic-windows').doc.notes.join(' ');
     expect(notes).toContain('render={<Button variant=');
     expect(notes).toContain('DialogClose');
   });
 
-  it('states the full root guidance once, on NostalgiaRoot, and a reminder elsewhere', () => {
-    const root = getComponent('NostalgiaRoot', 'flat-metro').notes.join(' ');
-    expect(root).toContain('Import the two stylesheets once');
-    const button = getComponent('Button', 'flat-metro').notes.join(' ');
-    expect(button).not.toContain('Import the two stylesheets once');
-    expect(button).toContain('both stylesheets imported once');
+  it.each(COMPONENTS)('%s has a note that names it and no other component', (name) => {
+    const own = FAMILY_PATTERNS[name];
+    const others = Object.entries(FAMILY_PATTERNS)
+      .filter(([family]) => family !== name)
+      .map(([, pattern]) => pattern);
+    const distinctive = getComponent(name, 'frutiger-aero').doc.notes.filter(
+      (note) =>
+        own !== undefined && own.test(note) && others.every((pattern) => !pattern.test(note)),
+    );
+    expect(distinctive.length, name + ' lacks a note of its own').toBeGreaterThan(0);
+  });
+
+  it.each(COMPONENTS)('%s does not repeat the rules stated in the instructions', (name) => {
+    const text = JSON.stringify(getComponent(name, 'flat-metro'));
+    expect(text).not.toMatch(/must render inside/i);
+    expect(text).not.toContain('tokens.css');
+    expect(text).not.toContain('Import the two stylesheets once');
+  });
+
+  it('shares no doc text between Dialog and Button', () => {
+    const button = new Set(allStrings(getComponent('Button', 'flat-metro').doc));
+    const shared = allStrings(getComponent('Dialog', 'flat-metro').doc).filter((text) =>
+      button.has(text),
+    );
+    expect(shared).toEqual([]);
   });
 
   it('rejects an unknown component with the list of valid ones', () => {
     expect(() => getComponent('Carousel', 'flat-metro')).toThrow(/Button/);
+  });
+});
+
+describe('the server instructions', () => {
+  it('state the NostalgiaRoot rule and both stylesheet imports once', () => {
+    const instructions = serverInstructions();
+    expect(instructions).toContain('Render inside NostalgiaRoot');
+    expect(instructions).toContain('@nostalgiaui/tokens/tokens.css');
+    expect(instructions).toContain('@nostalgiaui/react/styles.css');
+  });
+
+  it('come from the foundations doc, rule for rule', () => {
+    const instructions = serverInstructions();
+    for (const rule of foundations.rules) {
+      expect(instructions).toContain(rule.description);
+    }
   });
 });
 

@@ -22,6 +22,10 @@ time.
 
 ### `get_component` returns the whole picture
 
+Updated by decision 0011: the notes now come from each component's doc, the
+answer also carries props tables and the doc, and the rules every component
+shares moved to the server instructions.
+
 For one component in one era, the tool returns the import lines including both
 stylesheets, the TSX source, the stylesheet rules that apply in every era, the
 rules scoped to the requested era, and a list of notes about what is easy to

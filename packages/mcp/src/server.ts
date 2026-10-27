@@ -3,11 +3,13 @@ import { z } from 'zod';
 
 import {
   checkContrast,
+  COMPONENT_SECTIONS,
   getComponent,
   getTokens,
   importTheme,
   listEras,
   listPalettes,
+  serverInstructions,
   TOKEN_FORMATS,
   ToolError,
 } from './tools.js';
@@ -52,7 +54,10 @@ const paletteIds = listPalettes().map((palette) => palette.id);
  * must return a fresh McpServer on every call rather than a shared one.
  */
 export function createServer(): McpServer {
-  const server = new McpServer({ name: SERVER_NAME, version: SERVER_VERSION });
+  const server = new McpServer(
+    { name: SERVER_NAME, version: SERVER_VERSION },
+    { instructions: serverInstructions() },
+  );
 
   server.registerTool(
     'list_eras',
@@ -95,15 +100,19 @@ export function createServer(): McpServer {
     'get_component',
     {
       description:
-        'Source for one component styled for one era: the import lines, the TSX wrapper, the stylesheet rules that apply everywhere, the rules scoped to that era, and notes on what is easy to get wrong. The CSS is a filtered view of the stylesheet, not a verbatim copy: rules for other eras and section-divider comments are removed, while comments inside rules are kept. Components must render inside NostalgiaRoot.',
+        'One component, for one era, from its structured documentation. With no section, the answer has the import line, the TSX source, the CSS that applies in every era and the CSS scoped to this era (other eras and section-divider comments removed), a props table per part (name, type, required, default, description, from the TypeScript types), and the doc: summary, anatomy (each part and its class), props guidance, patterns, doAndDont pairs with a reason, accessibility, extensibility (render, className, CSS variables), eraNotes for this era, and notes on what is easy to get wrong. Pass section to receive only one of those doc fields. Match what you need against these named fields rather than searching the prose. Rules shared by every component are in the server instructions and are not repeated here.',
       inputSchema: z.object({
         name: z
           .string()
           .describe('Component name: NostalgiaRoot, Button, Input, Card, Tabs or Dialog'),
         era: z.enum(eraIds as [string, ...string[]]).describe('Era id, from list_eras'),
+        section: z
+          .enum(COMPONENT_SECTIONS)
+          .optional()
+          .describe('One doc section to return instead of the whole answer'),
       }),
     },
-    ({ name, era }) => guarded(() => getComponent(name, era)),
+    ({ name, era, section }) => guarded(() => getComponent(name, era, section)),
   );
 
   server.registerTool(
