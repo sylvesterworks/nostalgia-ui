@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { Gallery } from '../islands/Gallery.js';
+import { ThemeImport } from '../islands/ThemeImport.js';
 import { palettes, toSemantic } from '@nostalgiaui/tokens';
 
 const roles = ['surface', 'surfaceRaised', 'text', 'textMuted', 'accent', 'success', 'warning', 'danger'] as const;
@@ -31,5 +32,13 @@ const roles = ['surface', 'surfaceRaised', 'text', 'textMuted', 'accent', 'succe
       );
     })}
   </div>
+  <h2 id="import">Preview your own theme</h2>
+  <p>
+    Any VS Code color theme can become a palette. Choose its JSON file to see every primitive the
+    importer found, where each one came from, and the same settings page rendered in any era. The
+    same importer is available as a CLI (<code>npx @nostalgiaui/importer ./my-theme.json</code>) and
+    as the MCP server's <code>import_vscode_theme</code> tool.
+  </p>
+  <ThemeImport client:visible />
   <Gallery by="palette" client:load />
 </Base>

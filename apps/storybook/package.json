@@ -1,25 +1,26 @@
 {
-  "name": "@nostalgiaui/playground",
+  "name": "@nostalgiaui/storybook",
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Live era and palette switchers over the component set.",
+  "description": "Storybook for the component set, the local development surface.",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -p tsconfig.json && vite build",
-    "preview": "vite preview"
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build -o dist --quiet",
+    "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@nostalgiaui/importer": "workspace:*",
     "@nostalgiaui/react": "workspace:*",
     "@nostalgiaui/tokens": "workspace:*",
     "react": "19.3.1",
     "react-dom": "19.3.1"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "10.6.3",
+    "@storybook/react-vite": "10.6.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "@vitejs/plugin-react": "^6.1.2",
+    "storybook": "10.6.3",
     "typescript": "catalog:",
     "vite": "^8.3.5"
   }

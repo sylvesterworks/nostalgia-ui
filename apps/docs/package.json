@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@astrojs/react": "7.1.1",
+    "@nostalgiaui/importer": "workspace:*",
     "@nostalgiaui/mcp": "workspace:*",
     "@nostalgiaui/react": "workspace:*",
     "@nostalgiaui/tokens": "workspace:*",
