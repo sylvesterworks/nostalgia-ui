@@ -109,6 +109,37 @@ export interface ComponentDoc<Props> {
   readonly notes: readonly Prose[];
 }
 
+/**
+ * One row of a part's props table, extracted from the TypeScript types at
+ * build time by src/extract/props.ts (#38, decision 0010). Never written by
+ * hand.
+ */
+export interface PropRow {
+  readonly name: string;
+  /** The type as the compiler prints it, without the `| undefined` of an optional prop. */
+  readonly type: string;
+  readonly required: boolean;
+  /** The JSDoc `@default` text, when there is one. */
+  readonly default?: string;
+  /** The JSDoc description. */
+  readonly description: string;
+  /** Where the prop is declared: in this package, or by Base UI. */
+  readonly origin: 'nostalgiaui' | 'base-ui';
+}
+
+/**
+ * Props tables keyed by part export name, for example `Tab` or `DialogPopup`.
+ * React and DOM attributes are left out: they are the same on every element
+ * and documented by React.
+ */
+export type PropsTable = Readonly<Record<string, readonly PropRow[]>>;
+
+/**
+ * A doc whose props type is not known to the reader, as in the published
+ * manifest, where every component's doc sits in one array.
+ */
+export type AnyComponentDoc = ComponentDoc<Readonly<Record<string, unknown>>>;
+
 /** The rules that apply to every component, stated once. */
 export interface FoundationsDoc {
   readonly summary: Prose;

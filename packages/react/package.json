@@ -38,6 +38,9 @@
   "files": [
     "dist",
     "!dist/.tsbuildinfo",
+    "!dist/cli.*",
+    "!dist/extract",
+    "!dist/**/*.docs.*",
     "README.md",
     "LICENSE"
   ],
