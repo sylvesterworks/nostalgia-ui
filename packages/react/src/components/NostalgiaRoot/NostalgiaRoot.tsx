@@ -26,7 +26,7 @@ export function useNostalgiaContainer(): HTMLElement | null {
 export interface NostalgiaRootProps extends React.ComponentPropsWithoutRef<'div'> {
   /** Shape and feel. */
   readonly era: string;
-  /** Colour. */
+  /** Color. */
   readonly palette: string;
 }
 

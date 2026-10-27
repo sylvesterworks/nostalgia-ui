@@ -6,7 +6,11 @@ import type * as React from 'react';
 export type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'danger';
 
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
-  /** Visual weight. Every variant is styled only through era and palette tokens. */
+  /**
+   * Visual weight. Every variant is styled only through era and palette tokens.
+   *
+   * @default 'solid'
+   */
   readonly variant?: ButtonVariant;
   /** Replaces the rendered element, matching Base UI's composition contract. */
   readonly render?: useRender.RenderProp;

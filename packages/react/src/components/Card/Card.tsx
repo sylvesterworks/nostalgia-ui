@@ -4,8 +4,13 @@ import { clsx } from 'clsx';
 import type * as React from 'react';
 
 export interface CardProps extends React.ComponentPropsWithoutRef<'div'> {
-  /** A card that sits above the page surface rather than flush with it. */
+  /**
+   * A card that sits above the page surface rather than flush with it.
+   *
+   * @default false
+   */
   readonly elevated?: boolean;
+  /** Replaces the rendered element, matching Base UI's composition contract. */
   readonly render?: useRender.RenderProp;
 }
 

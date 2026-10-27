@@ -3,8 +3,14 @@ import { clsx } from 'clsx';
 import type * as React from 'react';
 
 export interface InputProps extends React.ComponentProps<typeof BaseInput> {
-  /** Marks the field as invalid, which eras express differently: a red inset
-   * border in Classic Windows, a glow in Frutiger Aero, a solid bar in Flat. */
+  /**
+   * Marks the field as invalid and sets `data-invalid` on it. Every era draws
+   * the boundary in the palette's danger token; the era decides where, for
+   * example an inset ring in Classic Windows and only the bottom edge in
+   * Flat / Metro.
+   *
+   * @default false
+   */
   readonly invalid?: boolean;
 }
 
