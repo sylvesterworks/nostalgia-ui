@@ -1,5 +1,5 @@
 import { raise, sink } from '../color.js';
-import type { Era } from '../types.js';
+import { defineEra } from '../types.js';
 
 /**
  * Flat / Metro, early 2010s. Solid fills, bold type, tiles, no shadows and no
@@ -10,7 +10,7 @@ import type { Era } from '../types.js';
  * derived colour for interaction: with shadow and gradient both forbidden, a
  * hover or pressed state can only be expressed as a shift in fill.
  */
-export const flatMetro: Era = {
+export const flatMetro = defineEra({
   id: 'flat-metro',
   label: 'Flat / Metro',
   period: 'early 2010s',
@@ -48,4 +48,4 @@ export const flatMetro: Era = {
     'shadow-overlay': 'none',
     'focus-color': s.text,
   }),
-};
+});

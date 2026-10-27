@@ -97,13 +97,52 @@ export type EraShape = {
  * the semantic colours rather than as values, which is what keeps an era
  * independent of any particular palette. The build evaluates them per pairing.
  */
-export type EraDerivation = (semantic: SemanticColors) => Readonly<Record<string, string>>;
+export type EraDerivation<Derived extends EraDerivedRequired = EraDerived> = (
+  semantic: SemanticColors,
+) => Derived;
 
-export interface Era {
+/**
+ * The derived keys every era must return, and therefore the only `--nui-era-*`
+ * variables a stylesheet may read outside a `[data-era]` rule. Everything
+ * else an era derives is specific to that era and only exists when that era
+ * is active. See docs/decisions/0009-era-token-contract.md.
+ *
+ * Listed as a runtime tuple as well as a type so that documentation and tests
+ * can read the contract rather than restate it.
+ */
+export const ERA_DERIVED_REQUIRED = ['shadow-raised', 'shadow-overlay', 'focus-color'] as const;
+export type EraDerivedRequiredKey = (typeof ERA_DERIVED_REQUIRED)[number];
+
+/** The part of a derivation's result that is the same shape in every era. */
+export type EraDerivedRequired = Readonly<Record<EraDerivedRequiredKey, string>>;
+
+/**
+ * What a derivation returns when the era is not known at compile time: the
+ * required keys, plus whatever extras that era happens to define.
+ */
+export type EraDerived = EraDerivedRequired & Readonly<Record<string, string>>;
+
+export interface Era<Derived extends EraDerivedRequired = EraDerived> {
   readonly id: string;
   readonly label: string;
   readonly period: string;
   readonly shape: EraShape;
   /** Derived colour recipes. Receives semantic colours, returns CSS values. */
-  readonly derive: EraDerivation;
+  readonly derive: EraDerivation<Derived>;
 }
+
+/**
+ * Builds an era whose derived keys are known to the type system. The extras
+ * are inferred from the object literal, so an era file names each key once,
+ * and leaving out a required key is a compile error in that file rather than
+ * a missing variable at runtime.
+ */
+export function defineEra<Derived extends EraDerivedRequired>(era: Era<Derived>): Era<Derived> {
+  return era;
+}
+
+/** The era-specific keys of one era, with the required set removed. */
+export type EraExtraKey<E extends Era<EraDerivedRequired>> = Exclude<
+  keyof ReturnType<E['derive']>,
+  EraDerivedRequiredKey
+>;

@@ -1,5 +1,5 @@
 import { darken, lighten, raise, withAlpha } from '../color.js';
-import type { Era } from '../types.js';
+import { defineEra } from '../types.js';
 
 /**
  * Classic Windows, 1990s. Grey chrome, hard 2px bevels, zero radius, no
@@ -17,7 +17,7 @@ import type { Era } from '../types.js';
  * charcoal one. Using the polarity-relative helpers inverted the bevel on
  * Solarized Light and clamped both dark edges to white.
  */
-export const classicWindows: Era = {
+export const classicWindows = defineEra({
   id: 'classic-windows',
   label: 'Classic Windows',
   period: '1990s',
@@ -54,4 +54,4 @@ export const classicWindows: Era = {
     'shadow-raised': 'none',
     'shadow-overlay': '2px 2px 0 0 ' + withAlpha(darken(s.surface, 0.7), 0.5),
   }),
-};
+});

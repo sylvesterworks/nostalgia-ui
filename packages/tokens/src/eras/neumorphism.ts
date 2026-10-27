@@ -1,5 +1,5 @@
 import { darken, lighten, withAlpha } from '../color.js';
-import type { Era } from '../types.js';
+import { defineEra } from '../types.js';
 
 /**
  * Neumorphism, around 2020. Soft extruded shapes that appear pressed out of,
@@ -14,7 +14,7 @@ import type { Era } from '../types.js';
  * both a near-black Dracula and a near-white Solarized. On the light end the
  * light shadow has nowhere to go, so the dark shadow carries the shape alone.
  */
-export const neumorphism: Era = {
+export const neumorphism = defineEra({
   id: 'neumorphism',
   label: 'Neumorphism',
   period: 'around 2020',
@@ -52,4 +52,4 @@ export const neumorphism: Era = {
       'focus-color': s.accent,
     };
   },
-};
+});
