@@ -60,10 +60,11 @@ Before adding any palette, check the source theme's license and record it in `pa
 
 ```
 packages/tokens      era + palette definitions; builds to CSS variables, Tailwind config, W3C design tokens JSON
-packages/react       Base UI components styled via tokens
+packages/react       Base UI components styled via tokens; each component has <Name>.docs.ts and <Name>.stories.tsx beside it (decision 0007)
 packages/importer    VS Code theme JSON → NostalgiaUI palette
 packages/mcp         MCP server
-apps/playground      Vite + React app with era and palette switchers (milestone 1)
+apps/storybook       Storybook on @storybook/react-vite, the local development surface; replaces apps/playground (#36)
+apps/playground      retired by #36; kept until Storybook lands
 apps/docs            docs site for nostalgiaui.sylvester.works (later)
 docs/decisions       short architecture decision notes
 ```
