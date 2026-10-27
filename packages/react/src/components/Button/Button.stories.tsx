@@ -30,3 +30,17 @@ export const Disabled: Story = { args: { variant: 'solid', children: 'Disabled',
 export const AsLink: Story = {
   args: { variant: 'outline', children: 'Read the docs', render: <a href="#as-link" /> },
 };
+
+/**
+ * Don't: navigate from a button's click handler. Use `render` with a link
+ * instead, as in AsLink.
+ */
+export const DontButtonForNavigation: Story = {
+  args: {
+    variant: 'outline',
+    children: 'Read the docs',
+    onClick: () => {
+      // Stands in for `window.location.href = '/docs'`, which is the mistake.
+    },
+  },
+};

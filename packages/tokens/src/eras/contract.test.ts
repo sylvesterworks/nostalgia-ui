@@ -20,7 +20,7 @@ import { eras } from './index.js';
  */
 describe('era-derived token contract', () => {
   it('requires exactly the keys the shared stylesheets read outside [data-era] rules', () => {
-    // button.css, card.css, dialog.css and base.css in @nostalgiaui/react use
+    // Button.css, Card.css, Dialog.css and foundations.css in @nostalgiaui/react use
     // these three, and only these three, without an era selector. Widening
     // this list is a decision, not a refactor: every era must then provide
     // the new key, and the decision record must say so.

@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
+import { Button } from '../Button/index.js';
+
 import { Tab, TabIndicator, TabList, TabPanel, Tabs } from './Tabs.js';
 
 const meta = {
@@ -41,5 +43,22 @@ export const LinkTabs: Story = {
         <TabIndicator />
       </TabList>
     </Tabs>
+  ),
+};
+
+/**
+ * Don't: build tabs from a row of buttons. They look similar but have no tab
+ * roles, no arrow-key movement and no link to a panel. Compare WithIndicator.
+ */
+export const DontButtonsAsTabs: Story = {
+  render: () => (
+    <div>
+      <div style={{ display: 'flex', gap: '0.25rem' }}>
+        <Button variant="ghost">Eras</Button>
+        <Button variant="ghost">Palettes</Button>
+        <Button variant="ghost">Rules</Button>
+      </div>
+      <p>Era controls shape and feel.</p>
+    </div>
   ),
 };

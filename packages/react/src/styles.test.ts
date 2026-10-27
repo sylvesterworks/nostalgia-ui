@@ -4,76 +4,65 @@ import { fileURLToPath } from 'node:url';
 
 import { describe, expect, it } from 'vitest';
 
-const stylesDir = join(dirname(fileURLToPath(import.meta.url)), 'styles');
+import {
+  findColorFunctions,
+  findHexColors,
+  findNamedColors,
+  stripCssComments,
+} from './docs/color-rules.js';
 
+const srcDir = dirname(fileURLToPath(import.meta.url));
+
+/**
+ * Every stylesheet under src: one per component folder, plus the shared
+ * foundation in src/styles. Names are paths relative to src with forward
+ * slashes, for example components/Button/Button.css.
+ */
 async function readStylesheets(): Promise<ReadonlyArray<readonly [string, string]>> {
-  const names = (await readdir(stylesDir)).filter((name) => name.endsWith('.css'));
+  const names = (await readdir(srcDir, { recursive: true }))
+    .map((name) => name.replaceAll('\\', '/'))
+    .filter((name) => name.endsWith('.css'));
   return Promise.all(
-    names.map(async (name) => [name, await readFile(join(stylesDir, name), 'utf8')] as const),
+    names.map(async (name) => [name, await readFile(join(srcDir, name), 'utf8')] as const),
   );
 }
 
 /**
  * The project's central rule, enforced rather than trusted: a component may
- * never name a colour. Every colour must arrive through a token, so that
+ * never name a color. Every color must arrive through a token, so that
  * changing palette cannot miss a component and adding a palette cannot
- * require touching one.
+ * require touching one. The patterns are shared with the documentation test
+ * through docs/color-rules.ts.
  */
 describe('component stylesheets', () => {
-  it('exist', async () => {
-    const sheets = await readStylesheets();
-    expect(sheets.length).toBeGreaterThanOrEqual(6);
-  });
-
-  it('contain no hex colour literals', async () => {
-    for (const [name, css] of await readStylesheets()) {
-      const matches = css.match(/#[0-9a-fA-F]{3,8}\b/g) ?? [];
-      expect(matches, name + ' contains hex colours: ' + matches.join(', ')).toHaveLength(0);
+  it('exist: one per component folder plus the shared foundation', async () => {
+    const names = (await readStylesheets()).map(([name]) => name);
+    expect(names).toContain('styles/foundations.css');
+    for (const component of ['NostalgiaRoot', 'Button', 'Input', 'Card', 'Tabs', 'Dialog']) {
+      expect(names).toContain('components/' + component + '/' + component + '.css');
     }
   });
 
-  it('contain no rgb, hsl, oklch or colour-function literals', async () => {
+  it('contain no hex color literals', async () => {
     for (const [name, css] of await readStylesheets()) {
-      const matches = css.match(/\b(rgba?|hsla?|oklch|oklab|lab|lch|color-mix)\s*\(/g) ?? [];
-      expect(matches, name + ' contains colour functions: ' + matches.join(', ')).toHaveLength(0);
+      const matches = findHexColors(css);
+      expect(matches, name + ' contains hex colors: ' + matches.join(', ')).toHaveLength(0);
     }
   });
 
-  it('contain no named CSS colours', async () => {
-    // transparent and currentColor are not colours in the sense that matters:
-    // neither pins a component to a specific palette.
-    const named = [
-      'white',
-      'black',
-      'red',
-      'green',
-      'blue',
-      'grey',
-      'gray',
-      'silver',
-      'navy',
-      'teal',
-      'olive',
-      'maroon',
-      'aqua',
-      'fuchsia',
-      'lime',
-      'yellow',
-      'orange',
-      'purple',
-    ];
-    // String.raw rather than a quoted string: in a normal string literal the
-    // escape collapses, and the guard silently becomes (?<![w-]) instead of a
-    // word boundary, which makes this check weaker than it looks.
-    const pattern = new RegExp(
-      String.raw`(?<![\w-])(` + named.join('|') + String.raw`)(?![\w-])`,
-      'gi',
-    );
+  it('contain no rgb, hsl, oklch or color-function literals', async () => {
     for (const [name, css] of await readStylesheets()) {
-      // Strip comments first, since prose legitimately mentions colour names.
-      const withoutComments = css.replace(/\/\*[\s\S]*?\*\//g, '');
-      const matches = withoutComments.match(pattern) ?? [];
-      expect(matches, name + ' contains named colours: ' + matches.join(', ')).toHaveLength(0);
+      const matches = findColorFunctions(css);
+      expect(matches, name + ' contains color functions: ' + matches.join(', ')).toHaveLength(0);
+    }
+  });
+
+  it('contain no named CSS colors', async () => {
+    for (const [name, css] of await readStylesheets()) {
+      // Strip comments first, since prose in a comment legitimately mentions
+      // color names.
+      const matches = findNamedColors(stripCssComments(css));
+      expect(matches, name + ' contains named colors: ' + matches.join(', ')).toHaveLength(0);
     }
   });
 
@@ -92,7 +81,7 @@ describe('component stylesheets', () => {
 describe('button variants', () => {
   it('styles the danger variant in every era, through tokens only', async () => {
     const sheets = await readStylesheets();
-    const button = sheets.find(([name]) => name === 'button.css')?.[1] ?? '';
+    const button = sheets.find(([name]) => name === 'components/Button/Button.css')?.[1] ?? '';
     expect(button).toContain('.nui-Button--danger {');
     for (const era of [
       'classic-windows',

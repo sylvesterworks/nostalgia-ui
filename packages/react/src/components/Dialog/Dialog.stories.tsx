@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Button } from './Button.js';
+import { Button } from '../Button/index.js';
 import {
   Dialog,
   DialogBackdrop,
@@ -56,6 +56,29 @@ export const StyledTriggerAndClose: Story = {
             <DialogClose render={<Button variant="ghost">Cancel</Button>} />
             <DialogClose render={<Button variant="danger">Discard</Button>} />
           </div>
+        </DialogPopup>
+      </DialogPortal>
+    </Dialog>
+  ),
+};
+
+/**
+ * Don't: put DialogDescription before DialogTitle. In Classic Windows the
+ * title becomes the title bar, which then sits in the middle of the window.
+ * Compare Open.
+ */
+export const DontTitleAfterDescription: Story = {
+  render: () => (
+    <Dialog defaultOpen>
+      <DialogTrigger>Open dialog</DialogTrigger>
+      <DialogPortal>
+        <DialogBackdrop />
+        <DialogPopup>
+          <DialogDescription>
+            The description comes first here, which is the mistake.
+          </DialogDescription>
+          <DialogTitle>Notifications</DialogTitle>
+          <DialogClose>Close</DialogClose>
         </DialogPopup>
       </DialogPortal>
     </Dialog>

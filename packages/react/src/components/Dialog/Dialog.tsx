@@ -1,7 +1,7 @@
 import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import type * as React from 'react';
 
-import { useNostalgiaContainer } from './NostalgiaRoot.js';
+import { useNostalgiaContainer } from '../NostalgiaRoot/index.js';
 
 /**
  * Styling wrappers over Base UI's Dialog parts. Focus trapping, scroll lock

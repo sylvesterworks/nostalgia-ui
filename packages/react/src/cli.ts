@@ -18,30 +18,32 @@ import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const srcDir = join(here, '..', 'src');
-const stylesDir = join(srcDir, 'styles');
-const componentsDir = join(srcDir, 'components');
 
-export const STYLE_ORDER = [
-  'base.css',
-  'button.css',
-  'input.css',
-  'card.css',
-  'tabs.css',
-  'dialog.css',
-] as const;
+/** The shared rules every component relies on, outside any component folder. */
+const FOUNDATIONS_CSS = 'styles/foundations.css';
 
 /**
- * Component name, its source file, and the stylesheet that styles it.
+ * Component name. Each component lives in components/<Name>/ with its
+ * source at <Name>.tsx and its stylesheet at <Name>.css.
  * NostalgiaRoot is listed because every other component needs it as an
  * ancestor, so an agent asking for a Button must also be told about the root.
  */
-export const COMPONENTS = [
-  { name: 'NostalgiaRoot', file: 'NostalgiaRoot.tsx', stylesheet: 'base.css' },
-  { name: 'Button', file: 'Button.tsx', stylesheet: 'button.css' },
-  { name: 'Input', file: 'Input.tsx', stylesheet: 'input.css' },
-  { name: 'Card', file: 'Card.tsx', stylesheet: 'card.css' },
-  { name: 'Tabs', file: 'Tabs.tsx', stylesheet: 'tabs.css' },
-  { name: 'Dialog', file: 'Dialog.tsx', stylesheet: 'dialog.css' },
+export const COMPONENTS = ['NostalgiaRoot', 'Button', 'Input', 'Card', 'Tabs', 'Dialog'] as const;
+
+const componentFile = (name: string, extension: string): string =>
+  'components/' + name + '/' + name + extension;
+
+/**
+ * Stylesheets in concatenation order, relative to src. The root rule comes
+ * first and the shared foundation second, which is the order they had when
+ * both lived in one base.css, so dist/styles.css resolves exactly as before.
+ */
+export const STYLE_ORDER = [
+  componentFile('NostalgiaRoot', '.css'),
+  FOUNDATIONS_CSS,
+  ...COMPONENTS.filter((name) => name !== 'NostalgiaRoot').map((name) =>
+    componentFile(name, '.css'),
+  ),
 ] as const;
 
 // --- styles.css ------------------------------------------------------------
@@ -56,8 +58,8 @@ const styleParts: string[] = [
   '',
 ];
 
-for (const name of STYLE_ORDER) {
-  styleParts.push(await readFile(join(stylesDir, name), 'utf8'));
+for (const path of STYLE_ORDER) {
+  styleParts.push(await readFile(join(srcDir, path), 'utf8'));
 }
 
 await writeFile(join(here, 'styles.css'), styleParts.join('\n'), 'utf8');
@@ -73,12 +75,20 @@ interface ManifestEntry {
 }
 
 const entries: ManifestEntry[] = [];
-for (const component of COMPONENTS) {
+for (const name of COMPONENTS) {
+  const own = await readFile(join(srcDir, componentFile(name, '.css')), 'utf8');
+  // The root's entry also carries the shared foundation, so an agent that
+  // reads NostalgiaRoot first (as get_component tells it to) still receives
+  // the focus and motion rules every component depends on.
+  const css =
+    name === 'NostalgiaRoot'
+      ? own + '\n' + (await readFile(join(srcDir, FOUNDATIONS_CSS), 'utf8'))
+      : own;
   entries.push({
-    name: component.name,
-    source: await readFile(join(componentsDir, component.file), 'utf8'),
-    stylesheet: component.stylesheet,
-    css: await readFile(join(stylesDir, component.stylesheet), 'utf8'),
+    name,
+    source: await readFile(join(srcDir, componentFile(name, '.tsx')), 'utf8'),
+    stylesheet: name + '.css',
+    css,
   });
 }
 

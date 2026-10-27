@@ -1,0 +1,12 @@
+/*
+ * The themed region. Every value here resolves to a token, so this file
+ * contains no color and no shape of its own.
+ */
+
+.nui-root {
+  background: var(--nui-color-surface);
+  color: var(--nui-color-text);
+  font-family: var(--nui-font-sans);
+  font-weight: var(--nui-font-weight-normal);
+  letter-spacing: var(--nui-letter-spacing);
+}
