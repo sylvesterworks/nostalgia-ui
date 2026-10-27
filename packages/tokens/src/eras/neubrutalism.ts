@@ -1,5 +1,5 @@
 import { darken, isLight, lighten } from '../color.js';
-import type { Era } from '../types.js';
+import { defineEra } from '../types.js';
 
 /**
  * Neubrutalism, 2020s. Thick borders, hard offset shadows, flat fills, blunt
@@ -12,7 +12,7 @@ import type { Era } from '../types.js';
  * palette, near-white on a dark one. The shadow is then a hard offset of that
  * ink with no blur at all.
  */
-export const neubrutalism: Era = {
+export const neubrutalism = defineEra({
   id: 'neubrutalism',
   label: 'Neubrutalism',
   period: '2020s',
@@ -53,4 +53,4 @@ export const neubrutalism: Era = {
       'focus-color': ink,
     };
   },
-};
+});

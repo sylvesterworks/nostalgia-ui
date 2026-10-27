@@ -1,5 +1,5 @@
 import { raise, scaleChroma, sink, withAlpha } from '../color.js';
-import type { Era } from '../types.js';
+import { defineEra } from '../types.js';
 
 /**
  * Frutiger Aero / Aqua, 2000s. Gloss, translucency, generous rounding, soft
@@ -10,7 +10,7 @@ import type { Era } from '../types.js';
  * light overlay to nothing, and has to be derived from the fill underneath or
  * it reads as plastic film laid over the wrong colour.
  */
-export const frutigerAero: Era = {
+export const frutigerAero = defineEra({
   id: 'frutiger-aero',
   label: 'Frutiger Aero',
   period: '2000s',
@@ -58,4 +58,4 @@ export const frutigerAero: Era = {
       'focus-color': s.accent,
     };
   },
-};
+});

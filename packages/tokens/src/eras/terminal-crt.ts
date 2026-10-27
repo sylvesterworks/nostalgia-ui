@@ -1,5 +1,5 @@
 import { darken, withAlpha } from '../color.js';
-import type { Era } from '../types.js';
+import { defineEra } from '../types.js';
 
 /**
  * Terminal / CRT, 1970s to 80s. Monospace everything, phosphor glow,
@@ -11,7 +11,7 @@ import type { Era } from '../types.js';
  * the metaphor strains, which is honest: there was no light-mode CRT. The
  * recipes still resolve, they just read as a printout rather than a screen.
  */
-export const terminalCrt: Era = {
+export const terminalCrt = defineEra({
   id: 'terminal-crt',
   label: 'Terminal / CRT',
   period: '1970s to 80s',
@@ -49,4 +49,4 @@ export const terminalCrt: Era = {
     'shadow-overlay': '0 0 24px ' + withAlpha(s.accent, 0.5),
     'focus-color': s.accent,
   }),
-};
+});
