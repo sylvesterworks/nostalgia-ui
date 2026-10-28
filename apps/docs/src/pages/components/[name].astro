@@ -1,0 +1,241 @@
+---
+import { manifest } from '@nostalgiaui/react/manifest';
+import type { ManifestEntry } from '@nostalgiaui/react/manifest';
+import { eras } from '@nostalgiaui/tokens';
+
+import { ExampleControls } from '../../islands/ExampleControls.js';
+import { StoryExample } from '../../islands/StoryExample.js';
+import { storyNames } from '../../islands/stories.js';
+import ComponentLayout from '../../layouts/ComponentLayout.astro';
+import { inlineHtml, proseHtml } from '../../lib/prose.js';
+
+// One page per component, built from the manifest. Every word of prose on
+// it comes from the component's .docs.ts or its JSDoc (decision 0012).
+
+export function getStaticPaths() {
+  return manifest.map((entry) => ({ params: { name: entry.name.toLowerCase() }, props: { entry } }));
+}
+
+interface Props {
+  readonly entry: ManifestEntry;
+}
+
+const { entry } = Astro.props;
+const { doc } = entry;
+
+// Stories the doc points at appear under Patterns and Do and don't; the rest
+// are the variants, shown once under Live examples.
+const referenced = new Set([
+  ...doc.patterns.map((pattern) => pattern.story),
+  ...doc.doAndDont.flatMap((pair) => [pair.do.story, pair.dont.story]),
+]);
+const variants = storyNames(doc.name).filter((story) => !referenced.has(story));
+
+/** `AsLink` reads as "As link". */
+const storyLabel = (story: string): string =>
+  story.replace(/(?<!^)([A-Z])/g, (letter: string) => ' ' + letter.toLowerCase());
+
+const eraNotes = doc.eraNotes as Readonly<Record<string, string | undefined>>;
+const notedEras = eras.flatMap((era) => {
+  const note = eraNotes[era.id];
+  return note === undefined ? [] : [{ label: era.label, note }];
+});
+
+// What the doc says about a prop sits beside the extracted row for the part
+// the doc is about. Props the tables leave out, such as React's own `type`,
+// are listed after that table.
+const guidance = Object.entries(doc.props as Readonly<Record<string, { description: string; whenToUse?: string } | undefined>>);
+const rootRows = new Set((entry.props[doc.name] ?? []).map((row) => row.name));
+const untabled = guidance.filter(([name]) => !rootRows.has(name));
+const guidanceHtml = (prop: string): string => {
+  const found = guidance.find(([name]) => name === prop)?.[1];
+  if (found === undefined) return '';
+  return (
+    inlineHtml(found.description) +
+    (found.whenToUse === undefined ? '' : ' <em>When to use:</em> ' + inlineHtml(found.whenToUse))
+  );
+};
+---
+
+<ComponentLayout title={doc.name} description={doc.summary.replaceAll('`', '')}>
+  <h1>{doc.name}</h1>
+  <div class="lede" set:html={proseHtml(doc.summary)} />
+
+  <div class="example-controls-bar">
+    <ExampleControls client:load />
+  </div>
+
+  <h2 id="examples">Live examples</h2>
+  {
+    variants.length === 0 ? (
+      <p class="meta">Every {doc.name} story is shown under Patterns and Do and don't.</p>
+    ) : (
+      <div class="example-grid">
+        {variants.map((story) => (
+          <figure class="example">
+            <StoryExample component={doc.name} story={story} client:load />
+            <figcaption>{storyLabel(story)}</figcaption>
+          </figure>
+        ))}
+      </div>
+    )
+  }
+
+  <h2 id="anatomy">Anatomy</h2>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Part</th><th>Class</th><th>Description</th></tr></thead>
+      <tbody>
+        {
+          doc.anatomy.map((part) => (
+            <tr>
+              <td><code>{part.name}</code></td>
+              <td><code>{part.className}</code></td>
+              <td set:html={inlineHtml(part.description)} />
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="props">Props</h2>
+  {
+    Object.entries(entry.props).map(([part, rows]) => (
+      <section class="props-part">
+        <h3 id={'props-' + part.toLowerCase()}><code>{part}</code></h3>
+        {rows.length === 0 ? (
+          <p class="meta">No props of its own; it takes the attributes of the element it renders.</p>
+        ) : (
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Prop</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                  {part === doc.name && guidance.length > 0 && <th>Guidance</th>}
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row) => (
+                  <tr>
+                    <td>
+                      <code>{row.name}</code>
+                      {row.required && <span class="badge">required</span>}
+                      {row.origin === 'base-ui' && <span class="badge">Base UI</span>}
+                    </td>
+                    <td><code>{row.type}</code></td>
+                    <td>{row.default === undefined ? '' : <code>{row.default}</code>}</td>
+                    <td set:html={inlineHtml(row.description)} />
+                    {part === doc.name && guidance.length > 0 && <td set:html={guidanceHtml(row.name)} />}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {part === doc.name && untabled.length > 0 && (
+          <dl class="prop-guidance">
+            {untabled.map(([name]) => (
+              <>
+                <dt><code>{name}</code></dt>
+                <dd set:html={guidanceHtml(name)} />
+              </>
+            ))}
+          </dl>
+        )}
+      </section>
+    ))
+  }
+
+  <h2 id="patterns">Patterns</h2>
+  {
+    doc.patterns.map((pattern) => (
+      <section class="pattern">
+        <h3>{pattern.title}</h3>
+        <div set:html={proseHtml(pattern.description)} />
+        <StoryExample component={doc.name} story={pattern.story} client:load />
+      </section>
+    ))
+  }
+
+  <h2 id="do-and-dont">Do and don't</h2>
+  {
+    doc.doAndDont.map((pair) => (
+      <section class="do-dont">
+        <div class="do-dont-pair">
+          <figure class="example example--do">
+            <figcaption><strong>Do:</strong> <span set:html={inlineHtml(pair.do.description)} /></figcaption>
+            <StoryExample component={doc.name} story={pair.do.story} client:load />
+          </figure>
+          <figure class="example example--dont">
+            <figcaption><strong>Don't:</strong> <span set:html={inlineHtml(pair.dont.description)} /></figcaption>
+            <StoryExample component={doc.name} story={pair.dont.story} client:load />
+          </figure>
+        </div>
+        <div class="do-dont-why" set:html={proseHtml(pair.why)} />
+      </section>
+    ))
+  }
+
+  <h2 id="accessibility">Accessibility</h2>
+  <ul>
+    {doc.accessibility.map((item) => <li set:html={inlineHtml(item)} />)}
+  </ul>
+
+  <h2 id="extensibility">Extensibility</h2>
+  <dl class="prop-guidance">
+    <dt><code>render</code></dt>
+    <dd set:html={inlineHtml(doc.extensibility.render)} />
+    <dt><code>className</code></dt>
+    <dd set:html={inlineHtml(doc.extensibility.className)} />
+  </dl>
+  {
+    doc.extensibility.cssVariables.length > 0 && (
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Custom property</th><th>Description</th></tr></thead>
+          <tbody>
+            {doc.extensibility.cssVariables.map((variable) => (
+              <tr>
+                <td><code>{variable.name}</code></td>
+                <td set:html={inlineHtml(variable.description)} />
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+  <div set:html={proseHtml(doc.extensibility.extendVsOverride)} />
+
+  <h2 id="era-notes">Era notes</h2>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Era</th><th>Note</th></tr></thead>
+      <tbody>
+        {
+          notedEras.map(({ label, note }) => (
+            <tr>
+              <td>{label}</td>
+              <td set:html={inlineHtml(note)} />
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="notes">Notes</h2>
+  <ul>
+    {doc.notes.map((note) => <li set:html={inlineHtml(note)} />)}
+  </ul>
+
+  <h2 id="source">Source</h2>
+  <details>
+    <summary><code>{entry.name}.tsx</code></summary>
+    <pre><code>{entry.source}</code></pre>
+  </details>
+</ComponentLayout>
