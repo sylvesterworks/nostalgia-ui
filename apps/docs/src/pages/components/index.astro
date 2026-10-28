@@ -1,0 +1,37 @@
+---
+import { foundations, manifest } from '@nostalgiaui/react/manifest';
+
+import ComponentLayout from '../../layouts/ComponentLayout.astro';
+import { inlineHtml, proseHtml } from '../../lib/prose.js';
+
+// The directory of component pages. Every word of prose comes from the docs:
+// the foundations doc first, then each component's summary.
+---
+
+<ComponentLayout title="Components" description={foundations.summary.replaceAll('`', '')}>
+  <h1>Components</h1>
+  <div class="lede" set:html={proseHtml(foundations.summary)} />
+
+  <h2 id="every-component">Every component</h2>
+  <ul>
+    {
+      foundations.rules.map((rule) => (
+        <li>
+          <strong>{rule.title}.</strong> <span set:html={inlineHtml(rule.description)} />
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2 id="components">Components</h2>
+  <div class="grid">
+    {
+      manifest.map((entry) => (
+        <a class="tile tile-link" href={'/components/' + entry.name.toLowerCase() + '/'}>
+          <h3>{entry.name}</h3>
+          <div class="meta" set:html={proseHtml(entry.doc.summary)} />
+        </a>
+      ))
+    }
+  </div>
+</ComponentLayout>

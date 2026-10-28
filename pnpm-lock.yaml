@@ -62,9 +62,6 @@ importers:
       '@nostalgiaui/importer':
         specifier: workspace:*
         version: link:../../packages/importer
-      '@nostalgiaui/mcp':
-        specifier: workspace:*
-        version: link:../../packages/mcp
       '@nostalgiaui/react':
         specifier: workspace:*
         version: link:../../packages/react

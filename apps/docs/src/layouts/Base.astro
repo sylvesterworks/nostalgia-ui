@@ -37,7 +37,7 @@ const current = Astro.url.pathname;
       <nav class="site-nav" aria-label="Site">
         {
           nav.map(([href, label]) => (
-            <a href={href} aria-current={current === href ? 'page' : undefined}>
+            <a href={href} aria-current={current === href ? 'page' : href !== '/' && current.startsWith(href) ? 'true' : undefined}>
               {label}
             </a>
           ))

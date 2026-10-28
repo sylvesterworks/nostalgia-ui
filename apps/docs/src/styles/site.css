@@ -78,7 +78,7 @@ pre {
   text-decoration: none;
 }
 
-.site-nav a[aria-current='page'],
+.site-nav a[aria-current],
 .site-nav a:hover {
   color: var(--site-text);
 }
@@ -269,4 +269,156 @@ th {
   border-left: 3px solid #ffb86c;
   color: #e0cfae;
   max-width: 80ch;
+}
+
+/* Component pages: a sidebar of every component beside the page. Above the
+ * content as a wrapping list at narrow widths. */
+.component-layout {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: 2.5rem;
+}
+
+.component-nav ul {
+  position: sticky;
+  top: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.925rem;
+}
+
+.component-nav li + li {
+  margin-top: 0.35rem;
+}
+
+.component-nav a {
+  color: var(--site-muted);
+  text-decoration: none;
+}
+
+.component-nav a[aria-current='page'],
+.component-nav a:hover {
+  color: var(--site-text);
+}
+
+@media (max-width: 48rem) {
+  .component-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .component-nav ul {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  .component-nav li + li {
+    margin-top: 0;
+  }
+}
+
+.tile-link {
+  display: block;
+  color: var(--site-text);
+  text-decoration: none;
+}
+
+.tile-link:hover {
+  border-color: var(--site-accent);
+}
+
+.tile-link .meta p {
+  margin: 0;
+}
+
+/* The era and palette pickers stay in view while the examples scroll by. */
+.example-controls-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 1.5rem 0;
+}
+
+.example-controls {
+  border: 1px solid var(--site-border);
+  border-radius: 8px;
+}
+
+.example-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+
+.example {
+  margin: 0;
+}
+
+.example figcaption {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--site-muted);
+}
+
+/* The themed region. Only this changes with era and palette. */
+.example-stage {
+  padding: 1.5rem;
+  border: 1px solid var(--site-border);
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.do-dont-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+}
+
+.example--do figcaption strong {
+  color: #8ee6a0;
+}
+
+.example--dont figcaption strong {
+  color: #ff8a8a;
+}
+
+.do-dont-why {
+  color: var(--site-muted);
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.badge {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0 0.35rem;
+  font-size: 0.75rem;
+  color: var(--site-muted);
+  border: 1px solid var(--site-border);
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.prop-guidance dt {
+  margin-top: 0.75rem;
+}
+
+.prop-guidance dd {
+  margin-left: 1.25rem;
+}
+
+/* Site chrome, not a component: it stands in for an example until clicked. */
+.example-mount {
+  padding: 0.35rem 0.85rem;
+  background: var(--site-surface);
+  color: var(--site-text);
+  border: 1px solid var(--site-border);
+  border-radius: 4px;
+  font: inherit;
+  cursor: pointer;
 }

@@ -1,0 +1,39 @@
+---
+import { manifest } from '@nostalgiaui/react/manifest';
+
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const current = Astro.url.pathname;
+
+const links = [
+  ['/components/', 'All components'],
+  ...manifest.map((entry) => ['/components/' + entry.name.toLowerCase() + '/', entry.name]),
+] as const;
+---
+
+<Base title={title} {...description === undefined ? {} : { description }}>
+  <div class="component-layout">
+    <nav class="component-nav" aria-label="Components">
+      <ul>
+        {
+          links.map(([href, label]) => (
+            <li>
+              <a href={href} aria-current={current === href ? 'page' : undefined}>
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="component-content">
+      <slot />
+    </div>
+  </div>
+</Base>
