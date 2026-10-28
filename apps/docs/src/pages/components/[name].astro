@@ -5,7 +5,6 @@ import { eras } from '@nostalgiaui/tokens';
 
 import { ExampleControls } from '../../islands/ExampleControls.js';
 import { StoryExample } from '../../islands/StoryExample.js';
-import { storyNames } from '../../islands/stories.js';
 import ComponentLayout from '../../layouts/ComponentLayout.astro';
 import { inlineHtml, proseHtml } from '../../lib/prose.js';
 
@@ -23,13 +22,9 @@ interface Props {
 const { entry } = Astro.props;
 const { doc } = entry;
 
-// Stories the doc points at appear under Patterns and Do and don't; the rest
-// are the variants, shown once under Live examples.
-const referenced = new Set([
-  ...doc.patterns.map((pattern) => pattern.story),
-  ...doc.doAndDont.flatMap((pair) => [pair.do.story, pair.dont.story]),
-]);
-const variants = storyNames(doc.name).filter((story) => !referenced.has(story));
+// Stories the doc points at appear under Patterns and Do and don't; the
+// doc's variants are shown once each under Live examples.
+const { variants } = doc;
 
 /** `AsLink` reads as "As link". */
 const storyLabel = (story: string): string =>

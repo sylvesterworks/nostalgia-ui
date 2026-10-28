@@ -1,4 +1,4 @@
-import { readdir } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -21,7 +21,7 @@ import * as pkg from '../index.js';
 
 import { findColors } from './color-rules.js';
 import { foundationsDoc } from './foundations.docs.js';
-import type { ComponentDoc } from './schema.js';
+import type { AnyComponentDoc, ComponentDoc } from './schema.js';
 
 /**
  * The guardrails for component documentation (decision 0007, issue #37).
@@ -33,6 +33,7 @@ const componentsDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'compo
 
 interface StoryRefs {
   readonly patterns: readonly { readonly story: string }[];
+  readonly variants: readonly string[];
   readonly doAndDont: readonly {
     readonly do: { readonly story: string };
     readonly dont: { readonly story: string };
@@ -54,6 +55,7 @@ const FAMILY_PATTERNS: Readonly<Record<string, RegExp>> = {
 function storyRefs(doc: StoryRefs): string[] {
   return [
     ...doc.patterns.map((pattern) => pattern.story),
+    ...doc.variants,
     ...doc.doAndDont.flatMap((pair) => [pair.do.story, pair.dont.story]),
   ];
 }
@@ -76,6 +78,7 @@ function allStrings(value: unknown): string[] {
 type StoryNames<Module> = Exclude<keyof Module, 'default'>;
 type DocStoryRefs<Doc extends StoryRefs> =
   | Doc['patterns'][number]['story']
+  | Doc['variants'][number]
   | Doc['doAndDont'][number]['do']['story']
   | Doc['doAndDont'][number]['dont']['story'];
 type RefsExist<Doc extends StoryRefs, Module> = [DocStoryRefs<Doc>] extends [StoryNames<Module>]
@@ -99,6 +102,7 @@ describe('the typecheck-time guardrails', () => {
   it('reject a story name the stories file does not export', () => {
     interface Wrong {
       readonly patterns: readonly [{ readonly story: 'NoSuchStory' }];
+      readonly variants: readonly [];
       readonly doAndDont: readonly [];
     }
     // @ts-expect-error NoSuchStory is not exported by Button.stories.tsx
@@ -116,6 +120,7 @@ describe('the typecheck-time guardrails', () => {
         size: { description: '' },
       },
       patterns: [],
+      variants: [],
       doAndDont: [],
       accessibility: [],
       extensibility: { render: '', className: '', cssVariables: [], extendVsOverride: '' },
@@ -181,24 +186,261 @@ describe('component documentation', () => {
   });
 });
 
-describe('story references', () => {
-  const stories = {
-    NostalgiaRoot: () => import('../components/NostalgiaRoot/NostalgiaRoot.stories.js'),
-    Button: () => import('../components/Button/Button.stories.js'),
-    Input: () => import('../components/Input/Input.stories.js'),
-    Card: () => import('../components/Card/Card.stories.js'),
-    Tabs: () => import('../components/Tabs/Tabs.stories.js'),
-    Dialog: () => import('../components/Dialog/Dialog.stories.js'),
-  } as const;
+// --- Guardrails added in #41 ----------------------------------------------
+//
+// Each rule is a small function returning the problems it finds, so the same
+// function runs over the real docs and over a broken fixture that proves it
+// can fail.
 
+const stories = {
+  NostalgiaRoot: () => import('../components/NostalgiaRoot/NostalgiaRoot.stories.js'),
+  Button: () => import('../components/Button/Button.stories.js'),
+  Input: () => import('../components/Input/Input.stories.js'),
+  Card: () => import('../components/Card/Card.stories.js'),
+  Tabs: () => import('../components/Tabs/Tabs.stories.js'),
+  Dialog: () => import('../components/Dialog/Dialog.stories.js'),
+} as const;
+
+async function storyNames(name: keyof typeof stories): Promise<string[]> {
+  const module: Record<string, unknown> = await stories[name]();
+  return Object.keys(module).filter((key) => key !== 'default');
+}
+
+/**
+ * Every component folder holds its doc and its stories, named after it, and
+ * no doc or stories file lives anywhere else.
+ */
+function fileProblems(folder: string, files: readonly string[]): string[] {
+  const problems: string[] = [];
+  for (const required of [folder + '.docs.ts', folder + '.stories.tsx']) {
+    if (!files.includes(required)) problems.push(folder + ' has no ' + required);
+  }
+  for (const file of files) {
+    const orphan = /\.(docs\.ts|stories\.tsx)$/.test(file) && !file.startsWith(folder + '.');
+    if (orphan) problems.push(folder + '/' + file + ' is not named after its folder');
+  }
+  return problems;
+}
+
+/**
+ * Every story is a pattern, half of a do and don't pair, or a variant, and a
+ * variant is not also shown in one of the other sections.
+ */
+function storyUsageProblems(
+  doc: StoryRefs & { readonly name: string },
+  exported: readonly string[],
+): string[] {
+  const shown = new Set([
+    ...doc.patterns.map((pattern) => pattern.story),
+    ...doc.doAndDont.flatMap((pair) => [pair.do.story, pair.dont.story]),
+  ]);
+  const used = new Set([...shown, ...doc.variants]);
+  return [
+    ...exported
+      .filter((story) => !used.has(story))
+      .map((story) => doc.name + '.' + story + ' is used by no section and is not a variant'),
+    ...doc.variants
+      .filter((story) => shown.has(story))
+      .map((story) => doc.name + '.' + story + ' is a variant and also shown elsewhere'),
+  ];
+}
+
+/** Both sides and the reason say something, and the two sides differ. */
+function doAndDontProblems(doc: Pick<AnyComponentDoc, 'name' | 'doAndDont'>): string[] {
+  return doc.doAndDont.flatMap((pair, index) => {
+    const where = doc.name + " do and don't " + String(index + 1);
+    const problems: string[] = [];
+    for (const [side, example] of [
+      ['do', pair.do],
+      ['dont', pair.dont],
+    ] as const) {
+      if (example.story.trim() === '') problems.push(where + ': ' + side + ' has no story');
+      if (example.description.trim() === '') {
+        problems.push(where + ': ' + side + ' has no description');
+      }
+    }
+    if (pair.why.trim() === '') problems.push(where + ': no reason');
+    if (pair.do.story === pair.dont.story) {
+      problems.push(where + ': both sides show ' + pair.do.story);
+    }
+    return problems;
+  });
+}
+
+/** Every top-level section of a doc, in schema order. */
+const SECTIONS = [
+  'name',
+  'summary',
+  'anatomy',
+  'props',
+  'patterns',
+  'variants',
+  'doAndDont',
+  'accessibility',
+  'extensibility',
+  'eraNotes',
+  'notes',
+] as const satisfies readonly (keyof AnyComponentDoc)[];
+
+const EXTENSIBILITY = [
+  'render',
+  'className',
+  'cssVariables',
+  'extendVsOverride',
+] as const satisfies readonly (keyof AnyComponentDoc['extensibility'])[];
+
+/**
+ * Sections a component may leave empty, and why. An entry for a section that
+ * is not empty fails too, so this list cannot go stale.
+ */
+const ALLOWED_EMPTY: Readonly<Record<string, readonly string[]>> = {
+  // NostalgiaRoot sets the era; it has no look of its own to vary by era.
+  // Its two stories are a pattern and a do and don't pair.
+  NostalgiaRoot: ['eraNotes', 'variants'],
+  // Every Tabs and Dialog story is a pattern or half of a do and don't pair.
+  Tabs: ['variants'],
+  Dialog: ['variants'],
+};
+
+function isEmpty(value: unknown): boolean {
+  if (typeof value === 'string') return value.trim() === '';
+  if (Array.isArray(value)) return value.length === 0;
+  if (value !== null && typeof value === 'object') return Object.keys(value).length === 0;
+  return value === undefined;
+}
+
+/** Sections missing from a doc, and the empty ones, by name. */
+function sectionProblems(doc: object): { readonly missing: string[]; readonly empty: string[] } {
+  const record = doc as Readonly<Record<string, unknown>>;
+  const missing = SECTIONS.filter((section) => !(section in record));
+  const empty: string[] = SECTIONS.filter(
+    (section) => section in record && isEmpty(record[section]),
+  );
+  const extensibility = record['extensibility'];
+  if (extensibility !== null && typeof extensibility === 'object') {
+    const fields = extensibility as Readonly<Record<string, unknown>>;
+    for (const field of EXTENSIBILITY) {
+      if (isEmpty(fields[field])) empty.push('extensibility.' + field);
+    }
+  }
+  return { missing, empty: empty.sort() };
+}
+
+describe('component files', () => {
+  it('pair a doc and a stories file in every folder, with none elsewhere', async () => {
+    const entries = await readdir(componentsDir, { withFileTypes: true });
+    const problems = entries
+      .filter((entry) => entry.isFile() && /\.(docs\.ts|stories\.tsx)$/.test(entry.name))
+      .map((entry) => entry.name + ' is outside a component folder');
+    for (const folder of entries.filter((entry) => entry.isDirectory())) {
+      problems.push(...fileProblems(folder.name, await readdir(join(componentsDir, folder.name))));
+    }
+    expect(problems).toEqual([]);
+  });
+
+  it('reject a folder without stories and a stray doc', () => {
+    expect(fileProblems('Card', ['Card.tsx', 'Card.docs.ts', 'Panel.docs.ts'])).toEqual([
+      'Card has no Card.stories.tsx',
+      'Card/Panel.docs.ts is not named after its folder',
+    ]);
+  });
+});
+
+describe('story references', () => {
   it.each(docs.map((doc) => [doc.name, doc] as const))(
     '%s points only at stories that exist',
     async (name, doc) => {
-      const load = stories[name];
-      const module: Record<string, unknown> = await load();
+      const exported = await storyNames(name);
       for (const ref of storyRefs(doc)) {
-        expect(Object.keys(module), name + ' doc points at missing story ' + ref).toContain(ref);
+        expect(exported, name + ' doc points at missing story ' + ref).toContain(ref);
       }
     },
   );
+
+  it.each(docs.map((doc) => [doc.name, doc] as const))(
+    '%s uses every story it has',
+    async (name, doc) => {
+      expect(storyUsageProblems(doc, await storyNames(name))).toEqual([]);
+    },
+  );
+
+  it('reject a story no section uses, and a variant shown twice', () => {
+    const doc = {
+      name: 'Button',
+      patterns: [{ story: 'Solid' }],
+      variants: ['Solid'],
+      doAndDont: [],
+    };
+    expect(storyUsageProblems(doc, ['Solid', 'Ghost'])).toEqual([
+      'Button.Ghost is used by no section and is not a variant',
+      'Button.Solid is a variant and also shown elsewhere',
+    ]);
+  });
+
+  it.each(Object.keys(stories))('%s.stories.tsx names no color', async (name) => {
+    const source = await readFile(join(componentsDir, name, name + '.stories.tsx'), 'utf8');
+    expect(findColors(source)).toEqual([]);
+  });
+
+  it('reject a story that names a color', () => {
+    expect(findColors("args: { style: { background: 'red' } }")).toEqual(['red']);
+  });
+});
+
+describe("do and don't pairs", () => {
+  it.each(docs.map((doc) => [doc.name, doc] as const))(
+    '%s has both sides and a reason for every pair',
+    (_name, doc) => {
+      expect(doAndDontProblems(doc)).toEqual([]);
+    },
+  );
+
+  it('reject a pair with an empty side, no reason, or one story on both sides', () => {
+    const doc = {
+      name: 'Button',
+      doAndDont: [
+        {
+          do: { story: 'AsLink', description: '' },
+          dont: { story: 'AsLink', description: 'Navigate from a click handler.' },
+          why: ' ',
+        },
+      ],
+    };
+    expect(doAndDontProblems(doc)).toEqual([
+      "Button do and don't 1: do has no description",
+      "Button do and don't 1: no reason",
+      "Button do and don't 1: both sides show AsLink",
+    ]);
+  });
+});
+
+describe('doc sections', () => {
+  it.each(docs.map((doc) => [doc.name, doc] as const))(
+    '%s fills every section the allow-list does not exempt',
+    (name, doc) => {
+      const { missing, empty } = sectionProblems(doc);
+      expect(missing, name + ' is missing sections').toEqual([]);
+      expect(empty, name + ': empty sections differ from ALLOWED_EMPTY').toEqual(
+        [...(ALLOWED_EMPTY[name] ?? [])].sort(),
+      );
+    },
+  );
+
+  it('exempt no component the docs do not have', () => {
+    const names = docs.map((doc): string => doc.name);
+    expect(Object.keys(ALLOWED_EMPTY).filter((name) => !names.includes(name))).toEqual([]);
+  });
+
+  it('reject a missing section and an empty one', () => {
+    const broken: Record<string, unknown> = {
+      ...buttonDoc,
+      accessibility: [],
+      extensibility: { ...buttonDoc.extensibility, render: '' },
+    };
+    delete broken['notes'];
+    expect(sectionProblems(broken)).toEqual({
+      missing: ['notes'],
+      empty: ['accessibility', 'extensibility.render'],
+    });
+  });
 });

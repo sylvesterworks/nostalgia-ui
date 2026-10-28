@@ -21,7 +21,7 @@
   "description": "Documentation site for nostalgiaui.sylvester.works, with the timeline demo.",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/check-pages.mjs dist",
     "preview": "astro preview",
     "typecheck": "tsc -p tsconfig.json"
   }

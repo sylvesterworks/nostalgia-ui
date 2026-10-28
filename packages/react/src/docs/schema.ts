@@ -99,6 +99,12 @@ export interface ComponentDoc<Props> {
   readonly props: { readonly [K in Extract<keyof Props, string>]?: PropDoc };
   /** How it is meant to be composed, each shown by a story. */
   readonly patterns: readonly Pattern[];
+  /**
+   * Stories that show a variant as it is, with no pattern or do and don't of
+   * their own. Every story in the stories file is a pattern, half of a do and
+   * don't pair, or listed here; docs.test.ts checks that.
+   */
+  readonly variants: readonly StoryRef[];
   readonly doAndDont: readonly DoAndDont[];
   /** Keyboard behavior, labelling requirements and contrast notes. */
   readonly accessibility: readonly Prose[];

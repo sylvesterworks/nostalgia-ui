@@ -182,3 +182,87 @@ describe('the extractor', () => {
     expect(() => extractProps(virtual, '/virtual')).toThrow(/outside this package/);
   });
 });
+
+// --- Our props in story args (#41) ----------------------------------------
+
+const storyModules = {
+  NostalgiaRoot: () => import('../components/NostalgiaRoot/NostalgiaRoot.stories.js'),
+  Button: () => import('../components/Button/Button.stories.js'),
+  Input: () => import('../components/Input/Input.stories.js'),
+  Card: () => import('../components/Card/Card.stories.js'),
+  Tabs: () => import('../components/Tabs/Tabs.stories.js'),
+  Dialog: () => import('../components/Dialog/Dialog.stories.js'),
+} as const;
+
+/** Every arg name the meta or any story in a stories module sets. */
+function argNames(module: Readonly<Record<string, unknown>>): Set<string> {
+  const names = new Set<string>();
+  for (const value of Object.values(module)) {
+    if (value === null || typeof value !== 'object') continue;
+    const args = (value as { readonly args?: unknown }).args;
+    if (args !== null && typeof args === 'object') {
+      for (const name of Object.keys(args)) names.add(name);
+    }
+  }
+  return names;
+}
+
+/**
+ * The props this package declares on a family's parts that no story sets in
+ * its args. Base UI's props are left out: they are Base UI's to demonstrate.
+ */
+function propsMissingFromArgs(
+  family: readonly string[],
+  props: PropsTable,
+  args: ReadonlySet<string>,
+): string[] {
+  return family.flatMap((part) =>
+    (props[part] ?? [])
+      .filter((row) => row.origin === 'nostalgiaui' && !args.has(row.name))
+      .map((row) => part + '.' + row.name),
+  );
+}
+
+describe('story args', () => {
+  it.each(docs.map((doc) => [doc.name, doc] as const))(
+    '%s sets every prop this package declares in some story',
+    async (name, doc) => {
+      const module: Record<string, unknown> = await storyModules[name]();
+      const family = doc.anatomy.map((part) => part.name);
+      expect(propsMissingFromArgs(family, table, argNames(module))).toEqual([]);
+    },
+  );
+
+  it('reject a prop of ours that no story sets', () => {
+    const props: PropsTable = {
+      Card: [
+        {
+          name: 'elevated',
+          type: 'boolean',
+          required: false,
+          description: '',
+          origin: 'nostalgiaui',
+        },
+        {
+          name: 'render',
+          type: 'unknown',
+          required: false,
+          description: '',
+          origin: 'nostalgiaui',
+        },
+        {
+          name: 'nativeButton',
+          type: 'boolean',
+          required: false,
+          description: '',
+          origin: 'base-ui',
+        },
+      ],
+    };
+    const module = {
+      default: { args: { elevated: false } },
+      Elevated: { args: { elevated: true } },
+    };
+    expect(propsMissingFromArgs(['Card'], props, argNames(module))).toEqual(['Card.render']);
+  });
+});

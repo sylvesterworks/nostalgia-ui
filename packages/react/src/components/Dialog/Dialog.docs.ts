@@ -78,6 +78,7 @@ export const dialogDoc = {
       story: 'Open',
     },
   ],
+  variants: [],
   doAndDont: [
     {
       do: {
