@@ -38,6 +38,7 @@ export const inputDoc = {
       story: 'Invalid',
     },
   ],
+  variants: ['Default'],
   doAndDont: [
     {
       do: {

@@ -27,6 +27,15 @@ export const Elevated: Story = {
   },
 };
 
+/** `render` swaps the element, here for a section, and keeps the styling. */
+export const RenderedAsSection: Story = {
+  args: {
+    elevated: true,
+    render: <section aria-label="Storage" />,
+    children: <CardBody>This card is a section element.</CardBody>,
+  },
+};
+
 /** CardTitle and CardBody are siblings the caller places, in that order. */
 export const WithTitleAndBody: Story = {
   args: {

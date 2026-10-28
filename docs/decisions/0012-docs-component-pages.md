@@ -33,8 +33,9 @@ and without the Storybook runtime in the site.
   the root and the story share one copy of its portal context. The rest of the
   site still uses the built package.
 - **Which stories appear where.** Patterns and do and don't render the stories
-  the doc points at. Live examples render the rest of the stories file, the
-  variants, once each.
+  the doc points at. Live examples render the doc's `variants`, once each.
+  (Until #41 there was no `variants` field and Live examples rendered the
+  rest of the stories file; #41 made the list explicit and tested.)
 - **One era and palette per page.** Each example is its own island; a small
   module store holds the page's choice, so one set of pickers drives every
   example.

@@ -33,6 +33,7 @@ export const nostalgiaRootDoc = {
       story: 'Nesting',
     },
   ],
+  variants: [],
   doAndDont: [
     {
       do: {

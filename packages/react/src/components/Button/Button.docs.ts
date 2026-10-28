@@ -57,6 +57,7 @@ export const buttonDoc = {
       story: 'AsLink',
     },
   ],
+  variants: ['Ghost', 'Disabled'],
   doAndDont: [
     {
       do: {

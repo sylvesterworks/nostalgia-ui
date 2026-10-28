@@ -45,6 +45,7 @@ export const cardDoc = {
       story: 'Elevated',
     },
   ],
+  variants: ['Flat', 'RenderedAsSection'],
   doAndDont: [
     {
       do: {

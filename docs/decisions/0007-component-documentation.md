@@ -52,6 +52,10 @@ The sections of the schema (summary, anatomy, props, patterns, do and don't,
 accessibility, extensibility, era notes, notes) are defined when the schema
 is written, under issue #37.
 
+#41 added a `variants` section: the stories that show a variant with no
+pattern or do and don't pair of their own, so that every story is listed by
+exactly one section. The guardrail tests in `docs.test.ts` enforce it.
+
 ### Rules that apply to everything are stated once
 
 `foundations.docs.ts` holds what is true of every component: render inside

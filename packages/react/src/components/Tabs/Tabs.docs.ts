@@ -62,6 +62,7 @@ export const tabsDoc = {
       story: 'LinkTabs',
     },
   ],
+  variants: [],
   doAndDont: [
     {
       do: {

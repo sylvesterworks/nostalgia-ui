@@ -91,11 +91,6 @@ function storiesFile(component: string): StoriesFile {
   return file;
 }
 
-/** Every story a component's stories file exports, by export name. */
-export function storyNames(component: string): readonly string[] {
-  return Object.keys(storiesFile(component).stories);
-}
-
 export interface LoadedStory {
   /** False for a story that opts out of the root, as DontOutsideRoot does. */
   readonly withRoot: boolean;
