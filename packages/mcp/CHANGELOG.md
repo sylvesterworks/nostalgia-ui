@@ -1,5 +1,21 @@
 # @nostalgiaui/mcp
 
+## 0.2.0
+
+### Minor Changes
+
+- 03ffc24: `get_component` now answers from each component's structured documentation. The full answer adds `props`, a table per part extracted from the TypeScript types, and `doc`, with `eraNotes` narrowed to the requested era. A new optional `section` parameter returns one doc field alone, such as `accessibility` or `props`. The rules every component shares, rendering inside `NostalgiaRoot` and importing the two stylesheets once among them, are now sent once as the server's instructions; per-component answers no longer repeat them, `notes` moved into `doc.notes`, and `imports` holds only the component import line. The package also exports `COMPONENT_SECTIONS`, `serverInstructions` and the `ComponentSection` and `ComponentSectionAnswer` types.
+
+### Patch Changes
+
+- Updated dependencies [89c073f]
+- Updated dependencies [01eec6a]
+- Updated dependencies [fcca3e0]
+- Updated dependencies [f74912a]
+  - @nostalgiaui/react@0.2.0
+  - @nostalgiaui/tokens@0.2.0
+  - @nostalgiaui/importer@0.1.3
+
 ## 0.1.3
 
 ### Patch Changes
