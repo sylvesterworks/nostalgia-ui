@@ -25,6 +25,7 @@ interface Story {
 }
 
 interface Meta {
+  readonly title?: string;
   readonly component?: React.ElementType;
   readonly args?: Args;
 }
@@ -100,6 +101,28 @@ export interface LoadedStory {
 }
 
 /** One story as an element, with the meta's args under the story's own. */
+/** Storybook's id for a part of a title or a story name. */
+function sanitize(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+/**
+ * The id Storybook gives a story: its title and its export name, each
+ * lowercased with runs of other characters turned into a hyphen, for example
+ * `components-button--as-link`. scripts/assemble-site.mjs checks every id the
+ * docs link to against Storybook's built index, so a mismatch fails there.
+ */
+export function storyId(component: string, name: string): string {
+  const { meta, stories } = storiesFile(component);
+  if (stories[name] === undefined) throw new Error(`${component}.stories.tsx has no story ${name}`);
+  if (meta.title === undefined) throw new Error(`${component}.stories.tsx has no title`);
+  const words = name.replace(/([a-z0-9])([A-Z])/g, '$1 $2');
+  return sanitize(meta.title) + '--' + sanitize(words);
+}
+
 export function loadStory(component: string, name: string): LoadedStory {
   const { meta, stories } = storiesFile(component);
   const story = stories[name];

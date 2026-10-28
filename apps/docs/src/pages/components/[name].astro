@@ -5,6 +5,7 @@ import { eras } from '@nostalgiaui/tokens';
 
 import { ExampleControls } from '../../islands/ExampleControls.js';
 import { StoryExample } from '../../islands/StoryExample.js';
+import { storyId } from '../../islands/stories.js';
 import ComponentLayout from '../../layouts/ComponentLayout.astro';
 import { inlineHtml, proseHtml } from '../../lib/prose.js';
 
@@ -25,6 +26,11 @@ const { doc } = entry;
 // Stories the doc points at appear under Patterns and Do and don't; the
 // doc's variants are shown once each under Live examples.
 const { variants } = doc;
+
+// The Storybook link opens the first pattern's story.
+const firstStory = doc.patterns[0]?.story;
+const storybookHref =
+  firstStory === undefined ? '/storybook/' : '/storybook/?path=/story/' + storyId(doc.name, firstStory);
 
 /** `AsLink` reads as "As link". */
 const storyLabel = (story: string): string =>
@@ -55,6 +61,7 @@ const guidanceHtml = (prop: string): string => {
 <ComponentLayout title={doc.name} description={doc.summary.replaceAll('`', '')}>
   <h1>{doc.name}</h1>
   <div class="lede" set:html={proseHtml(doc.summary)} />
+  <p class="meta"><a href={storybookHref}>Open {doc.name} in Storybook</a></p>
 
   <div class="example-controls-bar">
     <ExampleControls client:load />

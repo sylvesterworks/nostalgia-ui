@@ -22,6 +22,7 @@
     "changeset": "changeset",
     "version-packages": "changeset version && node scripts/sync-server-json.mjs && pnpm install --lockfile-only",
     "release": "pnpm run build && changeset publish",
+    "assemble:site": "node scripts/assemble-site.mjs",
     "publish:dry-run": "pnpm -r publish --dry-run --no-git-checks --access public"
   },
   "devDependencies": {
