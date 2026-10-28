@@ -23,3 +23,6 @@ pnpm-debug.log*
 
 # Astro regenerates these on every build
 .astro/
+
+# Claude Code handoff notes, kept out of the repo
+.claude/HANDOFF.md
