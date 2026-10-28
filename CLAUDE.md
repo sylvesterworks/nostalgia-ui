@@ -63,7 +63,7 @@ packages/tokens      era + palette definitions; builds to CSS variables, Tailwin
 packages/react       Base UI components styled via tokens; each component has <Name>.docs.ts and <Name>.stories.tsx beside it (decision 0007)
 packages/importer    VS Code theme JSON → NostalgiaUI palette
 packages/mcp         MCP server
-apps/storybook       Storybook on @storybook/react-vite, the local development surface (`pnpm dev`); replaced apps/playground in #36
+apps/storybook       Storybook on @storybook/react-vite, the local development surface (`pnpm dev`); replaced apps/playground in #36; published under /storybook on the docs site (#42)
 apps/docs            docs site for nostalgiaui.sylvester.works (later)
 docs/decisions       short architecture decision notes
 ```

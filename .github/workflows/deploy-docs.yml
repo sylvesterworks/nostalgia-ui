@@ -38,6 +38,12 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      # Storybook builds as part of the build above. This copies it under
+      # /storybook in the docs output, so Pages still deploys one artifact,
+      # and fails on a docs link to a story Storybook does not have.
+      - name: Put Storybook under /storybook
+        run: pnpm run assemble:site
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: apps/docs/dist

@@ -33,6 +33,11 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      # The same step the docs deploy runs: a docs link to a story Storybook
+      # does not have fails here, before it reaches main.
+      - name: Assemble the docs site with Storybook
+        run: pnpm run assemble:site
+
       # Everything a publish would do except the upload: packs each public
       # package and validates its manifest, so a broken files list or a
       # workspace: range that failed to resolve fails here, not on release day.

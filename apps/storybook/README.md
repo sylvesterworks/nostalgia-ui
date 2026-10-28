@@ -21,6 +21,15 @@ story renders inside one `NostalgiaRoot` set from them.
   tokens build, so an era or palette change needs
   `pnpm --filter @nostalgiaui/tokens build`.
 
+## Published
+
+The static build is published with the docs site, at
+https://nostalgiaui.sylvester.works/storybook/. `pnpm run build` builds it,
+and `pnpm run assemble:site` copies it into the docs output under
+`storybook/` and checks every docs link into it against `index.json`. The
+deploy workflow runs both; CI runs both too, so a dead story link fails
+before merge. The sidebar brand links back to the docs site's components.
+
 ## Where stories live
 
 In the component's folder, as
