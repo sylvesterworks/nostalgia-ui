@@ -1,5 +1,18 @@
 # @nostalgiaui/react
 
+## 0.2.0
+
+### Minor Changes
+
+- 01eec6a: Component docs gain a `variants` field: the stories that show a variant as it is, with no pattern or do and don't pair of their own. It appears on each manifest entry's `doc`. Every story is now a pattern, half of a do and don't pair, or a variant, and tests enforce that along with the other documentation rules (#41).
+- f74912a: `@nostalgiaui/react/manifest` now carries each component's documentation and props. Every entry gains `doc`, the component's structured doc, and `props`, a table per part with each prop's name, type, whether it is required, its default and its description, extracted from the TypeScript types. Props come from this package and from Base UI; inherited React and DOM attributes are left out. A new `foundations` export holds the rules every component shares. The public React API is unchanged, and the build-only `cli.js` is no longer published.
+
+### Patch Changes
+
+- 89c073f: Organize the source into one folder per component, holding its source, stylesheet, stories, documentation and an `index.ts`. Public exports and the rules in `styles.css` are unchanged. The `stylesheet` field in `@nostalgiaui/react/manifest` now names the component's own file (for example `Button.css`, `NostalgiaRoot.css`) instead of the old lowercase names, and the NostalgiaRoot entry's CSS includes the shared foundation rules that used to live in `base.css`.
+- Updated dependencies [fcca3e0]
+  - @nostalgiaui/tokens@0.2.0
+
 ## 0.1.3
 
 ### Patch Changes
