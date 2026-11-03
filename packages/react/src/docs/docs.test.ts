@@ -9,6 +9,8 @@ import type * as ButtonStories from '../components/Button/Button.stories.js';
 import type { ButtonProps } from '../components/Button/Button.js';
 import { cardDoc } from '../components/Card/Card.docs.js';
 import type * as CardStories from '../components/Card/Card.stories.js';
+import { checkboxDoc } from '../components/Checkbox/Checkbox.docs.js';
+import type * as CheckboxStories from '../components/Checkbox/Checkbox.stories.js';
 import { dialogDoc } from '../components/Dialog/Dialog.docs.js';
 import type * as DialogStories from '../components/Dialog/Dialog.stories.js';
 import { inputDoc } from '../components/Input/Input.docs.js';
@@ -40,13 +42,22 @@ interface StoryRefs {
   }[];
 }
 
-const docs = [nostalgiaRootDoc, buttonDoc, inputDoc, cardDoc, tabsDoc, dialogDoc] as const;
+const docs = [
+  nostalgiaRootDoc,
+  buttonDoc,
+  inputDoc,
+  checkboxDoc,
+  cardDoc,
+  tabsDoc,
+  dialogDoc,
+] as const;
 
 /** Each family's name, as a pattern that matches its parts too. */
 const FAMILY_PATTERNS: Readonly<Record<string, RegExp>> = {
   NostalgiaRoot: /\bNostalgiaRoot\b/,
   Button: /\bButton\b/,
   Input: /\bInput\b/,
+  Checkbox: /\bCheckbox\w*/,
   Card: /\bCard\w*/,
   Tabs: /\bTab\w*/,
   Dialog: /\bDialog\w*/,
@@ -89,6 +100,7 @@ const storyReferencesTypecheck: readonly true[] = [
   true satisfies RefsExist<typeof nostalgiaRootDoc, typeof NostalgiaRootStories>,
   true satisfies RefsExist<typeof buttonDoc, typeof ButtonStories>,
   true satisfies RefsExist<typeof inputDoc, typeof InputStories>,
+  true satisfies RefsExist<typeof checkboxDoc, typeof CheckboxStories>,
   true satisfies RefsExist<typeof cardDoc, typeof CardStories>,
   true satisfies RefsExist<typeof tabsDoc, typeof TabsStories>,
   true satisfies RefsExist<typeof dialogDoc, typeof DialogStories>,
@@ -196,6 +208,7 @@ const stories = {
   NostalgiaRoot: () => import('../components/NostalgiaRoot/NostalgiaRoot.stories.js'),
   Button: () => import('../components/Button/Button.stories.js'),
   Input: () => import('../components/Input/Input.stories.js'),
+  Checkbox: () => import('../components/Checkbox/Checkbox.stories.js'),
   Card: () => import('../components/Card/Card.stories.js'),
   Tabs: () => import('../components/Tabs/Tabs.stories.js'),
   Dialog: () => import('../components/Dialog/Dialog.stories.js'),

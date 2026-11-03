@@ -1,0 +1,202 @@
+/*
+ * Checkbox. The box is a control boundary, so its unticked edge reads the
+ * muted text color, which clears the 3:1 WCAG asks of a control's boundary on
+ * every surface; the border token is only meant to be perceivable. Ticked and
+ * mixed, the box takes the accent fill and the mark is drawn in the text color
+ * paired with it. Base UI sets data-checked, data-unchecked and
+ * data-indeterminate on both parts, and the indicator only exists while the
+ * box is ticked or mixed.
+ */
+
+.nui-Checkbox {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 1.125rem;
+  height: 1.125rem;
+  vertical-align: middle;
+  border-radius: var(--nui-radius-sm);
+  border: var(--nui-border-width) solid var(--nui-color-text-muted);
+  background: var(--nui-color-surface-sunken);
+  color: var(--nui-color-text-on-accent);
+  cursor: pointer;
+}
+
+.nui-Checkbox[data-checked],
+.nui-Checkbox[data-indeterminate] {
+  border-color: var(--nui-color-accent);
+  background: var(--nui-color-accent);
+}
+
+.nui-Checkbox[data-disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* The tick: two sides of a box, rotated. Drawn in currentColor so each era
+ * only chooses the color. */
+.nui-CheckboxIndicator {
+  display: block;
+  box-sizing: border-box;
+  width: 0.35rem;
+  height: 0.65rem;
+  margin-top: -0.1rem;
+  border: solid currentColor;
+  border-width: 0 0.15rem 0.15rem 0;
+  transform: rotate(45deg);
+}
+
+/* The dash for the mixed state. */
+.nui-CheckboxIndicator[data-indeterminate] {
+  width: 0.6rem;
+  height: 0;
+  margin-top: 0;
+  border-width: 0.15rem 0 0 0;
+  transform: none;
+}
+
+/* ---- Classic Windows: a sunken white well with a black tick ------------- */
+
+[data-era='classic-windows'] .nui-Checkbox {
+  width: 0.8125rem;
+  height: 0.8125rem;
+  border-radius: 0;
+  border-top-color: var(--nui-era-bevel-darker);
+  border-left-color: var(--nui-era-bevel-darker);
+  border-right-color: var(--nui-era-bevel-lighter);
+  border-bottom-color: var(--nui-era-bevel-lighter);
+  box-shadow:
+    inset 1px 1px 0 0 var(--nui-era-bevel-dark),
+    inset -1px -1px 0 0 var(--nui-era-bevel-light);
+  color: var(--nui-color-text);
+}
+
+/* The era never filled a ticked box: the well stays put and only the tick
+ * appears. */
+[data-era='classic-windows'] .nui-Checkbox[data-checked],
+[data-era='classic-windows'] .nui-Checkbox[data-indeterminate] {
+  border-top-color: var(--nui-era-bevel-darker);
+  border-left-color: var(--nui-era-bevel-darker);
+  border-right-color: var(--nui-era-bevel-lighter);
+  border-bottom-color: var(--nui-era-bevel-lighter);
+  background: var(--nui-color-surface-sunken);
+}
+
+/* A squarer, heavier tick, closer to the era's pixel glyph. */
+[data-era='classic-windows'] .nui-CheckboxIndicator {
+  width: 0.3rem;
+  height: 0.5rem;
+  border-width: 0 0.125rem 0.125rem 0;
+}
+
+[data-era='classic-windows'] .nui-CheckboxIndicator[data-indeterminate] {
+  width: 0.45rem;
+  height: 0;
+  border-width: 0.125rem 0 0 0;
+}
+
+/* Disabled boxes turned to the button face and their tick to gray. */
+[data-era='classic-windows'] .nui-Checkbox[data-disabled] {
+  opacity: 1;
+  background: var(--nui-era-control-face);
+  color: var(--nui-color-text-muted);
+}
+
+/* ---- Frutiger Aero: a rounded glass box, a vivid fill when ticked ------- */
+
+/* The small radius: at this size the era's medium radius makes a circle,
+ * which reads as a radio button. */
+[data-era='frutiger-aero'] .nui-Checkbox {
+  border-radius: var(--nui-radius-sm);
+  background: var(--nui-era-glass-fill);
+  box-shadow: inset 0 2px 4px var(--nui-era-gloss-mid);
+}
+
+[data-era='frutiger-aero'] .nui-Checkbox[data-checked],
+[data-era='frutiger-aero'] .nui-Checkbox[data-indeterminate] {
+  border-color: var(--nui-color-accent);
+  background: var(--nui-era-accent-vivid);
+  box-shadow: inset 0 1px 0 0 var(--nui-era-glass-border);
+}
+
+/* ---- Flat / Metro: a square tile, a solid accent fill when ticked ------- */
+
+[data-era='flat-metro'] .nui-Checkbox {
+  border-radius: 0;
+  border-width: 2px;
+  background: var(--nui-color-surface);
+  box-shadow: none;
+}
+
+[data-era='flat-metro'] .nui-Checkbox[data-checked],
+[data-era='flat-metro'] .nui-Checkbox[data-indeterminate] {
+  border-color: var(--nui-era-tile-fill);
+  background: var(--nui-era-tile-fill);
+}
+
+/* ---- Terminal / CRT: bracket glyphs, no box ----------------------------- */
+
+/* The glyphs are text, so they are drawn in the body text color, which
+ * clears 4.5:1, with the era's glow behind it. */
+[data-era='terminal-crt'] .nui-Checkbox {
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--nui-color-text);
+  font-family: var(--nui-font-mono);
+  text-shadow: 0 0 6px var(--nui-era-glow-text);
+}
+
+[data-era='terminal-crt'] .nui-Checkbox::before {
+  content: '[ ]';
+  white-space: pre;
+}
+
+[data-era='terminal-crt'] .nui-Checkbox[data-checked]::before {
+  content: '[x]';
+}
+
+[data-era='terminal-crt'] .nui-Checkbox[data-indeterminate]::before {
+  content: '[-]';
+}
+
+[data-era='terminal-crt'] .nui-CheckboxIndicator {
+  display: none;
+}
+
+/* ---- Neubrutalism: a thick ink box with a hard shadow ------------------- */
+
+[data-era='neubrutalism'] .nui-Checkbox {
+  border-radius: 0;
+  border-width: 2px;
+  border-color: var(--nui-era-ink);
+  background: var(--nui-color-surface-raised);
+  box-shadow: var(--nui-era-shadow-hard-sm);
+}
+
+[data-era='neubrutalism'] .nui-Checkbox[data-checked],
+[data-era='neubrutalism'] .nui-Checkbox[data-indeterminate] {
+  border-color: var(--nui-era-ink);
+  background: var(--nui-color-accent);
+}
+
+/* ---- Neumorphism: a well pressed into the surface ----------------------- */
+
+/* The era's border width is 0, but the box keeps a 1px muted edge so its
+ * boundary does not depend on soft shadows to be seen. Its small radius is
+ * still large enough to make a circle of the box, so it is capped. */
+[data-era='neumorphism'] .nui-Checkbox {
+  border-width: 1px;
+  border-radius: min(var(--nui-radius-sm), 0.3125rem);
+  background: var(--nui-color-surface);
+  box-shadow: var(--nui-era-shadow-inset);
+}
+
+[data-era='neumorphism'] .nui-Checkbox[data-checked],
+[data-era='neumorphism'] .nui-Checkbox[data-indeterminate] {
+  background: var(--nui-color-accent);
+  box-shadow: var(--nui-era-shadow-raised-sm);
+}

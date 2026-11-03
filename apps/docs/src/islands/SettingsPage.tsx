@@ -1,6 +1,8 @@
 import {
   Button,
   Card,
+  Checkbox,
+  CheckboxIndicator,
   CardBody,
   CardTitle,
   Dialog,
@@ -21,7 +23,7 @@ import {
 import type * as React from 'react';
 
 /**
- * One settings page, built from the five components.
+ * One settings page, built from every component.
  *
  * This is the demo target from the brief, written once. Every gallery and the
  * timeline render this same tree; nothing in it knows which era or palette it
@@ -47,6 +49,12 @@ export function SettingsPage(): React.ReactElement {
               <Input placeholder="Display name" defaultValue="Ada" />
               <Input placeholder="Email" defaultValue="ada@example.com" />
               <Input placeholder="Website" defaultValue="not a url" invalid />
+              <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Checkbox defaultChecked>
+                  <CheckboxIndicator />
+                </Checkbox>
+                Show my email on my profile
+              </label>
             </div>
           </Card>
         </TabPanel>

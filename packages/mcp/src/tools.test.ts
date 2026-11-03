@@ -87,13 +87,22 @@ describe('get_tokens', () => {
   });
 });
 
-const COMPONENTS = ['NostalgiaRoot', 'Button', 'Input', 'Card', 'Tabs', 'Dialog'] as const;
+const COMPONENTS = [
+  'NostalgiaRoot',
+  'Button',
+  'Input',
+  'Checkbox',
+  'Card',
+  'Tabs',
+  'Dialog',
+] as const;
 
 /** Each family's name, as a pattern that matches its parts too. */
 const FAMILY_PATTERNS: Readonly<Record<string, RegExp>> = {
   NostalgiaRoot: /\bNostalgiaRoot\b/,
   Button: /\bButton\b/,
   Input: /\bInput\b/,
+  Checkbox: /\bCheckbox\w*/,
   Card: /\bCard\w*/,
   Tabs: /\bTab\w*/,
   Dialog: /\bDialog\w*/,

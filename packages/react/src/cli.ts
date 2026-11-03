@@ -24,6 +24,7 @@ import { createSourceProgram, extractProps } from './extract/props.js';
 import { buttonDoc } from './components/Button/Button.docs.js';
 import { cardDoc } from './components/Card/Card.docs.js';
 import { dialogDoc } from './components/Dialog/Dialog.docs.js';
+import { checkboxDoc } from './components/Checkbox/Checkbox.docs.js';
 import { inputDoc } from './components/Input/Input.docs.js';
 import { nostalgiaRootDoc } from './components/NostalgiaRoot/NostalgiaRoot.docs.js';
 import { tabsDoc } from './components/Tabs/Tabs.docs.js';
@@ -43,12 +44,21 @@ const FOUNDATIONS_CSS = 'styles/foundations.css';
  * NostalgiaRoot is listed because every other component needs it as an
  * ancestor, so an agent asking for a Button must also be told about the root.
  */
-export const COMPONENTS = ['NostalgiaRoot', 'Button', 'Input', 'Card', 'Tabs', 'Dialog'] as const;
+export const COMPONENTS = [
+  'NostalgiaRoot',
+  'Button',
+  'Input',
+  'Checkbox',
+  'Card',
+  'Tabs',
+  'Dialog',
+] as const;
 
 const DOCS: Readonly<Record<(typeof COMPONENTS)[number], AnyComponentDoc>> = {
   NostalgiaRoot: nostalgiaRootDoc,
   Button: buttonDoc,
   Input: inputDoc,
+  Checkbox: checkboxDoc,
   Card: cardDoc,
   Tabs: tabsDoc,
   Dialog: dialogDoc,
