@@ -104,7 +104,7 @@ export function createServer(): McpServer {
       inputSchema: z.object({
         name: z
           .string()
-          .describe('Component name: NostalgiaRoot, Button, Input, Card, Tabs or Dialog'),
+          .describe('Component name: NostalgiaRoot, Button, Input, Checkbox, Card, Tabs or Dialog'),
         era: z.enum(eraIds as [string, ...string[]]).describe('Era id, from list_eras'),
         section: z
           .enum(COMPONENT_SECTIONS)

@@ -6,6 +6,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 
 import { buttonDoc } from '../components/Button/Button.docs.js';
 import { cardDoc } from '../components/Card/Card.docs.js';
+import { checkboxDoc } from '../components/Checkbox/Checkbox.docs.js';
 import { dialogDoc } from '../components/Dialog/Dialog.docs.js';
 import { inputDoc } from '../components/Input/Input.docs.js';
 import { nostalgiaRootDoc } from '../components/NostalgiaRoot/NostalgiaRoot.docs.js';
@@ -24,7 +25,15 @@ import { createSourceProgram, extractProps } from './props.js';
 
 const packageDir = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
-const docs = [nostalgiaRootDoc, buttonDoc, inputDoc, cardDoc, tabsDoc, dialogDoc] as const;
+const docs = [
+  nostalgiaRootDoc,
+  buttonDoc,
+  inputDoc,
+  checkboxDoc,
+  cardDoc,
+  tabsDoc,
+  dialogDoc,
+] as const;
 
 /** Exported parts, as docs.test.ts counts them: hooks are not parts. */
 const parts = Object.keys(pkg)
@@ -189,6 +198,7 @@ const storyModules = {
   NostalgiaRoot: () => import('../components/NostalgiaRoot/NostalgiaRoot.stories.js'),
   Button: () => import('../components/Button/Button.stories.js'),
   Input: () => import('../components/Input/Input.stories.js'),
+  Checkbox: () => import('../components/Checkbox/Checkbox.stories.js'),
   Card: () => import('../components/Card/Card.stories.js'),
   Tabs: () => import('../components/Tabs/Tabs.stories.js'),
   Dialog: () => import('../components/Dialog/Dialog.stories.js'),

@@ -39,7 +39,15 @@ describe('component stylesheets', () => {
   it('exist: one per component folder plus the shared foundation', async () => {
     const names = (await readStylesheets()).map(([name]) => name);
     expect(names).toContain('styles/foundations.css');
-    for (const component of ['NostalgiaRoot', 'Button', 'Input', 'Card', 'Tabs', 'Dialog']) {
+    for (const component of [
+      'NostalgiaRoot',
+      'Button',
+      'Input',
+      'Checkbox',
+      'Card',
+      'Tabs',
+      'Dialog',
+    ]) {
       expect(names).toContain('components/' + component + '/' + component + '.css');
     }
   });

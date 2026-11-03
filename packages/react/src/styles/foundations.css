@@ -6,6 +6,7 @@
 
 .nui-Button,
 .nui-Input,
+.nui-Checkbox,
 .nui-Card,
 .nui-Tab,
 .nui-DialogPopup {
@@ -20,6 +21,7 @@
 /* One focus treatment, shaped per era by the focus tokens. */
 .nui-Button:focus-visible,
 .nui-Input:focus-visible,
+.nui-Checkbox:focus-visible,
 .nui-Tab:focus-visible,
 .nui-DialogClose:focus-visible {
   outline: var(--nui-focus-width) solid var(--nui-era-focus-color);
@@ -32,4 +34,11 @@
 [data-era='classic-windows'] .nui-Button:focus-visible,
 [data-era='classic-windows'] .nui-Tab:focus-visible {
   outline-style: dotted;
+}
+
+/* A checkbox is too small to hold the rectangle inside it, so the dotted
+ * rectangle sits just outside the box instead. */
+[data-era='classic-windows'] .nui-Checkbox:focus-visible {
+  outline-style: dotted;
+  outline-offset: 2px;
 }

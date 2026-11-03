@@ -44,6 +44,190 @@ exports[`props tables > CardBody matches its snapshot 1`] = `[]`;
 
 exports[`props tables > CardTitle matches its snapshot 1`] = `[]`;
 
+exports[`props tables > Checkbox matches its snapshot 1`] = `
+[
+  {
+    "description": "Identifies the form that owns the hidden input. Useful when the checkbox is rendered outside the form.",
+    "name": "form",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: CheckboxRootState) => CSSProperties | undefined)",
+  },
+  {
+    "default": "false",
+    "description": "Whether the checkbox is initially ticked.
+
+To render a controlled checkbox, use the \`checked\` prop instead.",
+    "name": "defaultChecked",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: CheckboxRootState) => string | undefined)",
+  },
+  {
+    "description": "The id of the input element.",
+    "name": "id",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "default": "false",
+    "description": "Whether the component should ignore user interaction.",
+    "name": "disabled",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "default": "undefined",
+    "description": "Identifies the field when a form is submitted.",
+    "name": "name",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "description": "The checkbox's value. Identifies it within a [Checkbox Group](https://base-ui.com/react/components/checkbox-group), falling back to \`name\` when omitted. When submitting a form, a checked box submits \`value\`; with no \`value\`, it submits the native "on".",
+    "name": "value",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "default": "undefined",
+    "description": "Whether the checkbox is currently ticked.
+
+To render an uncontrolled checkbox, use the \`defaultChecked\` prop instead.",
+    "name": "checked",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "default": "false",
+    "description": "Whether the user should be unable to tick or untick the checkbox.",
+    "name": "readOnly",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "default": "false",
+    "description": "Whether the user must tick the checkbox before submitting a form.",
+    "name": "required",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, CheckboxRootState>",
+  },
+  {
+    "default": "false",
+    "description": "Whether the component renders a native \`<button>\` element when replacing it via the \`render\` prop. Set to \`true\` if the rendered element is a native button.",
+    "name": "nativeButton",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "Event handler called when the checkbox is ticked or unticked.",
+    "name": "onCheckedChange",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((checked: boolean, eventDetails: { reason: "none"; event: Event; cancel: () => void; allowPropagation: () => void; isCanceled: boolean; isPropagationAllowed: boolean; trigger: Element | undefined; }) => void)",
+  },
+  {
+    "default": "false",
+    "description": "Whether the checkbox is in a mixed state: neither ticked, nor unticked.",
+    "name": "indeterminate",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "A ref to access the hidden \`<input>\` element.",
+    "name": "inputRef",
+    "origin": "base-ui",
+    "required": false,
+    "type": "Ref<HTMLInputElement>",
+  },
+  {
+    "default": "false",
+    "description": "Whether the checkbox controls a group of child checkboxes.
+
+Must be used in a [Checkbox Group](https://base-ui.com/react/components/checkbox-group).",
+    "name": "parent",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "The value submitted with the form when the checkbox is unchecked. By default, unchecked checkboxes do not submit any value, matching native checkbox behavior.",
+    "name": "uncheckedValue",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+]
+`;
+
+exports[`props tables > CheckboxIndicator matches its snapshot 1`] = `
+[
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: CheckboxIndicatorState) => CSSProperties | undefined)",
+  },
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: CheckboxIndicatorState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, CheckboxIndicatorState>",
+  },
+  {
+    "default": "false",
+    "description": "Whether to keep the element in the DOM when the checkbox is not checked.",
+    "name": "keepMounted",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+]
+`;
+
 exports[`props tables > Dialog matches its snapshot 1`] = `
 [
   {
