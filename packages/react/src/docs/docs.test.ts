@@ -17,6 +17,8 @@ import { inputDoc } from '../components/Input/Input.docs.js';
 import type * as InputStories from '../components/Input/Input.stories.js';
 import { nostalgiaRootDoc } from '../components/NostalgiaRoot/NostalgiaRoot.docs.js';
 import type * as NostalgiaRootStories from '../components/NostalgiaRoot/NostalgiaRoot.stories.js';
+import { switchDoc } from '../components/Switch/Switch.docs.js';
+import type * as SwitchStories from '../components/Switch/Switch.stories.js';
 import { tabsDoc } from '../components/Tabs/Tabs.docs.js';
 import type * as TabsStories from '../components/Tabs/Tabs.stories.js';
 import * as pkg from '../index.js';
@@ -47,6 +49,7 @@ const docs = [
   buttonDoc,
   inputDoc,
   checkboxDoc,
+  switchDoc,
   cardDoc,
   tabsDoc,
   dialogDoc,
@@ -58,6 +61,7 @@ const FAMILY_PATTERNS: Readonly<Record<string, RegExp>> = {
   Button: /\bButton\b/,
   Input: /\bInput\b/,
   Checkbox: /\bCheckbox\w*/,
+  Switch: /\bSwitch\w*/,
   Card: /\bCard\w*/,
   Tabs: /\bTab\w*/,
   Dialog: /\bDialog\w*/,
@@ -101,6 +105,7 @@ const storyReferencesTypecheck: readonly true[] = [
   true satisfies RefsExist<typeof buttonDoc, typeof ButtonStories>,
   true satisfies RefsExist<typeof inputDoc, typeof InputStories>,
   true satisfies RefsExist<typeof checkboxDoc, typeof CheckboxStories>,
+  true satisfies RefsExist<typeof switchDoc, typeof SwitchStories>,
   true satisfies RefsExist<typeof cardDoc, typeof CardStories>,
   true satisfies RefsExist<typeof tabsDoc, typeof TabsStories>,
   true satisfies RefsExist<typeof dialogDoc, typeof DialogStories>,
@@ -209,6 +214,7 @@ const stories = {
   Button: () => import('../components/Button/Button.stories.js'),
   Input: () => import('../components/Input/Input.stories.js'),
   Checkbox: () => import('../components/Checkbox/Checkbox.stories.js'),
+  Switch: () => import('../components/Switch/Switch.stories.js'),
   Card: () => import('../components/Card/Card.stories.js'),
   Tabs: () => import('../components/Tabs/Tabs.stories.js'),
   Dialog: () => import('../components/Dialog/Dialog.stories.js'),

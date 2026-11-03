@@ -13,6 +13,7 @@ export type { CardProps } from './components/Card/index.js';
 export { Tabs, TabList, Tab, TabIndicator, TabPanel } from './components/Tabs/index.js';
 
 export { Checkbox, CheckboxIndicator } from './components/Checkbox/index.js';
+export { Switch, SwitchThumb } from './components/Switch/index.js';
 
 export {
   Dialog,

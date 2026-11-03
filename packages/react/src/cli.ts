@@ -27,6 +27,7 @@ import { dialogDoc } from './components/Dialog/Dialog.docs.js';
 import { checkboxDoc } from './components/Checkbox/Checkbox.docs.js';
 import { inputDoc } from './components/Input/Input.docs.js';
 import { nostalgiaRootDoc } from './components/NostalgiaRoot/NostalgiaRoot.docs.js';
+import { switchDoc } from './components/Switch/Switch.docs.js';
 import { tabsDoc } from './components/Tabs/Tabs.docs.js';
 import { foundationsDoc } from './docs/foundations.docs.js';
 import type { AnyComponentDoc, PropsTable } from './docs/schema.js';
@@ -49,6 +50,7 @@ export const COMPONENTS = [
   'Button',
   'Input',
   'Checkbox',
+  'Switch',
   'Card',
   'Tabs',
   'Dialog',
@@ -59,6 +61,7 @@ const DOCS: Readonly<Record<(typeof COMPONENTS)[number], AnyComponentDoc>> = {
   Button: buttonDoc,
   Input: inputDoc,
   Checkbox: checkboxDoc,
+  Switch: switchDoc,
   Card: cardDoc,
   Tabs: tabsDoc,
   Dialog: dialogDoc,

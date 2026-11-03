@@ -667,6 +667,164 @@ exports[`props tables > NostalgiaRoot matches its snapshot 1`] = `
 ]
 `;
 
+exports[`props tables > Switch matches its snapshot 1`] = `
+[
+  {
+    "description": "Identifies the form that owns the hidden input. Useful when the switch is rendered outside the form.",
+    "name": "form",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SwitchRootState) => CSSProperties | undefined)",
+  },
+  {
+    "default": "false",
+    "description": "Whether the switch is initially active.
+
+To render a controlled switch, use the \`checked\` prop instead.",
+    "name": "defaultChecked",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SwitchRootState) => string | undefined)",
+  },
+  {
+    "description": "The id of the hidden input element.
+
+When \`nativeButton\` is \`true\`, the id is applied to the root element.",
+    "name": "id",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "default": "false",
+    "description": "Whether the component should ignore user interaction.",
+    "name": "disabled",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "Identifies the field when a form is submitted.",
+    "name": "name",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "description": "The value submitted with the form when the switch is on. By default, switch submits the "on" value, matching native checkbox behavior.",
+    "name": "value",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "description": "Whether the switch is currently active.
+
+To render an uncontrolled switch, use the \`defaultChecked\` prop instead.",
+    "name": "checked",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "default": "false",
+    "description": "Whether the user should be unable to activate or deactivate the switch.",
+    "name": "readOnly",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "default": "false",
+    "description": "Whether the user must activate the switch before submitting a form.",
+    "name": "required",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SwitchRootState>",
+  },
+  {
+    "default": "false",
+    "description": "Whether the component renders a native \`<button>\` element when replacing it via the \`render\` prop. Set to \`true\` if the rendered element is a native button.",
+    "name": "nativeButton",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "Event handler called when the switch is activated or deactivated.",
+    "name": "onCheckedChange",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((checked: boolean, eventDetails: { reason: "none"; event: Event; cancel: () => void; allowPropagation: () => void; isCanceled: boolean; isPropagationAllowed: boolean; trigger: Element | undefined; }) => void)",
+  },
+  {
+    "description": "A ref to access the hidden \`<input>\` element.",
+    "name": "inputRef",
+    "origin": "base-ui",
+    "required": false,
+    "type": "Ref<HTMLInputElement>",
+  },
+  {
+    "description": "The value submitted with the form when the switch is off. By default, unchecked switches do not submit any value, matching native checkbox behavior.",
+    "name": "uncheckedValue",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+]
+`;
+
+exports[`props tables > SwitchThumb matches its snapshot 1`] = `
+[
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SwitchThumbState) => CSSProperties | undefined)",
+  },
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SwitchThumbState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SwitchThumbState>",
+  },
+]
+`;
+
 exports[`props tables > Tab matches its snapshot 1`] = `
 [
   {
