@@ -1,0 +1,298 @@
+/*
+ * Select. The trigger reads the same tokens as Input and the popup the same
+ * as Card, so a form of Inputs and Selects looks like one form in every era.
+ * The highlighted item takes the accent fill with the text color paired with
+ * it: the palette's selection color is too close to the popup to show which
+ * item is highlighted (1.02:1 in Solarized Light) and text on it fails in One
+ * Dark Pro (2.14:1). The chosen item is marked by the indicator's tick.
+ */
+
+.nui-SelectLabel {
+  margin-bottom: calc(var(--nui-spacing-unit) * 0.75);
+  color: var(--nui-color-text);
+  font-family: var(--nui-font-sans);
+}
+
+.nui-SelectTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--nui-spacing-unit) * 1.5);
+  min-width: 12rem;
+  padding: calc(var(--nui-spacing-unit) * 1.25 * var(--nui-density-scale))
+    calc(var(--nui-spacing-unit) * 1.5 * var(--nui-density-scale));
+  border-radius: var(--nui-radius-sm);
+  border: var(--nui-border-width) var(--nui-border-style) var(--nui-color-border);
+  background: var(--nui-color-surface-sunken);
+  color: var(--nui-color-text);
+  font-weight: var(--nui-font-weight-normal);
+  text-align: start;
+  cursor: pointer;
+}
+
+.nui-SelectTrigger[data-disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.nui-SelectValue[data-placeholder] {
+  color: var(--nui-color-text-muted);
+}
+
+/* The arrow: two sides of a box, rotated, in currentColor. */
+.nui-SelectIcon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.nui-SelectIcon:empty::before {
+  content: '';
+  display: block;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-top: -0.2rem;
+  border: solid currentColor;
+  border-width: 0 0.125rem 0.125rem 0;
+  transform: rotate(45deg);
+}
+
+.nui-SelectPopup {
+  box-sizing: border-box;
+  min-width: 12rem;
+  padding: calc(var(--nui-spacing-unit) * 0.5);
+  border-radius: var(--nui-radius-md);
+  border: var(--nui-border-width) var(--nui-border-style) var(--nui-color-border);
+  background: var(--nui-color-surface-raised);
+  color: var(--nui-color-text);
+  font-family: var(--nui-font-sans);
+  letter-spacing: var(--nui-letter-spacing);
+  box-shadow: var(--nui-era-shadow-raised);
+  outline: 0;
+}
+
+.nui-SelectList {
+  max-height: 18rem;
+  overflow-y: auto;
+}
+
+/* A fixed column for the tick, so every item's text starts at the same place
+ * whether or not it is the chosen one. */
+.nui-SelectItem {
+  display: grid;
+  grid-template-columns: 1rem 1fr;
+  align-items: center;
+  gap: var(--nui-spacing-unit);
+  padding: calc(var(--nui-spacing-unit) * 0.75 * var(--nui-density-scale))
+    calc(var(--nui-spacing-unit) * 1.25 * var(--nui-density-scale));
+  border-radius: var(--nui-radius-sm);
+  color: var(--nui-color-text);
+  cursor: default;
+  outline: 0;
+  user-select: none;
+}
+
+/* The ring is in the body text color, which clears 4.5:1 on every surface a
+ * popup uses, so the highlighted row stands out from the popup even where the
+ * accent fill alone does not reach 3:1 (2.60:1 on Solarized Light's raised
+ * surface). */
+.nui-SelectItem[data-highlighted] {
+  background: var(--nui-color-accent);
+  color: var(--nui-color-text-on-accent);
+  box-shadow: inset 0 0 0 1px var(--nui-color-text);
+}
+
+.nui-SelectItem[data-disabled] {
+  color: var(--nui-color-text-muted);
+  cursor: not-allowed;
+}
+
+.nui-SelectItemText {
+  grid-column: 2;
+}
+
+/* The tick for the chosen item, drawn like Checkbox's unless the indicator
+ * holds an icon of its own. */
+.nui-SelectItemIndicator {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: center;
+  display: inline-flex;
+}
+
+.nui-SelectItemIndicator:empty::before {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  width: 0.35rem;
+  height: 0.65rem;
+  margin-top: -0.1rem;
+  border: solid currentColor;
+  border-width: 0 0.15rem 0.15rem 0;
+  transform: rotate(45deg);
+}
+
+/* ---- Classic Windows: a sunken field with a bevelled arrow button ------- */
+
+[data-era='classic-windows'] .nui-SelectTrigger {
+  padding-right: 2px;
+  border-radius: 0;
+  border-top-color: var(--nui-era-bevel-darker);
+  border-left-color: var(--nui-era-bevel-darker);
+  border-right-color: var(--nui-era-bevel-lighter);
+  border-bottom-color: var(--nui-era-bevel-lighter);
+  box-shadow:
+    inset 1px 1px 0 0 var(--nui-era-bevel-dark),
+    inset -1px -1px 0 0 var(--nui-era-bevel-light);
+}
+
+/* The arrow sits on a raised button face inside the field. */
+[data-era='classic-windows'] .nui-SelectIcon {
+  align-self: stretch;
+  width: 1.125rem;
+  margin-block: calc(var(--nui-spacing-unit) * -1.25 * var(--nui-density-scale) + 2px);
+  border: 2px solid;
+  border-top-color: var(--nui-era-bevel-lighter);
+  border-left-color: var(--nui-era-bevel-lighter);
+  border-right-color: var(--nui-era-bevel-darker);
+  border-bottom-color: var(--nui-era-bevel-darker);
+  background: var(--nui-era-control-face);
+  color: var(--nui-color-text);
+}
+
+/* The era drew a solid triangle, not a chevron. */
+[data-era='classic-windows'] .nui-SelectIcon:empty::before {
+  width: 0;
+  height: 0;
+  margin-top: 0;
+  border-style: solid;
+  border-color: currentColor transparent transparent transparent;
+  border-width: 0.25rem 0.25rem 0 0.25rem;
+  transform: none;
+}
+
+/* A flat list with a plain dark edge and square highlight. */
+[data-era='classic-windows'] .nui-SelectPopup {
+  padding: 0;
+  border-radius: 0;
+  border: 1px solid var(--nui-color-text);
+  background: var(--nui-color-surface-sunken);
+  box-shadow: none;
+}
+
+[data-era='classic-windows'] .nui-SelectItem {
+  border-radius: 0;
+}
+
+/* ---- Frutiger Aero: an inset glass field and a glass popup -------------- */
+
+[data-era='frutiger-aero'] .nui-SelectTrigger {
+  border-radius: var(--nui-radius-md);
+  border-color: var(--nui-era-glass-border);
+  background: var(--nui-era-glass-fill);
+  box-shadow: inset 0 2px 4px var(--nui-era-gloss-mid);
+}
+
+/* The glass is painted over an opaque surface layer, as Dialog's is, so text
+ * on it is the color the contrast audit measures. */
+[data-era='frutiger-aero'] .nui-SelectPopup {
+  border-color: var(--nui-era-glass-border);
+  background:
+    linear-gradient(var(--nui-era-glass-fill), var(--nui-era-glass-fill)), var(--nui-color-surface);
+}
+
+/* ---- Flat / Metro: a solid popup with divider lines --------------------- */
+
+[data-era='flat-metro'] .nui-SelectTrigger {
+  border: 0;
+  border-bottom: 2px solid var(--nui-era-divider);
+  border-radius: 0;
+  background: var(--nui-era-surface-hover);
+  box-shadow: none;
+}
+
+[data-era='flat-metro'] .nui-SelectPopup {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+[data-era='flat-metro'] .nui-SelectItem {
+  border-radius: 0;
+}
+
+[data-era='flat-metro'] .nui-SelectItem + .nui-SelectItem {
+  border-top: 1px solid var(--nui-era-divider);
+}
+
+/* ---- Terminal / CRT: an accent-bordered popup with scanlines ------------ */
+
+/* The trigger's text stays in the body text color: accent text does not
+ * reach 4.5:1 in this era (#72). */
+[data-era='terminal-crt'] .nui-SelectTrigger {
+  border-color: var(--nui-color-accent);
+  background: transparent;
+  font-family: var(--nui-font-mono);
+  text-shadow: 0 0 6px var(--nui-era-glow-text);
+}
+
+/* No glow behind the muted placeholder, as on Input: the glow lightens what
+ * is behind the text and took it to 3.93:1 in Dracula. */
+[data-era='terminal-crt'] .nui-SelectValue[data-placeholder] {
+  text-shadow: none;
+}
+
+[data-era='terminal-crt'] .nui-SelectPopup {
+  position: relative;
+  border-radius: 0;
+  border-color: var(--nui-color-accent);
+  background: var(--nui-color-surface);
+  font-family: var(--nui-font-mono);
+}
+
+[data-era='terminal-crt'] .nui-SelectPopup::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    var(--nui-era-scanline) 2px,
+    var(--nui-era-scanline) 3px
+  );
+  pointer-events: none;
+}
+
+[data-era='terminal-crt'] .nui-SelectItem {
+  border-radius: 0;
+}
+
+/* ---- Neubrutalism: an ink popup with a hard shadow ---------------------- */
+
+[data-era='neubrutalism'] .nui-SelectTrigger {
+  border-color: var(--nui-era-ink);
+  background: var(--nui-color-surface-raised);
+  box-shadow: var(--nui-era-shadow-hard-sm);
+}
+
+[data-era='neubrutalism'] .nui-SelectPopup {
+  border-color: var(--nui-era-ink);
+  box-shadow: var(--nui-era-shadow-hard);
+}
+
+/* ---- Neumorphism: an inset trigger and an extruded popup ---------------- */
+
+[data-era='neumorphism'] .nui-SelectTrigger {
+  border: 0;
+  background: var(--nui-color-surface);
+  box-shadow: var(--nui-era-shadow-inset);
+}
+
+[data-era='neumorphism'] .nui-SelectPopup {
+  border: 0;
+  background: var(--nui-color-surface);
+  box-shadow: var(--nui-era-shadow-raised);
+}

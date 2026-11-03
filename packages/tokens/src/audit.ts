@@ -169,6 +169,17 @@ const CHECKS: readonly Check[] = [
     required: AA_NON_TEXT,
     level: 'AA-large',
   },
+  // A select's highlighted item is drawn on the accent fill rather than the
+  // palette's selection color, which neither reads against the popup nor
+  // carries text in every palette (#23).
+  {
+    id: 'select-item-highlighted',
+    label: 'Highlighted select item text',
+    foreground: 'textOnAccent',
+    background: 'accent',
+    required: AA_TEXT,
+    level: 'AA',
+  },
   {
     id: 'border-on-surface',
     label: 'Border against the surface it sits on',

@@ -76,6 +76,7 @@ for (const [path, module] of Object.entries(modules)) {
 const OPENS_ON_LOAD: ReadonlySet<string> = new Set([
   'Dialog.Open',
   'Dialog.DontTitleAfterDescription',
+  'Select.Open',
 ]);
 
 // A renamed or deleted story must not leave a stale entry behind.

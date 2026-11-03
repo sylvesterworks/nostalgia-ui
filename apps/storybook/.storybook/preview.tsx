@@ -16,6 +16,7 @@ import '../../../packages/react/src/components/Button/Button.css';
 import '../../../packages/react/src/components/Input/Input.css';
 import '../../../packages/react/src/components/Checkbox/Checkbox.css';
 import '../../../packages/react/src/components/Switch/Switch.css';
+import '../../../packages/react/src/components/Select/Select.css';
 import '../../../packages/react/src/components/Card/Card.css';
 import '../../../packages/react/src/components/Tabs/Tabs.css';
 import '../../../packages/react/src/components/Dialog/Dialog.css';

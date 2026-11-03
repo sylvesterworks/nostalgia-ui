@@ -14,6 +14,20 @@ export { Tabs, TabList, Tab, TabIndicator, TabPanel } from './components/Tabs/in
 
 export { Checkbox, CheckboxIndicator } from './components/Checkbox/index.js';
 export { Switch, SwitchThumb } from './components/Switch/index.js';
+export {
+  Select,
+  SelectIcon,
+  SelectItem,
+  SelectItemIndicator,
+  SelectItemText,
+  SelectLabel,
+  SelectList,
+  SelectPopup,
+  SelectPortal,
+  SelectPositioner,
+  SelectTrigger,
+  SelectValue,
+} from './components/Select/index.js';
 
 export {
   Dialog,

@@ -92,6 +92,26 @@ function rowFor(checker: ts.TypeChecker, prop: ts.Symbol, origin: PropRow['origi
   };
 }
 
+interface Declared {
+  readonly row: PropRow;
+  readonly declaration: ts.Declaration;
+}
+
+/**
+ * Rows in declaration order: by declaring file, then position in it. The
+ * checker's own property order is not stable for intersected and Omit types;
+ * it changed with whatever else the program loaded, which once flipped two of
+ * DialogPopup's rows when Select was added (#23).
+ */
+function bySource(declared: readonly Declared[]): PropRow[] {
+  const key = (d: Declared): string => d.declaration.getSourceFile().fileName.replace(/\\/g, '/');
+  return [...declared]
+    .sort((a, b) =>
+      key(a) === key(b) ? a.declaration.pos - b.declaration.pos : key(a) < key(b) ? -1 : 1,
+    )
+    .map((d) => d.row);
+}
+
 /**
  * The props table for every component exported from src/index.ts, keyed by
  * export name. Hooks (`use*`) and type-only exports are skipped. Within a
@@ -118,17 +138,22 @@ export function extractProps(program: ts.Program, packageDir: string): PropsTabl
       throw new Error(exported.name + ' is exported but takes no props');
     }
 
-    const own: PropRow[] = [];
-    const baseUi: PropRow[] = [];
+    const own: Declared[] = [];
+    const baseUi: Declared[] = [];
     for (const prop of checker.getPropertiesOfType(checker.getTypeOfSymbol(propsParameter))) {
       const declaration = prop.declarations?.[0];
       if (declaration === undefined)
         throw new Error(exported.name + '.' + prop.name + ' has no declaration');
       const origin = originOf(declaration, srcDir);
       if (origin === 'react') continue;
-      (origin === 'nostalgiaui' ? own : baseUi).push(rowFor(checker, prop, origin));
+      const row = rowFor(checker, prop, origin);
+      // Some Base UI parts redeclare `children` with no JSDoc (Select's Root,
+      // Trigger, Popup, Item and ItemIndicator in 1.9.0). Undocumented, it is
+      // React's `children` again, so it is left out the same way (#23).
+      if (origin === 'base-ui' && prop.name === 'children' && row.description === '') continue;
+      (origin === 'nostalgiaui' ? own : baseUi).push({ row, declaration });
     }
-    table[exported.name] = [...own, ...baseUi];
+    table[exported.name] = [...bySource(own), ...bySource(baseUi)];
   }
   return table;
 }
