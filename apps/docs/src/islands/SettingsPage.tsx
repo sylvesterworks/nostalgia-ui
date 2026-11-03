@@ -14,6 +14,18 @@ import {
   DialogTitle,
   DialogTrigger,
   Input,
+  Select,
+  SelectIcon,
+  SelectItem,
+  SelectItemIndicator,
+  SelectItemText,
+  SelectLabel,
+  SelectList,
+  SelectPopup,
+  SelectPortal,
+  SelectPositioner,
+  SelectTrigger,
+  SelectValue,
   Switch,
   SwitchThumb,
   Tab,
@@ -23,6 +35,12 @@ import {
   Tabs,
 } from '@nostalgiaui/react';
 import type * as React from 'react';
+
+const languages = [
+  { value: 'en', label: 'English' },
+  { value: 'fr', label: 'Français' },
+  { value: 'de', label: 'Deutsch' },
+] as const;
 
 /**
  * One settings page, built from every component.
@@ -63,6 +81,29 @@ export function SettingsPage(): React.ReactElement {
                 </Switch>
                 Show me as online
               </label>
+              <Select items={languages} defaultValue="en">
+                <div style={{ display: 'grid', justifyItems: 'start' }}>
+                  <SelectLabel>Language</SelectLabel>
+                  <SelectTrigger>
+                    <SelectValue />
+                    <SelectIcon />
+                  </SelectTrigger>
+                </div>
+                <SelectPortal>
+                  <SelectPositioner>
+                    <SelectPopup>
+                      <SelectList>
+                        {languages.map((language) => (
+                          <SelectItem key={language.value} value={language.value}>
+                            <SelectItemIndicator />
+                            <SelectItemText>{language.label}</SelectItemText>
+                          </SelectItem>
+                        ))}
+                      </SelectList>
+                    </SelectPopup>
+                  </SelectPositioner>
+                </SelectPortal>
+              </Select>
             </div>
           </Card>
         </TabPanel>

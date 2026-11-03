@@ -47,50 +47,11 @@ exports[`props tables > CardTitle matches its snapshot 1`] = `[]`;
 exports[`props tables > Checkbox matches its snapshot 1`] = `
 [
   {
-    "description": "Identifies the form that owns the hidden input. Useful when the checkbox is rendered outside the form.",
-    "name": "form",
-    "origin": "base-ui",
-    "required": false,
-    "type": "string",
-  },
-  {
-    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
-    "name": "style",
-    "origin": "base-ui",
-    "required": false,
-    "type": "CSSProperties | ((state: CheckboxRootState) => CSSProperties | undefined)",
-  },
-  {
-    "default": "false",
-    "description": "Whether the checkbox is initially ticked.
-
-To render a controlled checkbox, use the \`checked\` prop instead.",
-    "name": "defaultChecked",
-    "origin": "base-ui",
-    "required": false,
-    "type": "boolean",
-  },
-  {
-    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
-    "name": "className",
-    "origin": "base-ui",
-    "required": false,
-    "type": "string | ((state: CheckboxRootState) => string | undefined)",
-  },
-  {
     "description": "The id of the input element.",
     "name": "id",
     "origin": "base-ui",
     "required": false,
     "type": "string",
-  },
-  {
-    "default": "false",
-    "description": "Whether the component should ignore user interaction.",
-    "name": "disabled",
-    "origin": "base-ui",
-    "required": false,
-    "type": "boolean",
   },
   {
     "default": "undefined",
@@ -101,8 +62,8 @@ To render a controlled checkbox, use the \`checked\` prop instead.",
     "type": "string",
   },
   {
-    "description": "The checkbox's value. Identifies it within a [Checkbox Group](https://base-ui.com/react/components/checkbox-group), falling back to \`name\` when omitted. When submitting a form, a checked box submits \`value\`; with no \`value\`, it submits the native "on".",
-    "name": "value",
+    "description": "Identifies the form that owns the hidden input. Useful when the checkbox is rendered outside the form.",
+    "name": "form",
     "origin": "base-ui",
     "required": false,
     "type": "string",
@@ -119,6 +80,31 @@ To render an uncontrolled checkbox, use the \`defaultChecked\` prop instead.",
   },
   {
     "default": "false",
+    "description": "Whether the checkbox is initially ticked.
+
+To render a controlled checkbox, use the \`checked\` prop instead.",
+    "name": "defaultChecked",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "default": "false",
+    "description": "Whether the component should ignore user interaction.",
+    "name": "disabled",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "Event handler called when the checkbox is ticked or unticked.",
+    "name": "onCheckedChange",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((checked: boolean, eventDetails: { reason: "none"; event: Event; cancel: () => void; allowPropagation: () => void; isCanceled: boolean; isPropagationAllowed: boolean; trigger: Element | undefined; }) => void)",
+  },
+  {
+    "default": "false",
     "description": "Whether the user should be unable to tick or untick the checkbox.",
     "name": "readOnly",
     "origin": "base-ui",
@@ -132,30 +118,6 @@ To render an uncontrolled checkbox, use the \`defaultChecked\` prop instead.",
     "origin": "base-ui",
     "required": false,
     "type": "boolean",
-  },
-  {
-    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
-
-Accepts a \`ReactElement\` or a function that returns the element to render.",
-    "name": "render",
-    "origin": "base-ui",
-    "required": false,
-    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, CheckboxRootState>",
-  },
-  {
-    "default": "false",
-    "description": "Whether the component renders a native \`<button>\` element when replacing it via the \`render\` prop. Set to \`true\` if the rendered element is a native button.",
-    "name": "nativeButton",
-    "origin": "base-ui",
-    "required": false,
-    "type": "boolean",
-  },
-  {
-    "description": "Event handler called when the checkbox is ticked or unticked.",
-    "name": "onCheckedChange",
-    "origin": "base-ui",
-    "required": false,
-    "type": "((checked: boolean, eventDetails: { reason: "none"; event: Event; cancel: () => void; allowPropagation: () => void; isCanceled: boolean; isPropagationAllowed: boolean; trigger: Element | undefined; }) => void)",
   },
   {
     "default": "false",
@@ -189,17 +151,56 @@ Must be used in a [Checkbox Group](https://base-ui.com/react/components/checkbox
     "required": false,
     "type": "string",
   },
+  {
+    "description": "The checkbox's value. Identifies it within a [Checkbox Group](https://base-ui.com/react/components/checkbox-group), falling back to \`name\` when omitted. When submitting a form, a checked box submits \`value\`; with no \`value\`, it submits the native "on".",
+    "name": "value",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: CheckboxRootState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, CheckboxRootState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: CheckboxRootState) => CSSProperties | undefined)",
+  },
+  {
+    "default": "false",
+    "description": "Whether the component renders a native \`<button>\` element when replacing it via the \`render\` prop. Set to \`true\` if the rendered element is a native button.",
+    "name": "nativeButton",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
 ]
 `;
 
 exports[`props tables > CheckboxIndicator matches its snapshot 1`] = `
 [
   {
-    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
-    "name": "style",
+    "default": "false",
+    "description": "Whether to keep the element in the DOM when the checkbox is not checked.",
+    "name": "keepMounted",
     "origin": "base-ui",
     "required": false,
-    "type": "CSSProperties | ((state: CheckboxIndicatorState) => CSSProperties | undefined)",
+    "type": "boolean",
   },
   {
     "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
@@ -218,12 +219,11 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
     "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, CheckboxIndicatorState>",
   },
   {
-    "default": "false",
-    "description": "Whether to keep the element in the DOM when the checkbox is not checked.",
-    "name": "keepMounted",
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
     "origin": "base-ui",
     "required": false,
-    "type": "boolean",
+    "type": "CSSProperties | ((state: CheckboxIndicatorState) => CSSProperties | undefined)",
   },
 ]
 `;
@@ -320,11 +320,12 @@ When \`modal\` is \`true\` or \`'trap-focus'\`, render \`<Dialog.Close>\` inside
 exports[`props tables > DialogBackdrop matches its snapshot 1`] = `
 [
   {
-    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
-    "name": "style",
+    "default": "false",
+    "description": "Whether the backdrop is forced to render even when nested.",
+    "name": "forceRender",
     "origin": "base-ui",
     "required": false,
-    "type": "CSSProperties | ((state: DialogBackdropState) => CSSProperties | undefined)",
+    "type": "boolean",
   },
   {
     "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
@@ -343,25 +344,17 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
     "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, DialogBackdropState>",
   },
   {
-    "default": "false",
-    "description": "Whether the backdrop is forced to render even when nested.",
-    "name": "forceRender",
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
     "origin": "base-ui",
     "required": false,
-    "type": "boolean",
+    "type": "CSSProperties | ((state: DialogBackdropState) => CSSProperties | undefined)",
   },
 ]
 `;
 
 exports[`props tables > DialogClose matches its snapshot 1`] = `
 [
-  {
-    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
-    "name": "style",
-    "origin": "base-ui",
-    "required": false,
-    "type": "CSSProperties | ((state: DialogCloseState) => CSSProperties | undefined)",
-  },
   {
     "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
     "name": "className",
@@ -379,6 +372,13 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
     "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, DialogCloseState>",
   },
   {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: DialogCloseState) => CSSProperties | undefined)",
+  },
+  {
     "default": "true",
     "description": "Whether the component renders a native \`<button>\` element when replacing it via the \`render\` prop. Set to \`false\` if the rendered element is not a button (for example, \`<div>\`).",
     "name": "nativeButton",
@@ -391,13 +391,6 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
 
 exports[`props tables > DialogDescription matches its snapshot 1`] = `
 [
-  {
-    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
-    "name": "style",
-    "origin": "base-ui",
-    "required": false,
-    "type": "CSSProperties | ((state: DialogDescriptionState) => CSSProperties | undefined)",
-  },
   {
     "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
     "name": "className",
@@ -414,34 +407,18 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
     "required": false,
     "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, DialogDescriptionState>",
   },
-]
-`;
-
-exports[`props tables > DialogPopup matches its snapshot 1`] = `
-[
   {
     "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
     "name": "style",
     "origin": "base-ui",
     "required": false,
-    "type": "CSSProperties | ((state: DialogPopupState) => CSSProperties | undefined)",
+    "type": "CSSProperties | ((state: DialogDescriptionState) => CSSProperties | undefined)",
   },
-  {
-    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
-    "name": "className",
-    "origin": "base-ui",
-    "required": false,
-    "type": "string | ((state: DialogPopupState) => string | undefined)",
-  },
-  {
-    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+]
+`;
 
-Accepts a \`ReactElement\` or a function that returns the element to render.",
-    "name": "render",
-    "origin": "base-ui",
-    "required": false,
-    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, DialogPopupState>",
-  },
+exports[`props tables > DialogPopup matches its snapshot 1`] = `
+[
   {
     "description": "Determines the element to focus when the dialog is opened. By default, focus moves to the first tabbable element inside the popup, except when the dialog is opened by touch — then the popup itself is focused to avoid opening the virtual keyboard.
 
@@ -460,17 +437,48 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
     "required": false,
     "type": "boolean | RefObject<HTMLElement | null> | ((closeType: InteractionType) => boolean | void | HTMLElement | null)",
   },
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: DialogPopupState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, DialogPopupState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: DialogPopupState) => CSSProperties | undefined)",
+  },
 ]
 `;
 
 exports[`props tables > DialogPortal matches its snapshot 1`] = `
 [
   {
-    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
-    "name": "style",
+    "default": "false",
+    "description": "Whether to keep the portal mounted in the DOM while the popup is hidden.",
+    "name": "keepMounted",
     "origin": "base-ui",
     "required": false,
-    "type": "CSSProperties | ((state: DialogPortalState) => CSSProperties | undefined)",
+    "type": "boolean",
+  },
+  {
+    "description": "A parent element to render the portal element into.",
+    "name": "container",
+    "origin": "base-ui",
+    "required": false,
+    "type": "HTMLElement | ShadowRoot | RefObject<HTMLElement | ShadowRoot | null> | null",
   },
   {
     "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
@@ -489,32 +497,17 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
     "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, DialogPortalState>",
   },
   {
-    "default": "false",
-    "description": "Whether to keep the portal mounted in the DOM while the popup is hidden.",
-    "name": "keepMounted",
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
     "origin": "base-ui",
     "required": false,
-    "type": "boolean",
-  },
-  {
-    "description": "A parent element to render the portal element into.",
-    "name": "container",
-    "origin": "base-ui",
-    "required": false,
-    "type": "HTMLElement | ShadowRoot | RefObject<HTMLElement | ShadowRoot | null> | null",
+    "type": "CSSProperties | ((state: DialogPortalState) => CSSProperties | undefined)",
   },
 ]
 `;
 
 exports[`props tables > DialogTitle matches its snapshot 1`] = `
 [
-  {
-    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
-    "name": "style",
-    "origin": "base-ui",
-    "required": false,
-    "type": "CSSProperties | ((state: DialogTitleState) => CSSProperties | undefined)",
-  },
   {
     "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
     "name": "className",
@@ -530,6 +523,13 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
     "origin": "base-ui",
     "required": false,
     "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, DialogTitleState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: DialogTitleState) => CSSProperties | undefined)",
   },
 ]
 `;
@@ -558,14 +558,6 @@ exports[`props tables > DialogTrigger matches its snapshot 1`] = `
     "type": "string",
   },
   {
-    "default": "true",
-    "description": "Whether the component renders a native \`<button>\` element when replacing it via the \`render\` prop. Set to \`false\` if the rendered element is not a button (for example, \`<div>\`).",
-    "name": "nativeButton",
-    "origin": "base-ui",
-    "required": false,
-    "type": "boolean",
-  },
-  {
     "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
     "name": "className",
     "origin": "base-ui",
@@ -588,6 +580,14 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
     "required": false,
     "type": "CSSProperties | ((state: DialogTriggerState) => CSSProperties | undefined)",
   },
+  {
+    "default": "true",
+    "description": "Whether the component renders a native \`<button>\` element when replacing it via the \`render\` prop. Set to \`false\` if the rendered element is not a button (for example, \`<div>\`).",
+    "name": "nativeButton",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
 ]
 `;
 
@@ -602,15 +602,22 @@ exports[`props tables > Input matches its snapshot 1`] = `
     "type": "boolean",
   },
   {
-    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
-    "name": "style",
+    "description": "Callback fired when the \`value\` changes. Use when controlled.",
+    "name": "onValueChange",
     "origin": "base-ui",
     "required": false,
-    "type": "CSSProperties | ((state: InputState) => CSSProperties | undefined)",
+    "type": "((value: string, eventDetails: { reason: "none"; event: Event; cancel: () => void; allowPropagation: () => void; isCanceled: boolean; isPropagationAllowed: boolean; trigger: Element | undefined; }) => void)",
   },
   {
     "description": "The default value of the input. Use when uncontrolled.",
     "name": "defaultValue",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | number | readonly string[]",
+  },
+  {
+    "description": "The value of the input. Use when controlled.",
+    "name": "value",
     "origin": "base-ui",
     "required": false,
     "type": "string | number | readonly string[]",
@@ -623,20 +630,6 @@ exports[`props tables > Input matches its snapshot 1`] = `
     "type": "string | ((state: InputState) => string | undefined)",
   },
   {
-    "description": "The value of the input. Use when controlled.",
-    "name": "value",
-    "origin": "base-ui",
-    "required": false,
-    "type": "string | number | readonly string[]",
-  },
-  {
-    "description": "Callback fired when the \`value\` changes. Use when controlled.",
-    "name": "onValueChange",
-    "origin": "base-ui",
-    "required": false,
-    "type": "((value: string, eventDetails: { reason: "none"; event: Event; cancel: () => void; allowPropagation: () => void; isCanceled: boolean; isPropagationAllowed: boolean; trigger: Element | undefined; }) => void)",
-  },
-  {
     "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
 
 Accepts a \`ReactElement\` or a function that returns the element to render.",
@@ -644,6 +637,13 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
     "origin": "base-ui",
     "required": false,
     "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, InputState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: InputState) => CSSProperties | undefined)",
   },
 ]
 `;
@@ -667,47 +667,58 @@ exports[`props tables > NostalgiaRoot matches its snapshot 1`] = `
 ]
 `;
 
-exports[`props tables > Switch matches its snapshot 1`] = `
+exports[`props tables > Select matches its snapshot 1`] = `
 [
   {
-    "description": "Identifies the form that owns the hidden input. Useful when the switch is rendered outside the form.",
+    "description": "A ref to access the hidden input element.",
+    "name": "inputRef",
+    "origin": "base-ui",
+    "required": false,
+    "type": "Ref<HTMLInputElement>",
+  },
+  {
+    "description": "Identifies the field when a form is submitted.",
+    "name": "name",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "description": "Identifies the form that owns the hidden input. Useful when the select is rendered outside the form.",
     "name": "form",
     "origin": "base-ui",
     "required": false,
     "type": "string",
   },
   {
-    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
-    "name": "style",
+    "description": "Provides a hint to the browser for autofill.",
+    "name": "autoComplete",
     "origin": "base-ui",
     "required": false,
-    "type": "CSSProperties | ((state: SwitchRootState) => CSSProperties | undefined)",
+    "type": "string",
+  },
+  {
+    "description": "The id of the Select.",
+    "name": "id",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
   },
   {
     "default": "false",
-    "description": "Whether the switch is initially active.
-
-To render a controlled switch, use the \`checked\` prop instead.",
-    "name": "defaultChecked",
+    "description": "Whether the user must choose a value before submitting a form.",
+    "name": "required",
     "origin": "base-ui",
     "required": false,
     "type": "boolean",
   },
   {
-    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
-    "name": "className",
+    "default": "false",
+    "description": "Whether the user should be unable to choose a different option from the select popup.",
+    "name": "readOnly",
     "origin": "base-ui",
     "required": false,
-    "type": "string | ((state: SwitchRootState) => string | undefined)",
-  },
-  {
-    "description": "The id of the hidden input element.
-
-When \`nativeButton\` is \`true\`, the id is applied to the root element.",
-    "name": "id",
-    "origin": "base-ui",
-    "required": false,
-    "type": "string",
+    "type": "boolean",
   },
   {
     "default": "false",
@@ -718,15 +729,670 @@ When \`nativeButton\` is \`true\`, the id is applied to the root element.",
     "type": "boolean",
   },
   {
-    "description": "Identifies the field when a form is submitted.",
-    "name": "name",
+    "default": "false",
+    "description": "Whether multiple items can be selected.",
+    "name": "multiple",
+    "origin": "base-ui",
+    "required": false,
+    "type": "Multiple",
+  },
+  {
+    "default": "true",
+    "description": "Whether moving the pointer over items should highlight them. Disabling this prop allows CSS \`:hover\` to be differentiated from the \`:focus\` (\`data-highlighted\`) state.",
+    "name": "highlightItemOnHover",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "default": "false",
+    "description": "Whether the select popup is initially open.
+
+To render a controlled select popup, use the \`open\` prop instead.",
+    "name": "defaultOpen",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "Event handler called when the select popup is opened or closed.",
+    "name": "onOpenChange",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((open: boolean, eventDetails: SelectRootOpenChangeEventDetails) => void)",
+  },
+  {
+    "description": "Event handler called after any animations complete when the select popup is opened or closed.",
+    "name": "onOpenChangeComplete",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((open: boolean) => void)",
+  },
+  {
+    "description": "Whether the select popup is currently open.",
+    "name": "open",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "default": "true",
+    "description": "Determines if the select enters a modal state when open. - \`true\`: user interaction is limited to the select: document page scroll is locked and pointer interactions on outside elements are disabled. - \`false\`: user interaction with the rest of the document is allowed.
+
+On touch devices, a \`true\` modal blocks outside taps but leaves the page scrollable unless the popup spans nearly the full viewport width, matching native iOS behavior.",
+    "name": "modal",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "A ref to imperative actions. - \`unmount\`: Ends the closing phase of the select after an externally controlled closing animation finishes. Call \`preventUnmountOnClose()\` in \`onOpenChange\` first, otherwise the select completes closing on its own. Whether it leaves the DOM is decided by \`keepMounted\` on the portal. - \`close\`: Closes the select imperatively when called.",
+    "name": "actionsRef",
+    "origin": "base-ui",
+    "required": false,
+    "type": "RefObject<SelectRootActions | null>",
+  },
+  {
+    "description": "Data structure of the items rendered in the select popup. When specified, \`<Select.Value>\` renders the label of the selected item instead of the raw value.",
+    "name": "items",
+    "origin": "base-ui",
+    "required": false,
+    "type": "Record<string, ReactNode> | readonly { label: ReactNode; value: any; }[] | readonly Group<any>[]",
+  },
+  {
+    "description": "When the item values are objects (\`<Select.Item value={object}>\`), this function converts the object value to a string representation for display in the trigger. If the shape of the object is \`{ value, label }\`, the label will be used automatically without needing to specify this prop.",
+    "name": "itemToStringLabel",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((itemValue: Value) => string)",
+  },
+  {
+    "description": "When the item values are objects (\`<Select.Item value={object}>\`), this function converts the object value to a string representation for form submission. If the shape of the object is \`{ value, label }\`, the value will be used automatically without needing to specify this prop.",
+    "name": "itemToStringValue",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((itemValue: Value) => string)",
+  },
+  {
+    "description": "Custom comparison logic used to determine if a select item value matches the current selected value. Useful when item values are objects without matching referentially. Defaults to \`Object.is\` comparison.",
+    "name": "isItemEqualToValue",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((itemValue: Value, value: Value) => boolean)",
+  },
+  {
+    "description": "The uncontrolled value of the select when it's initially rendered.
+
+To render a controlled select, use the \`value\` prop instead.",
+    "name": "defaultValue",
+    "origin": "base-ui",
+    "required": false,
+    "type": "SelectInputValue<Value, Multiple> | null",
+  },
+  {
+    "description": "The value of the select. Use when controlled.",
+    "name": "value",
+    "origin": "base-ui",
+    "required": false,
+    "type": "SelectInputValue<Value, Multiple> | null",
+  },
+  {
+    "description": "Event handler called when the value of the select changes.",
+    "name": "onValueChange",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((value: SelectOutputValue<Value, Multiple> | (Multiple extends true ? never : null), eventDetails: SelectRootChangeEventDetails) => void)",
+  },
+]
+`;
+
+exports[`props tables > SelectIcon matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SelectIconState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SelectIconState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SelectIconState) => CSSProperties | undefined)",
+  },
+]
+`;
+
+exports[`props tables > SelectItem matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SelectItemState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SelectItemState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SelectItemState) => CSSProperties | undefined)",
+  },
+  {
+    "default": "false",
+    "description": "Whether the component renders a native \`<button>\` element when replacing it via the \`render\` prop. Set to \`true\` if the rendered element is a native button.",
+    "name": "nativeButton",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "default": "null",
+    "description": "A unique value that identifies this select item.",
+    "name": "value",
+    "origin": "base-ui",
+    "required": false,
+    "type": "any",
+  },
+  {
+    "default": "false",
+    "description": "Whether the component should ignore user interaction.",
+    "name": "disabled",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "Specifies the text label to use when the item is matched during keyboard text navigation.
+
+Defaults to the item text content if not provided.",
+    "name": "label",
     "origin": "base-ui",
     "required": false,
     "type": "string",
   },
+]
+`;
+
+exports[`props tables > SelectItemIndicator matches its snapshot 1`] = `
+[
   {
-    "description": "The value submitted with the form when the switch is on. By default, switch submits the "on" value, matching native checkbox behavior.",
-    "name": "value",
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SelectItemIndicatorState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SelectItemIndicatorState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SelectItemIndicatorState) => CSSProperties | undefined)",
+  },
+  {
+    "description": "Whether to keep the HTML element in the DOM when the item is not selected.",
+    "name": "keepMounted",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+]
+`;
+
+exports[`props tables > SelectItemText matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SelectItemTextState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SelectItemTextState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SelectItemTextState) => CSSProperties | undefined)",
+  },
+]
+`;
+
+exports[`props tables > SelectLabel matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: FieldRootState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, FieldRootState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: FieldRootState) => CSSProperties | undefined)",
+  },
+]
+`;
+
+exports[`props tables > SelectList matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SelectListState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SelectListState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SelectListState) => CSSProperties | undefined)",
+  },
+]
+`;
+
+exports[`props tables > SelectPopup matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SelectPopupState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SelectPopupState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SelectPopupState) => CSSProperties | undefined)",
+  },
+  {
+    "description": "Determines the element to focus when the select popup is closed.
+
+- \`false\`: Do not move focus. - \`true\`: Move focus based on the default behavior (trigger or previously focused element). - \`RefObject\`: Move focus to the ref element. - \`function\`: Called with the interaction type (\`mouse\`, \`touch\`, \`pen\`, or \`keyboard\`).   Return an element to focus, \`true\` to use the default behavior, or \`false\`/\`undefined\` to do nothing.",
+    "name": "finalFocus",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean | RefObject<HTMLElement | null> | ((closeType: InteractionType) => boolean | void | HTMLElement | null)",
+  },
+]
+`;
+
+exports[`props tables > SelectPortal matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SelectPortalState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SelectPortalState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SelectPortalState) => CSSProperties | undefined)",
+  },
+  {
+    "description": "A parent element to render the portal element into.",
+    "name": "container",
+    "origin": "base-ui",
+    "required": false,
+    "type": "HTMLElement | ShadowRoot | RefObject<HTMLElement | ShadowRoot | null> | null",
+  },
+]
+`;
+
+exports[`props tables > SelectPositioner matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SelectPositionerState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SelectPositionerState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SelectPositionerState) => CSSProperties | undefined)",
+  },
+  {
+    "description": "An element to position the popup against. By default, the popup will be positioned against the trigger.",
+    "name": "anchor",
+    "origin": "base-ui",
+    "required": false,
+    "type": "Element | VirtualElement | RefObject<Element | null> | (() => Element | VirtualElement | null) | null",
+  },
+  {
+    "default": "'absolute'",
+    "description": "Determines which CSS \`position\` property to use.",
+    "name": "positionMethod",
+    "origin": "base-ui",
+    "required": false,
+    "type": ""absolute" | "fixed"",
+  },
+  {
+    "default": "'bottom'",
+    "description": "Which side of the anchor element to align the popup against. May automatically change to avoid collisions.",
+    "name": "side",
+    "origin": "base-ui",
+    "required": false,
+    "type": ""top" | "bottom" | "left" | "right" | "inline-end" | "inline-start"",
+  },
+  {
+    "default": "0",
+    "description": "Distance between the anchor and the popup in pixels. Also accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment.
+
+The function takes a \`data\` object parameter with the following properties: - \`data.anchor\`: the dimensions of the anchor element with properties \`width\` and \`height\`. - \`data.positioner\`: the dimensions of the positioner element with properties \`width\` and \`height\`. - \`data.side\`: which side of the anchor element the positioner is aligned against. - \`data.align\`: how the positioner is aligned relative to the specified side.",
+    "name": "sideOffset",
+    "origin": "base-ui",
+    "required": false,
+    "type": "number | OffsetFunction",
+  },
+  {
+    "default": "'center'",
+    "description": "How to align the popup relative to the specified side.",
+    "name": "align",
+    "origin": "base-ui",
+    "required": false,
+    "type": ""center" | "start" | "end"",
+  },
+  {
+    "default": "0",
+    "description": "Additional offset along the alignment axis in pixels. Also accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment.
+
+The function takes a \`data\` object parameter with the following properties: - \`data.anchor\`: the dimensions of the anchor element with properties \`width\` and \`height\`. - \`data.positioner\`: the dimensions of the positioner element with properties \`width\` and \`height\`. - \`data.side\`: which side of the anchor element the positioner is aligned against. - \`data.align\`: how the positioner is aligned relative to the specified side.",
+    "name": "alignOffset",
+    "origin": "base-ui",
+    "required": false,
+    "type": "number | OffsetFunction",
+  },
+  {
+    "default": "'clipping-ancestors'",
+    "description": "An element or a rectangle that delimits the area that the popup is confined to.",
+    "name": "collisionBoundary",
+    "origin": "base-ui",
+    "required": false,
+    "type": "Boundary",
+  },
+  {
+    "default": "5",
+    "description": "Additional space to maintain from the edge of the collision boundary.",
+    "name": "collisionPadding",
+    "origin": "base-ui",
+    "required": false,
+    "type": "Padding",
+  },
+  {
+    "default": "false",
+    "description": "Whether to maintain the popup in the viewport after the anchor element was scrolled out of view.",
+    "name": "sticky",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "default": "5",
+    "description": "Minimum distance to maintain between the arrow and the edges of the popup.
+
+Use it to prevent the arrow element from hanging out of the rounded corners of a popup.",
+    "name": "arrowPadding",
+    "origin": "base-ui",
+    "required": false,
+    "type": "number",
+  },
+  {
+    "default": "false",
+    "description": "Whether to disable the popup from tracking any layout shift of its positioning anchor.",
+    "name": "disableAnchorTracking",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "Determines how to handle collisions when positioning the popup.
+
+\`side\` controls overflow on the preferred placement axis (\`top\`/\`bottom\` or \`left\`/\`right\`): - \`'flip'\`: keep the requested side when it fits; otherwise try the opposite side   (\`top\` and \`bottom\`, or \`left\` and \`right\`). - \`'shift'\`: never change side; keep the requested side and move the popup within   the clipping boundary so it stays visible. - \`'none'\`: do not correct side-axis overflow.
+
+\`align\` controls overflow on the alignment axis (\`start\`/\`center\`/\`end\`): - \`'flip'\`: keep side, but swap \`start\` and \`end\` when the requested alignment overflows. - \`'shift'\`: keep side and requested alignment, then nudge the popup along the   alignment axis to fit. - \`'none'\`: do not correct alignment-axis overflow.
+
+\`fallbackAxisSide\` controls fallback behavior on the perpendicular axis when the preferred axis cannot fit: - \`'start'\`: allow perpendicular fallback and try the logical start side first   (\`top\` before \`bottom\`, or \`left\` before \`right\` in LTR). - \`'end'\`: allow perpendicular fallback and try the logical end side first   (\`bottom\` before \`top\`, or \`right\` before \`left\` in LTR). - \`'none'\`: do not fallback to the perpendicular axis.
+
+When \`side\` is \`'shift'\`, explicitly setting \`align\` only supports \`'shift'\` or \`'none'\`. If \`align\` is omitted, it defaults to \`'flip'\`.",
+    "name": "collisionAvoidance",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CollisionAvoidance",
+  },
+  {
+    "default": "true",
+    "description": "Whether the positioner overlaps the trigger so the selected item's text is aligned with the trigger's value text. This only applies to mouse input and is automatically disabled if there is not enough space.",
+    "name": "alignItemWithTrigger",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+]
+`;
+
+exports[`props tables > SelectTrigger matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SelectTriggerState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SelectTriggerState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SelectTriggerState) => CSSProperties | undefined)",
+  },
+  {
+    "default": "true",
+    "description": "Whether the component renders a native \`<button>\` element when replacing it via the \`render\` prop. Set to \`false\` if the rendered element is not a button (for example, \`<div>\`).",
+    "name": "nativeButton",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "Whether the component should ignore user interaction.",
+    "name": "disabled",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+]
+`;
+
+exports[`props tables > SelectValue matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SelectValueState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SelectValueState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SelectValueState) => CSSProperties | undefined)",
+  },
+  {
+    "description": "Accepts a function that returns a \`ReactNode\` to format the selected value. Treat the value as read-only: in \`multiple\` mode it may be a shared frozen array when nothing is selected.",
+    "name": "children",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactNode | ((value: any) => ReactNode)",
+  },
+  {
+    "description": "The placeholder value to display when no value is selected. This is overridden by \`children\` if specified, or by a null item's label in \`items\`.",
+    "name": "placeholder",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactNode",
+  },
+]
+`;
+
+exports[`props tables > Switch matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SwitchRootState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SwitchRootState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SwitchRootState) => CSSProperties | undefined)",
+  },
+  {
+    "default": "false",
+    "description": "Whether the component renders a native \`<button>\` element when replacing it via the \`render\` prop. Set to \`true\` if the rendered element is a native button.",
+    "name": "nativeButton",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "The id of the hidden input element.
+
+When \`nativeButton\` is \`true\`, the id is applied to the root element.",
+    "name": "id",
     "origin": "base-ui",
     "required": false,
     "type": "string",
@@ -739,6 +1405,52 @@ To render an uncontrolled switch, use the \`defaultChecked\` prop instead.",
     "origin": "base-ui",
     "required": false,
     "type": "boolean",
+  },
+  {
+    "default": "false",
+    "description": "Whether the switch is initially active.
+
+To render a controlled switch, use the \`checked\` prop instead.",
+    "name": "defaultChecked",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "default": "false",
+    "description": "Whether the component should ignore user interaction.",
+    "name": "disabled",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "A ref to access the hidden \`<input>\` element.",
+    "name": "inputRef",
+    "origin": "base-ui",
+    "required": false,
+    "type": "Ref<HTMLInputElement>",
+  },
+  {
+    "description": "Identifies the field when a form is submitted.",
+    "name": "name",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "description": "Identifies the form that owns the hidden input. Useful when the switch is rendered outside the form.",
+    "name": "form",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "description": "Event handler called when the switch is activated or deactivated.",
+    "name": "onCheckedChange",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((checked: boolean, eventDetails: { reason: "none"; event: Event; cancel: () => void; allowPropagation: () => void; isCanceled: boolean; isPropagationAllowed: boolean; trigger: Element | undefined; }) => void)",
   },
   {
     "default": "false",
@@ -757,35 +1469,11 @@ To render an uncontrolled switch, use the \`defaultChecked\` prop instead.",
     "type": "boolean",
   },
   {
-    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
-
-Accepts a \`ReactElement\` or a function that returns the element to render.",
-    "name": "render",
+    "description": "The value submitted with the form when the switch is on. By default, switch submits the "on" value, matching native checkbox behavior.",
+    "name": "value",
     "origin": "base-ui",
     "required": false,
-    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SwitchRootState>",
-  },
-  {
-    "default": "false",
-    "description": "Whether the component renders a native \`<button>\` element when replacing it via the \`render\` prop. Set to \`true\` if the rendered element is a native button.",
-    "name": "nativeButton",
-    "origin": "base-ui",
-    "required": false,
-    "type": "boolean",
-  },
-  {
-    "description": "Event handler called when the switch is activated or deactivated.",
-    "name": "onCheckedChange",
-    "origin": "base-ui",
-    "required": false,
-    "type": "((checked: boolean, eventDetails: { reason: "none"; event: Event; cancel: () => void; allowPropagation: () => void; isCanceled: boolean; isPropagationAllowed: boolean; trigger: Element | undefined; }) => void)",
-  },
-  {
-    "description": "A ref to access the hidden \`<input>\` element.",
-    "name": "inputRef",
-    "origin": "base-ui",
-    "required": false,
-    "type": "Ref<HTMLInputElement>",
+    "type": "string",
   },
   {
     "description": "The value submitted with the form when the switch is off. By default, unchecked switches do not submit any value, matching native checkbox behavior.",
@@ -799,13 +1487,6 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
 
 exports[`props tables > SwitchThumb matches its snapshot 1`] = `
 [
-  {
-    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
-    "name": "style",
-    "origin": "base-ui",
-    "required": false,
-    "type": "CSSProperties | ((state: SwitchThumbState) => CSSProperties | undefined)",
-  },
   {
     "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
     "name": "className",
@@ -822,18 +1503,18 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
     "required": false,
     "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SwitchThumbState>",
   },
-]
-`;
-
-exports[`props tables > Tab matches its snapshot 1`] = `
-[
   {
     "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
     "name": "style",
     "origin": "base-ui",
     "required": false,
-    "type": "CSSProperties | ((state: TabsTabState) => CSSProperties | undefined)",
+    "type": "CSSProperties | ((state: SwitchThumbState) => CSSProperties | undefined)",
   },
+]
+`;
+
+exports[`props tables > Tab matches its snapshot 1`] = `
+[
   {
     "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
     "name": "className",
@@ -842,10 +1523,25 @@ exports[`props tables > Tab matches its snapshot 1`] = `
     "type": "string | ((state: TabsTabState) => string | undefined)",
   },
   {
-    "description": "Whether the Tab is disabled.
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
 
-If a first Tab on a \`<Tabs.List>\` is disabled, it won't initially be selected. Instead, the next enabled Tab will be selected. However, it does not work like this during server-side rendering, as it is not known during pre-rendering which Tabs are disabled. To work around it, ensure that \`defaultValue\` or \`value\` on \`<Tabs.Root>\` is set to an enabled Tab's value.",
-    "name": "disabled",
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, TabsTabState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: TabsTabState) => CSSProperties | undefined)",
+  },
+  {
+    "default": "true",
+    "description": "Whether the component renders a native \`<button>\` element when replacing it via the \`render\` prop. Set to \`false\` if the rendered element is not a button (for example, \`<div>\`).",
+    "name": "nativeButton",
     "origin": "base-ui",
     "required": false,
     "type": "boolean",
@@ -858,18 +1554,10 @@ If a first Tab on a \`<Tabs.List>\` is disabled, it won't initially be selected.
     "type": "any",
   },
   {
-    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+    "description": "Whether the Tab is disabled.
 
-Accepts a \`ReactElement\` or a function that returns the element to render.",
-    "name": "render",
-    "origin": "base-ui",
-    "required": false,
-    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, TabsTabState>",
-  },
-  {
-    "default": "true",
-    "description": "Whether the component renders a native \`<button>\` element when replacing it via the \`render\` prop. Set to \`false\` if the rendered element is not a button (for example, \`<div>\`).",
-    "name": "nativeButton",
+If a first Tab on a \`<Tabs.List>\` is disabled, it won't initially be selected. Instead, the next enabled Tab will be selected. However, it does not work like this during server-side rendering, as it is not known during pre-rendering which Tabs are disabled. To work around it, ensure that \`defaultValue\` or \`value\` on \`<Tabs.Root>\` is set to an enabled Tab's value.",
+    "name": "disabled",
     "origin": "base-ui",
     "required": false,
     "type": "boolean",
@@ -879,13 +1567,6 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
 
 exports[`props tables > TabIndicator matches its snapshot 1`] = `
 [
-  {
-    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
-    "name": "style",
-    "origin": "base-ui",
-    "required": false,
-    "type": "CSSProperties | ((state: TabsIndicatorState) => CSSProperties | undefined)",
-  },
   {
     "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
     "name": "className",
@@ -903,6 +1584,13 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
     "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, TabsIndicatorState>",
   },
   {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: TabsIndicatorState) => CSSProperties | undefined)",
+  },
+  {
     "default": "false",
     "description": "Whether to render itself before React hydrates. This minimizes the time that the indicator isn't visible after server-side rendering.",
     "name": "renderBeforeHydration",
@@ -915,13 +1603,6 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
 
 exports[`props tables > TabList matches its snapshot 1`] = `
 [
-  {
-    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
-    "name": "style",
-    "origin": "base-ui",
-    "required": false,
-    "type": "CSSProperties | ((state: TabsListState) => CSSProperties | undefined)",
-  },
   {
     "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
     "name": "className",
@@ -937,6 +1618,13 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
     "origin": "base-ui",
     "required": false,
     "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, TabsListState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: TabsListState) => CSSProperties | undefined)",
   },
   {
     "default": "false",
@@ -960,25 +1648,11 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
 exports[`props tables > TabPanel matches its snapshot 1`] = `
 [
   {
-    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
-    "name": "style",
-    "origin": "base-ui",
-    "required": false,
-    "type": "CSSProperties | ((state: TabsPanelState) => CSSProperties | undefined)",
-  },
-  {
     "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
     "name": "className",
     "origin": "base-ui",
     "required": false,
     "type": "string | ((state: TabsPanelState) => string | undefined)",
-  },
-  {
-    "description": "The value of the TabPanel. It will be shown when the Tab with the corresponding value is active.",
-    "name": "value",
-    "origin": "base-ui",
-    "required": true,
-    "type": "any",
   },
   {
     "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
@@ -988,6 +1662,20 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
     "origin": "base-ui",
     "required": false,
     "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, TabsPanelState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: TabsPanelState) => CSSProperties | undefined)",
+  },
+  {
+    "description": "The value of the TabPanel. It will be shown when the Tab with the corresponding value is active.",
+    "name": "value",
+    "origin": "base-ui",
+    "required": true,
+    "type": "any",
   },
   {
     "default": "false",
@@ -1003,11 +1691,34 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
 exports[`props tables > Tabs matches its snapshot 1`] = `
 [
   {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: TabsRootState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, TabsRootState>",
+  },
+  {
     "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
     "name": "style",
     "origin": "base-ui",
     "required": false,
     "type": "CSSProperties | ((state: TabsRootState) => CSSProperties | undefined)",
+  },
+  {
+    "description": "The value of the currently active \`Tab\`. Use when the component is controlled. When the value is \`null\`, no Tab will be active.",
+    "name": "value",
+    "origin": "base-ui",
+    "required": false,
+    "type": "any",
   },
   {
     "default": "0",
@@ -1018,18 +1729,12 @@ exports[`props tables > Tabs matches its snapshot 1`] = `
     "type": "any",
   },
   {
-    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
-    "name": "className",
+    "default": "'horizontal'",
+    "description": "The component orientation (layout flow direction).",
+    "name": "orientation",
     "origin": "base-ui",
     "required": false,
-    "type": "string | ((state: TabsRootState) => string | undefined)",
-  },
-  {
-    "description": "The value of the currently active \`Tab\`. Use when the component is controlled. When the value is \`null\`, no Tab will be active.",
-    "name": "value",
-    "origin": "base-ui",
-    "required": false,
-    "type": "any",
+    "type": ""horizontal" | "vertical"",
   },
   {
     "description": "Callback invoked when new value is being set.
@@ -1043,23 +1748,6 @@ Automatic changes cannot be canceled; calling \`eventDetails.cancel()\` for \`'i
     "origin": "base-ui",
     "required": false,
     "type": "((value: any, eventDetails: TabsRootChangeEventDetails) => void)",
-  },
-  {
-    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
-
-Accepts a \`ReactElement\` or a function that returns the element to render.",
-    "name": "render",
-    "origin": "base-ui",
-    "required": false,
-    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, TabsRootState>",
-  },
-  {
-    "default": "'horizontal'",
-    "description": "The component orientation (layout flow direction).",
-    "name": "orientation",
-    "origin": "base-ui",
-    "required": false,
-    "type": ""horizontal" | "vertical"",
   },
 ]
 `;

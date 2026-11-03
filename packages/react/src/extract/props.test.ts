@@ -10,6 +10,7 @@ import { checkboxDoc } from '../components/Checkbox/Checkbox.docs.js';
 import { dialogDoc } from '../components/Dialog/Dialog.docs.js';
 import { inputDoc } from '../components/Input/Input.docs.js';
 import { nostalgiaRootDoc } from '../components/NostalgiaRoot/NostalgiaRoot.docs.js';
+import { selectDoc } from '../components/Select/Select.docs.js';
 import { switchDoc } from '../components/Switch/Switch.docs.js';
 import { tabsDoc } from '../components/Tabs/Tabs.docs.js';
 import { findColors } from '../docs/color-rules.js';
@@ -32,6 +33,7 @@ const docs = [
   inputDoc,
   checkboxDoc,
   switchDoc,
+  selectDoc,
   cardDoc,
   tabsDoc,
   dialogDoc,
@@ -111,6 +113,12 @@ describe('props tables', () => {
       .filter((row) => row.description === '')
       .map((row) => row.name);
     expect(missing, part + ' props without a description').toEqual([]);
+  });
+
+  it("leaves out Base UI's undocumented children, as it does React's", () => {
+    // SelectItem redeclares `children` with no JSDoc in Base UI 1.9.0 (#23).
+    expect(allPropNames('SelectItem')).toContain('children');
+    expect(rowsOf('SelectItem').map((row) => row.name)).not.toContain('children');
   });
 
   it.each(parts)('%s: descriptions written here name no color', (part) => {
@@ -202,6 +210,7 @@ const storyModules = {
   Input: () => import('../components/Input/Input.stories.js'),
   Checkbox: () => import('../components/Checkbox/Checkbox.stories.js'),
   Switch: () => import('../components/Switch/Switch.stories.js'),
+  Select: () => import('../components/Select/Select.stories.js'),
   Card: () => import('../components/Card/Card.stories.js'),
   Tabs: () => import('../components/Tabs/Tabs.stories.js'),
   Dialog: () => import('../components/Dialog/Dialog.stories.js'),
