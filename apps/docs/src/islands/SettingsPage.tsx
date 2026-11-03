@@ -14,6 +14,8 @@ import {
   DialogTitle,
   DialogTrigger,
   Input,
+  Switch,
+  SwitchThumb,
   Tab,
   TabIndicator,
   TabList,
@@ -54,6 +56,12 @@ export function SettingsPage(): React.ReactElement {
                   <CheckboxIndicator />
                 </Checkbox>
                 Show my email on my profile
+              </label>
+              <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Switch>
+                  <SwitchThumb />
+                </Switch>
+                Show me as online
               </label>
             </div>
           </Card>

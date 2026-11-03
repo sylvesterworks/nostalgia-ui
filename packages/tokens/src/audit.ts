@@ -150,6 +150,25 @@ const CHECKS: readonly Check[] = [
     required: AA_NON_TEXT,
     level: 'AA-large',
   },
+  // A switch's thumb carries its state, so it must stand out from the track
+  // it slides on (WCAG 1.4.11, #21): the muted thumb on the sunken off track
+  // and the on-accent thumb on the accent on track.
+  {
+    id: 'switch-thumb-on-track',
+    label: 'Switch thumb on the off track',
+    foreground: 'textMuted',
+    background: 'surfaceSunken',
+    required: AA_NON_TEXT,
+    level: 'AA-large',
+  },
+  {
+    id: 'switch-thumb-on-accent',
+    label: 'Switch thumb on the on track',
+    foreground: 'textOnAccent',
+    background: 'accent',
+    required: AA_NON_TEXT,
+    level: 'AA-large',
+  },
   {
     id: 'border-on-surface',
     label: 'Border against the surface it sits on',

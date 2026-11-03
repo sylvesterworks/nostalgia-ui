@@ -1,6 +1,6 @@
 # @nostalgiaui/react
 
-Button, Input, Checkbox, Card, Tabs and Dialog on [Base UI](https://base-ui.com), styled
+Button, Input, Checkbox, Switch, Card, Tabs and Dialog on [Base UI](https://base-ui.com), styled
 only through NostalgiaUI tokens. Keyboard behaviour, focus management and
 dismissal come from Base UI; this package adds class names and nothing else.
 

@@ -10,6 +10,7 @@ import { checkboxDoc } from '../components/Checkbox/Checkbox.docs.js';
 import { dialogDoc } from '../components/Dialog/Dialog.docs.js';
 import { inputDoc } from '../components/Input/Input.docs.js';
 import { nostalgiaRootDoc } from '../components/NostalgiaRoot/NostalgiaRoot.docs.js';
+import { switchDoc } from '../components/Switch/Switch.docs.js';
 import { tabsDoc } from '../components/Tabs/Tabs.docs.js';
 import { findColors } from '../docs/color-rules.js';
 import type { PropsTable } from '../docs/schema.js';
@@ -30,6 +31,7 @@ const docs = [
   buttonDoc,
   inputDoc,
   checkboxDoc,
+  switchDoc,
   cardDoc,
   tabsDoc,
   dialogDoc,
@@ -199,6 +201,7 @@ const storyModules = {
   Button: () => import('../components/Button/Button.stories.js'),
   Input: () => import('../components/Input/Input.stories.js'),
   Checkbox: () => import('../components/Checkbox/Checkbox.stories.js'),
+  Switch: () => import('../components/Switch/Switch.stories.js'),
   Card: () => import('../components/Card/Card.stories.js'),
   Tabs: () => import('../components/Tabs/Tabs.stories.js'),
   Dialog: () => import('../components/Dialog/Dialog.stories.js'),

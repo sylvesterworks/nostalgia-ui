@@ -7,6 +7,7 @@
 .nui-Button,
 .nui-Input,
 .nui-Checkbox,
+.nui-Switch,
 .nui-Card,
 .nui-Tab,
 .nui-DialogPopup {
@@ -22,6 +23,7 @@
 .nui-Button:focus-visible,
 .nui-Input:focus-visible,
 .nui-Checkbox:focus-visible,
+.nui-Switch:focus-visible,
 .nui-Tab:focus-visible,
 .nui-DialogClose:focus-visible {
   outline: var(--nui-focus-width) solid var(--nui-era-focus-color);
