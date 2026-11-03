@@ -132,7 +132,7 @@ export const selectDoc = {
   accessibility: [
     "Keyboard behavior is Base UI's: Enter, Space or the arrow keys open the list, the arrow keys and typing move the highlight, Enter chooses, and Escape closes it with focus back on the trigger.",
     'The trigger needs a name. Use SelectLabel inside Select, or give the trigger `aria-label` when no visible text fits.',
-    "The highlighted option is drawn on the accent fill in the text color paired with it, which the contrast audit checks as `select-item-highlighted`. The palette's selection color is not used: it is too close to the popup to show which option is highlighted.",
+    "The highlighted option is drawn on the accent fill in the text color paired with it, which the contrast audit checks as `item-highlighted`. The palette's selection color is not used: it is too close to the popup to show which option is highlighted.",
   ],
   extensibility: {
     render:

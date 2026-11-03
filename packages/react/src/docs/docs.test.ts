@@ -15,6 +15,8 @@ import { dialogDoc } from '../components/Dialog/Dialog.docs.js';
 import type * as DialogStories from '../components/Dialog/Dialog.stories.js';
 import { inputDoc } from '../components/Input/Input.docs.js';
 import type * as InputStories from '../components/Input/Input.stories.js';
+import { menuDoc } from '../components/Menu/Menu.docs.js';
+import type * as MenuStories from '../components/Menu/Menu.stories.js';
 import { nostalgiaRootDoc } from '../components/NostalgiaRoot/NostalgiaRoot.docs.js';
 import type * as NostalgiaRootStories from '../components/NostalgiaRoot/NostalgiaRoot.stories.js';
 import { selectDoc } from '../components/Select/Select.docs.js';
@@ -53,6 +55,7 @@ const docs = [
   checkboxDoc,
   switchDoc,
   selectDoc,
+  menuDoc,
   cardDoc,
   tabsDoc,
   dialogDoc,
@@ -66,6 +69,7 @@ const FAMILY_PATTERNS: Readonly<Record<string, RegExp>> = {
   Checkbox: /\bCheckbox\w*/,
   Switch: /\bSwitch\w*/,
   Select: /\bSelect\w*/,
+  Menu: /\bMenu\w*/,
   Card: /\bCard\w*/,
   Tabs: /\bTab\w*/,
   Dialog: /\bDialog\w*/,
@@ -111,6 +115,7 @@ const storyReferencesTypecheck: readonly true[] = [
   true satisfies RefsExist<typeof checkboxDoc, typeof CheckboxStories>,
   true satisfies RefsExist<typeof switchDoc, typeof SwitchStories>,
   true satisfies RefsExist<typeof selectDoc, typeof SelectStories>,
+  true satisfies RefsExist<typeof menuDoc, typeof MenuStories>,
   true satisfies RefsExist<typeof cardDoc, typeof CardStories>,
   true satisfies RefsExist<typeof tabsDoc, typeof TabsStories>,
   true satisfies RefsExist<typeof dialogDoc, typeof DialogStories>,
@@ -221,6 +226,7 @@ const stories = {
   Checkbox: () => import('../components/Checkbox/Checkbox.stories.js'),
   Switch: () => import('../components/Switch/Switch.stories.js'),
   Select: () => import('../components/Select/Select.stories.js'),
+  Menu: () => import('../components/Menu/Menu.stories.js'),
   Card: () => import('../components/Card/Card.stories.js'),
   Tabs: () => import('../components/Tabs/Tabs.stories.js'),
   Dialog: () => import('../components/Dialog/Dialog.stories.js'),

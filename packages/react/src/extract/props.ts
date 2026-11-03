@@ -92,6 +92,9 @@ function rowFor(checker: ts.TypeChecker, prop: ts.Symbol, origin: PropRow['origi
   };
 }
 
+/** React props that Base UI redeclares, without JSDoc, on some parts. */
+const REDECLARED_REACT_PROPS: ReadonlySet<string> = new Set(['children', 'id']);
+
 interface Declared {
   readonly row: PropRow;
   readonly declaration: ts.Declaration;
@@ -147,10 +150,12 @@ export function extractProps(program: ts.Program, packageDir: string): PropsTabl
       const origin = originOf(declaration, srcDir);
       if (origin === 'react') continue;
       const row = rowFor(checker, prop, origin);
-      // Some Base UI parts redeclare `children` with no JSDoc (Select's Root,
-      // Trigger, Popup, Item and ItemIndicator in 1.9.0). Undocumented, it is
-      // React's `children` again, so it is left out the same way (#23).
-      if (origin === 'base-ui' && prop.name === 'children' && row.description === '') continue;
+      // Some Base UI parts redeclare a React prop with no JSDoc: `children` on
+      // Select's Root, Trigger, Popup, Item and ItemIndicator (#23), and `id`
+      // on MenuItem and MenuPopup (#25), in 1.9.0. Undocumented, it is React's
+      // prop again, so it is left out the same way.
+      if (origin === 'base-ui' && REDECLARED_REACT_PROPS.has(prop.name) && row.description === '')
+        continue;
       (origin === 'nostalgiaui' ? own : baseUi).push({ row, declaration });
     }
     table[exported.name] = [...bySource(own), ...bySource(baseUi)];

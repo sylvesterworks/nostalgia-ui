@@ -26,6 +26,7 @@ import { cardDoc } from './components/Card/Card.docs.js';
 import { dialogDoc } from './components/Dialog/Dialog.docs.js';
 import { checkboxDoc } from './components/Checkbox/Checkbox.docs.js';
 import { inputDoc } from './components/Input/Input.docs.js';
+import { menuDoc } from './components/Menu/Menu.docs.js';
 import { nostalgiaRootDoc } from './components/NostalgiaRoot/NostalgiaRoot.docs.js';
 import { selectDoc } from './components/Select/Select.docs.js';
 import { switchDoc } from './components/Switch/Switch.docs.js';
@@ -53,6 +54,7 @@ export const COMPONENTS = [
   'Checkbox',
   'Switch',
   'Select',
+  'Menu',
   'Card',
   'Tabs',
   'Dialog',
@@ -65,6 +67,7 @@ const DOCS: Readonly<Record<(typeof COMPONENTS)[number], AnyComponentDoc>> = {
   Checkbox: checkboxDoc,
   Switch: switchDoc,
   Select: selectDoc,
+  Menu: menuDoc,
   Card: cardDoc,
   Tabs: tabsDoc,
   Dialog: dialogDoc,
