@@ -40,6 +40,30 @@ describe('era-derived token contract', () => {
     );
   });
 
+  describe.each(eras.map((era) => [era.id, era] as const))('%s text fills', (_id, era) => {
+    it.each(palettes.map((palette) => [palette.id, palette] as const))(
+      'name keys the era derives for %s',
+      (_paletteId, palette) => {
+        const derived = era.derive(toSemantic(palette));
+        for (const key of era.textFills ?? []) {
+          expect(Object.keys(derived), era.id + ' lists text fill ' + key).toContain(key);
+        }
+      },
+    );
+  });
+
+  it('lists the fills text sits on in the eras that paint their own', () => {
+    // Each of these is a neutral fill a card, a button or a field paints
+    // behind body text in that era (#69). Adding a new one is a decision: the
+    // audit then holds text and muted text to 4.5:1 on it.
+    const listed = Object.fromEntries(eras.map((era) => [era.id, era.textFills ?? []]));
+    expect(listed).toMatchObject({
+      'classic-windows': ['control-face'],
+      'frutiger-aero': ['glass-fill'],
+      'flat-metro': ['surface-hover'],
+    });
+  });
+
   it('types the extras of a concrete era so a stylesheet author can see them', () => {
     // Compile-time check: EraExtraKey reads the era-specific keys off the
     // inferred type, with the required set removed. If this stops compiling,

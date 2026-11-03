@@ -1,4 +1,4 @@
-import { contrastRatio } from './color.js';
+import { composite, contrastRatio } from './color.js';
 import { toSemantic } from './semantic.js';
 import type { Era, Palette, SemanticColors } from './types.js';
 
@@ -83,13 +83,32 @@ const CHECKS: readonly Check[] = [
     required: AA_TEXT,
     level: 'AA',
   },
+  // Muted text is used at body size (card bodies, dialog descriptions,
+  // inactive tabs, placeholders), so it is held to the body text bar on every
+  // surface. It was AA-large on the base surface only until #69.
   {
     id: 'text-muted-on-surface',
     label: 'Muted text on the base surface',
     foreground: 'textMuted',
     background: 'surface',
-    required: AA_LARGE,
-    level: 'AA-large',
+    required: AA_TEXT,
+    level: 'AA',
+  },
+  {
+    id: 'text-muted-on-surface-raised',
+    label: 'Muted text on a raised surface',
+    foreground: 'textMuted',
+    background: 'surfaceRaised',
+    required: AA_TEXT,
+    level: 'AA',
+  },
+  {
+    id: 'text-muted-on-surface-sunken',
+    label: 'Muted text in a sunken well',
+    foreground: 'textMuted',
+    background: 'surfaceSunken',
+    required: AA_TEXT,
+    level: 'AA',
   },
   {
     id: 'text-on-accent',
@@ -170,6 +189,31 @@ export function auditContrast(era: Era, palette: Palette): ContrastAudit {
       passes: ratio >= check.required,
     };
   });
+
+  // The era's own fills that text sits on, painted over the base surface.
+  const derived = era.derive(semantic);
+  for (const key of era.textFills ?? []) {
+    const fill = derived[key];
+    if (fill === undefined)
+      throw new Error(era.id + ' lists text fill ' + key + ' but derives none');
+    const background = composite(fill, semantic.surface);
+    for (const [foreground, name] of [
+      ['text', 'Body text'],
+      ['textMuted', 'Muted text'],
+    ] as const) {
+      const ratio = contrastRatio(semantic[foreground], background);
+      findings.push({
+        id: (foreground === 'text' ? 'text-on-' : 'text-muted-on-') + key,
+        label: name + ' on ' + era.label + "'s " + key,
+        foreground: semantic[foreground],
+        background,
+        ratio: Math.round(ratio * 100) / 100,
+        required: AA_TEXT,
+        level: 'AA',
+        passes: ratio >= AA_TEXT,
+      });
+    }
+  }
 
   const failures = findings.filter((finding) => !finding.passes);
 

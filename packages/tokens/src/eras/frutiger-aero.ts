@@ -43,7 +43,11 @@ export const frutigerAero = defineEra({
       'gloss-mid': withAlpha(highlight, 0.12),
       'gloss-bottom': withAlpha(highlight, 0),
       'sheen-bottom': withAlpha(highlight, 0.22),
-      'glass-fill': withAlpha(raise(s.surface, 0.18), 0.72),
+      // Text sits on the glass, so over the base surface it must paint
+      // within the raised surface, where text contrast is guaranteed. The
+      // blur and the gloss carry the glass look; raise(surface, 0.18) at this
+      // alpha took muted text to about 3.6:1 (#69).
+      'glass-fill': withAlpha(s.surfaceRaised, 0.72),
       'glass-border': withAlpha(highlight, 0.45),
       'shadow-raised':
         '0 1px 3px ' + withAlpha(depth, 0.32) + ', 0 6px 14px ' + withAlpha(depth, 0.18),
@@ -58,4 +62,5 @@ export const frutigerAero = defineEra({
       'focus-color': s.accent,
     };
   },
+  textFills: ['glass-fill'],
 });

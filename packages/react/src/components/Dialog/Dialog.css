@@ -69,10 +69,14 @@
 
 /* ---- Frutiger Aero: floating frosted pane ------------------------------- */
 
+/* The glass is painted over an opaque surface layer rather than over the
+ * dimmed page: a popup sits on the backdrop, not on the base surface, and
+ * through it the description fell to 4.13:1 (#69). Over the surface it
+ * paints the color the contrast audit measures. */
 [data-era='frutiger-aero'] .nui-DialogPopup {
   border-color: var(--nui-era-glass-border);
-  background: var(--nui-era-glass-fill);
-  backdrop-filter: blur(12px);
+  background:
+    linear-gradient(var(--nui-era-glass-fill), var(--nui-era-glass-fill)), var(--nui-color-surface);
 }
 
 [data-era='frutiger-aero'] .nui-DialogBackdrop {
