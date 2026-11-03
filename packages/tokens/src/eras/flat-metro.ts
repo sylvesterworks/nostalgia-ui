@@ -1,4 +1,4 @@
-import { raise, sink } from '../color.js';
+import { mix, raise, sink } from '../color.js';
 import { defineEra } from '../types.js';
 
 /**
@@ -41,11 +41,16 @@ export const flatMetro = defineEra({
     'tile-active': sink(s.accent, 0.08),
     'danger-hover': raise(s.danger, 0.08),
     'danger-active': sink(s.danger, 0.08),
-    'surface-hover': raise(s.surface, 0.06),
+    // Text sits on this fill (a flat card, a hovered button), so it stays
+    // between the base and raised surfaces, where text contrast is
+    // guaranteed. raise(surface, 0.06) went past the raised surface and took
+    // Solarized Light's body text to 4.45:1 (#69).
+    'surface-hover': mix(s.surface, s.surfaceRaised, 0.6),
     'surface-active': sink(s.surface, 0.05),
     divider: raise(s.surface, 0.12),
     'shadow-raised': 'none',
     'shadow-overlay': 'none',
     'focus-color': s.text,
   }),
+  textFills: ['surface-hover'],
 });

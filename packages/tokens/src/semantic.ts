@@ -48,7 +48,11 @@ export function toSemantic(palette: Palette): SemanticColors {
     // Light's body text clears 4.5:1 on its base surface but only 3.58:1 on a
     // raised panel.
     text: ensureContrastAll(p.foreground, allSurfaces, 4.5),
-    textMuted: ensureContrastAll(p.comment, allSurfaces, 3),
+    // Muted text is still text: card bodies, dialog descriptions, inactive
+    // tabs and placeholders all use it at body size, so it needs the body
+    // text bar too. At 3:1 it failed 4.5:1 on every surface of every palette
+    // (#69).
+    textMuted: ensureContrastAll(p.comment, allSurfaces, 4.5),
     // Text that sits on an accent fill. Choosing between the palette's own
     // two extremes is not sufficient: Solarized Light's olive accent reaches
     // only 2.97:1 against either. readableOn walks a tinted lightness ramp

@@ -141,6 +141,21 @@ export function withAlpha(color: string, alpha: number): string {
 }
 
 /**
+ * The opaque colour a translucent fill shows over a backdrop, blended per
+ * channel in sRGB as browsers paint it. Contrast can only be measured against
+ * what is actually painted, so a glass fill is checked through this.
+ */
+export function composite(fill: string, backdrop: string): string {
+  const top = parse(fill);
+  if (top === undefined) throw new Error('Not a colour: ' + fill);
+  const alpha = clamp01(top.alpha ?? 1);
+  const a = requireRgb(fill);
+  const b = requireRgb(backdrop);
+  const blend = (x: number, y: number): number => clamp01(alpha * x + (1 - alpha) * y);
+  return formatHex({ mode: 'rgb', r: blend(a.r, b.r), g: blend(a.g, b.g), b: blend(a.b, b.b) });
+}
+
+/**
  * WCAG 2.1 relative luminance. Implemented here rather than taken from a
  * library because the contrast harness is the one test that can genuinely
  * fail, so its maths should be readable and pinned in this repo.

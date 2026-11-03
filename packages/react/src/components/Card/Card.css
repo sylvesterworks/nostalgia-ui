@@ -45,10 +45,14 @@
   backdrop-filter: blur(6px);
 }
 
+/* The gloss band covers the top padding only, above the title, so no text
+ * sits under it: at full strength it took text under it to about 2.4:1
+ * (#69). */
 [data-era='frutiger-aero'] .nui-Card::before {
   content: '';
   position: absolute;
-  inset: 0 0 70% 0;
+  inset: 0 0 auto 0;
+  height: calc(var(--nui-spacing-unit) * 3 * var(--nui-density-scale));
   background: linear-gradient(to bottom, var(--nui-era-gloss-top), var(--nui-era-gloss-bottom));
   pointer-events: none;
 }

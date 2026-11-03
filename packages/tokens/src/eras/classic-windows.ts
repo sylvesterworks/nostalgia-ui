@@ -54,4 +54,5 @@ export const classicWindows = defineEra({
     'shadow-raised': 'none',
     'shadow-overlay': '2px 2px 0 0 ' + withAlpha(darken(s.surface, 0.7), 0.5),
   }),
+  textFills: ['control-face'],
 });

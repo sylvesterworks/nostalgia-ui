@@ -129,6 +129,15 @@ export interface Era<Derived extends EraDerivedRequired = EraDerived> {
   readonly shape: EraShape;
   /** Derived colour recipes. Receives semantic colours, returns CSS values. */
   readonly derive: EraDerivation<Derived>;
+  /**
+   * Derived keys that body and muted text sit on, such as a bevelled face or
+   * a glass pane. The semantic layer guarantees text contrast only on its
+   * three surfaces, so each of these must paint, over the base surface,
+   * within that range. The contrast audit checks text and muted text on each
+   * one (#69, decision 0013). A plain string list keeps eras assignable to
+   * `Era`; the era contract test checks each name against `derive`.
+   */
+  readonly textFills?: readonly string[];
 }
 
 /**

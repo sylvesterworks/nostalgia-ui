@@ -2,6 +2,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { eras } from '@nostalgiaui/tokens';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -96,5 +97,59 @@ describe('button variants', () => {
       );
     }
     expect(button).toContain('--nui-color-text-on-danger');
+  });
+});
+
+/**
+ * Fills with their own text color: accent and danger fills carry
+ * `--nui-color-text-on-accent` or `--nui-color-text-on-danger`, which the
+ * contrast audit checks against those fills.
+ */
+const FILLS_WITH_OWN_TEXT = new Set([
+  'titlebar-fill',
+  'accent-vivid',
+  'danger-vivid',
+  'tile-fill',
+  'tile-hover',
+  'tile-active',
+  'danger-hover',
+  'danger-active',
+  'phosphor-fill',
+]);
+
+/** Each era fill a rule paints as its background, with the era the rule is scoped to. */
+function eraFills(css: string): { readonly era: string; readonly fill: string }[] {
+  const found: { era: string; fill: string }[] = [];
+  for (const rule of stripCssComments(css).matchAll(/([^{}]+)\{([^}]*)\}/g)) {
+    const [, selector = '', body = ''] = rule;
+    const scoped = [...selector.matchAll(/data-era='([^']+)'/g)].map((m) => m[1] ?? '');
+    for (const use of body.matchAll(/background(?:-color)?:\s*var\(--nui-era-([a-z-]+)\)/g)) {
+      for (const era of scoped) found.push({ era, fill: use[1] ?? '' });
+    }
+  }
+  return found;
+}
+
+describe('era fills behind text', () => {
+  it('are each listed in that era as a text fill, so the audit checks them', async () => {
+    // The contrast audit only knows the fills an era lists in textFills (#69).
+    // A stylesheet that paints any other neutral era fill behind text would
+    // escape it.
+    const unaudited: string[] = [];
+    for (const [name, css] of await readStylesheets()) {
+      for (const { era, fill } of eraFills(css)) {
+        if (FILLS_WITH_OWN_TEXT.has(fill)) continue;
+        const listed = eras.find((e) => e.id === era)?.textFills ?? [];
+        if (!listed.includes(fill)) unaudited.push(name + ': ' + era + ' ' + fill);
+      }
+    }
+    expect(unaudited).toEqual([]);
+  });
+
+  it('reject a neutral fill the era does not list', () => {
+    const css = "[data-era='flat-metro'] .nui-Card { background: var(--nui-era-divider); }";
+    expect(eraFills(css)).toEqual([{ era: 'flat-metro', fill: 'divider' }]);
+    const listed = eras.find((e) => e.id === 'flat-metro')?.textFills ?? [];
+    expect(listed).not.toContain('divider');
   });
 });

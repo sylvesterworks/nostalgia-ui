@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { auditContrast } from './audit.js';
-import { contrastRatio, isLight, lightness } from './color.js';
+import { contrastRatio, isLight, lightness, withAlpha } from './color.js';
 import { eras } from './eras/index.js';
 import { palettes } from './palettes/index.js';
 import { toSemantic } from './semantic.js';
@@ -99,6 +99,62 @@ describe('every era and palette pairing', () => {
       expect(lightness(dark)).toBeGreaterThan(lightness(darker));
       expect(lightness(dark) - lightness(darker)).toBeGreaterThan(0.04);
     });
+  });
+});
+
+describe('muted text', () => {
+  it.each(pairings.map((p) => [p.label, p] as const))(
+    '%s is held to the body text bar on every surface',
+    (_label, { palette, era }) => {
+      // Muted text is used at body size, so 3:1 is not enough (#69).
+      const audit = auditContrast(era, palette);
+      const surfaces = [
+        'text-muted-on-surface',
+        'text-muted-on-surface-raised',
+        'text-muted-on-surface-sunken',
+      ];
+      const muted = audit.findings.filter((f) => surfaces.includes(f.id));
+      expect(muted.map((f) => f.id).sort()).toEqual(surfaces);
+      for (const finding of muted) expect(finding.required).toBe(4.5);
+    },
+  );
+});
+
+describe('era text fills', () => {
+  const base = eras[0];
+  if (base === undefined) throw new Error('no eras');
+  const palette = palettes[0];
+  if (palette === undefined) throw new Error('no palettes');
+
+  it('are audited for body and muted text, painted over the surface', () => {
+    const audit = auditContrast(base, palette);
+    for (const key of base.textFills ?? []) {
+      expect(audit.findings.map((f) => f.id)).toEqual(
+        expect.arrayContaining(['text-on-' + key, 'text-muted-on-' + key]),
+      );
+    }
+  });
+
+  it('fail the audit when a fill strays far from the surfaces', () => {
+    // A pane close to the text color itself: nothing on it is readable.
+    const glare = {
+      ...base,
+      derive: (s: Parameters<typeof base.derive>[0]) => ({
+        ...base.derive(s),
+        glare: withAlpha(s.text, 0.9),
+      }),
+      textFills: ['glare'],
+    };
+    const audit = auditContrast(glare, palette);
+    expect(audit.failures.map((f) => f.id)).toEqual(
+      expect.arrayContaining(['text-on-glare', 'text-muted-on-glare']),
+    );
+  });
+
+  it('reject a fill name the era does not derive', () => {
+    expect(() => auditContrast({ ...base, textFills: ['no-such-fill'] }, palette)).toThrow(
+      /no-such-fill/,
+    );
   });
 });
 
