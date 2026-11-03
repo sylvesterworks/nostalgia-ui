@@ -77,6 +77,7 @@ const OPENS_ON_LOAD: ReadonlySet<string> = new Set([
   'Dialog.Open',
   'Dialog.DontTitleAfterDescription',
   'Select.Open',
+  'Menu.Open',
 ]);
 
 // A renamed or deleted story must not leave a stale entry behind.

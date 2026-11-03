@@ -28,6 +28,15 @@ export {
   SelectTrigger,
   SelectValue,
 } from './components/Select/index.js';
+export {
+  Menu,
+  MenuItem,
+  MenuPopup,
+  MenuPortal,
+  MenuPositioner,
+  MenuSeparator,
+  MenuTrigger,
+} from './components/Menu/index.js';
 
 export {
   Dialog,

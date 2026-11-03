@@ -46,6 +46,7 @@ describe('component stylesheets', () => {
       'Checkbox',
       'Switch',
       'Select',
+      'Menu',
       'Card',
       'Tabs',
       'Dialog',

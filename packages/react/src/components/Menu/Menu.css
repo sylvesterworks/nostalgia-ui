@@ -1,0 +1,171 @@
+/*
+ * Menu. The popup reads the same tokens as Card. The highlighted item is
+ * drawn as Select's is: the accent fill with the text color paired with it,
+ * and a 1px inset ring in the body text color so the row stands out from the
+ * popup even where the fill alone does not reach 3:1 (2.60:1 on Solarized
+ * Light's raised surface). The palette's selection color is not used for the
+ * reasons Select's stylesheet gives. The trigger has no styles of its own:
+ * render it as a Button.
+ */
+
+.nui-MenuPopup {
+  box-sizing: border-box;
+  min-width: 12rem;
+  padding: calc(var(--nui-spacing-unit) * 0.5);
+  border-radius: var(--nui-radius-md);
+  border: var(--nui-border-width) var(--nui-border-style) var(--nui-color-border);
+  background: var(--nui-color-surface-raised);
+  color: var(--nui-color-text);
+  font-family: var(--nui-font-sans);
+  letter-spacing: var(--nui-letter-spacing);
+  box-shadow: var(--nui-era-shadow-raised);
+  outline: 0;
+}
+
+.nui-MenuItem {
+  display: flex;
+  align-items: center;
+  gap: var(--nui-spacing-unit);
+  padding: calc(var(--nui-spacing-unit) * 0.75 * var(--nui-density-scale))
+    calc(var(--nui-spacing-unit) * 1.5 * var(--nui-density-scale));
+  border-radius: var(--nui-radius-sm);
+  color: var(--nui-color-text);
+  cursor: default;
+  outline: 0;
+  user-select: none;
+}
+
+.nui-MenuItem[data-highlighted] {
+  background: var(--nui-color-accent);
+  color: var(--nui-color-text-on-accent);
+  box-shadow: inset 0 0 0 1px var(--nui-color-text);
+}
+
+.nui-MenuItem[data-disabled] {
+  color: var(--nui-color-text-muted);
+  cursor: not-allowed;
+}
+
+/* Base UI lets the arrow keys highlight a disabled item, so it can be
+ * discovered. It keeps the ring but not the fill: muted text on the accent
+ * fill would not be readable. */
+.nui-MenuItem[data-disabled][data-highlighted] {
+  background: transparent;
+}
+
+.nui-MenuSeparator {
+  height: 0;
+  margin: calc(var(--nui-spacing-unit) * 0.5) 0;
+  border: 0;
+  border-top: 1px solid var(--nui-color-border);
+}
+
+/* ---- Classic Windows: a flat list with a plain edge and an etched rule -- */
+
+[data-era='classic-windows'] .nui-MenuPopup {
+  padding: 2px;
+  border-radius: 0;
+  border: 1px solid var(--nui-color-text);
+  background: var(--nui-color-surface-sunken);
+  box-shadow: none;
+}
+
+[data-era='classic-windows'] .nui-MenuItem {
+  border-radius: 0;
+}
+
+/* The era's separator was an etched groove: a dark line over a light one. */
+[data-era='classic-windows'] .nui-MenuSeparator {
+  margin: 3px 2px;
+  border-top-color: var(--nui-era-bevel-dark);
+  border-bottom: 1px solid var(--nui-era-bevel-lighter);
+}
+
+/* ---- Frutiger Aero: a glass popup -------------------------------------- */
+
+/* The glass is painted over an opaque surface layer, as Dialog's is, so text
+ * on it is the color the contrast audit measures. */
+[data-era='frutiger-aero'] .nui-MenuPopup {
+  border-color: var(--nui-era-glass-border);
+  background:
+    linear-gradient(var(--nui-era-glass-fill), var(--nui-era-glass-fill)), var(--nui-color-surface);
+}
+
+[data-era='frutiger-aero'] .nui-MenuSeparator {
+  border-top-color: var(--nui-era-glass-border);
+}
+
+/* ---- Flat / Metro: a solid popup with divider lines -------------------- */
+
+[data-era='flat-metro'] .nui-MenuPopup {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+[data-era='flat-metro'] .nui-MenuItem {
+  border-radius: 0;
+}
+
+[data-era='flat-metro'] .nui-MenuItem + .nui-MenuItem {
+  border-top: 1px solid var(--nui-era-divider);
+}
+
+[data-era='flat-metro'] .nui-MenuSeparator {
+  margin: 0;
+  border-top: 2px solid var(--nui-era-divider);
+}
+
+/* ---- Terminal / CRT: an accent-bordered popup with scanlines ----------- */
+
+[data-era='terminal-crt'] .nui-MenuPopup {
+  position: relative;
+  border-radius: 0;
+  border-color: var(--nui-color-accent);
+  background: var(--nui-color-surface);
+  font-family: var(--nui-font-mono);
+}
+
+[data-era='terminal-crt'] .nui-MenuPopup::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    var(--nui-era-scanline) 2px,
+    var(--nui-era-scanline) 3px
+  );
+  pointer-events: none;
+}
+
+[data-era='terminal-crt'] .nui-MenuItem {
+  border-radius: 0;
+}
+
+/* A dashed rule, like a line of hyphens. */
+[data-era='terminal-crt'] .nui-MenuSeparator {
+  border-top-style: dashed;
+  border-top-color: var(--nui-color-text-muted);
+}
+
+/* ---- Neubrutalism: an ink popup with a hard shadow --------------------- */
+
+[data-era='neubrutalism'] .nui-MenuPopup {
+  border-color: var(--nui-era-ink);
+  box-shadow: var(--nui-era-shadow-hard);
+}
+
+[data-era='neubrutalism'] .nui-MenuSeparator {
+  border-top: 2px solid var(--nui-era-ink);
+}
+
+/* ---- Neumorphism: an extruded popup ------------------------------------ */
+
+[data-era='neumorphism'] .nui-MenuPopup {
+  border: 0;
+  background: var(--nui-color-surface);
+  box-shadow: var(--nui-era-shadow-raised);
+}

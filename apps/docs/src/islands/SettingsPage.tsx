@@ -14,6 +14,13 @@ import {
   DialogTitle,
   DialogTrigger,
   Input,
+  Menu,
+  MenuItem,
+  MenuPopup,
+  MenuPortal,
+  MenuPositioner,
+  MenuSeparator,
+  MenuTrigger,
   Select,
   SelectIcon,
   SelectItem,
@@ -104,6 +111,21 @@ export function SettingsPage(): React.ReactElement {
                   </SelectPositioner>
                 </SelectPortal>
               </Select>
+              <div>
+                <Menu>
+                  <MenuTrigger render={<Button variant="outline" />}>Profile actions</MenuTrigger>
+                  <MenuPortal>
+                    <MenuPositioner>
+                      <MenuPopup>
+                        <MenuItem>Copy profile link</MenuItem>
+                        <MenuItem>Export data</MenuItem>
+                        <MenuSeparator />
+                        <MenuItem>Sign out</MenuItem>
+                      </MenuPopup>
+                    </MenuPositioner>
+                  </MenuPortal>
+                </Menu>
+              </div>
             </div>
           </Card>
         </TabPanel>
