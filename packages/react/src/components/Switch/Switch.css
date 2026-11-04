@@ -217,3 +217,19 @@
   border: 1px solid var(--nui-color-text);
   background: var(--nui-color-surface);
 }
+
+/* ---- Web 1.0: an inset track and an outset thumb ------------------------ */
+
+[data-era='web-1'] .nui-Switch {
+  --nui-switch-edge: 2px;
+  border-style: inset;
+  border-radius: 0;
+}
+
+[data-era='web-1'] .nui-Switch[data-checked] {
+  border-color: var(--nui-color-accent);
+}
+
+[data-era='web-1'] .nui-SwitchThumb {
+  border-radius: 0;
+}

@@ -74,6 +74,7 @@ export const inputDoc = {
       'Build a labeled field component around Input rather than adding label props to it, so Input stays one element.',
   },
   eraNotes: {
+    'web-1': 'The inset field browsers drew, two pixels deep.',
     'early-mac':
       'A plain box with a pen edge. Invalid gets a double edge, since the era has no danger color.',
     'classic-windows': 'Invalid adds an inset ring in the danger color inside the border.',

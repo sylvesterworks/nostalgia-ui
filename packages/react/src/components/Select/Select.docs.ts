@@ -154,6 +154,7 @@ export const selectDoc = {
       'Wrap the parts into a labeled select for your app, with your options passed in. An explicit `container` on SelectPortal still wins over the NostalgiaRoot default if the list must render elsewhere.',
   },
   eraNotes: {
+    'web-1': "The browser's inset drop-down field and a plain list with a dark edge.",
     'early-mac':
       'A pop-up menu with a hard drop shadow and a solid triangle; the highlighted option is the two tones inverted.',
     'classic-windows':

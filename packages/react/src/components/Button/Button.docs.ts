@@ -95,6 +95,8 @@ export const buttonDoc = {
       'Wrap Button to add behavior such as a loading state, and pass styling through `className`. To change how a variant looks in every era, change the stylesheet rather than overriding per instance.',
   },
   eraNotes: {
+    'web-1':
+      "The browser's own outset button, inset when pressed. Outline and ghost take the era's link color, and ghost is underlined like a link.",
     'early-mac':
       'Two tones and a rounded push button: solid is inverted, danger has a 3px edge instead of a color, and pressing inverts the button.',
     'classic-windows':

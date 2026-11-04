@@ -62,3 +62,14 @@
 [data-era='early-mac'] .nui-SliderThumb:has(:focus-visible) {
   outline-style: dotted;
 }
+
+/* Web 1.0 used the browser's dotted focus outline. */
+[data-era='web-1'] .nui-Button:focus-visible,
+[data-era='web-1'] .nui-Input:focus-visible,
+[data-era='web-1'] .nui-Checkbox:focus-visible,
+[data-era='web-1'] .nui-Switch:focus-visible,
+[data-era='web-1'] .nui-SelectTrigger:focus-visible,
+[data-era='web-1'] .nui-Tab:focus-visible,
+[data-era='web-1'] .nui-SliderThumb:has(:focus-visible) {
+  outline-style: dotted;
+}

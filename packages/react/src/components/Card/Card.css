@@ -134,3 +134,22 @@
 [data-era='early-mac'] .nui-Card--elevated {
   box-shadow: var(--nui-era-shadow-overlay);
 }
+
+/* ---- Web 1.0: a bevelled table frame ------------------------------------ */
+
+[data-era='web-1'] .nui-Card {
+  border: 2px outset var(--nui-color-border);
+  border-radius: 0;
+  background: var(--nui-color-surface-raised);
+  box-shadow: none;
+}
+
+/* Under the title, the groove of an <hr>. */
+[data-era='web-1'] .nui-CardTitle {
+  padding-bottom: var(--nui-spacing-unit);
+  border-bottom: 2px groove var(--nui-color-border);
+}
+
+[data-era='web-1'] .nui-Card--elevated {
+  border-width: 3px;
+}

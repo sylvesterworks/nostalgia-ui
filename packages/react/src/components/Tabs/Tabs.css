@@ -30,7 +30,7 @@
   cursor: pointer;
 }
 
-.nui-Tab[data-selected] {
+.nui-Tab[data-active] {
   color: var(--nui-color-text);
   font-weight: var(--nui-font-weight-bold);
 }
@@ -69,7 +69,7 @@
   margin-right: -1px;
 }
 
-[data-era='classic-windows'] .nui-Tab[data-selected] {
+[data-era='classic-windows'] .nui-Tab[data-active] {
   background: var(--nui-color-surface-raised);
   /* The selected tab grows upward and merges with the panel below it. */
   margin-bottom: -2px;
@@ -88,7 +88,7 @@
   border-bottom-color: var(--nui-era-glass-border);
 }
 
-[data-era='frutiger-aero'] .nui-Tab[data-selected] {
+[data-era='frutiger-aero'] .nui-Tab[data-active] {
   border-radius: var(--nui-radius-pill) var(--nui-radius-pill) 0 0;
   background: linear-gradient(to bottom, var(--nui-era-gloss-top), var(--nui-era-gloss-bottom));
 }
@@ -125,9 +125,13 @@
   border-bottom-color: var(--nui-color-accent);
 }
 
-[data-era='terminal-crt'] .nui-Tab[data-selected] {
-  color: var(--nui-color-accent);
-  text-shadow: 0 0 8px var(--nui-era-glow);
+/* The label is body text with the text glow, as Checkbox and Switch draw
+ * theirs: accent text is only held to 3:1 and fell to 2.73:1 on Solarized
+ * Light once this rule began to apply (#72). The glowing indicator still
+ * marks the selection in the accent. */
+[data-era='terminal-crt'] .nui-Tab[data-active] {
+  color: var(--nui-color-text);
+  text-shadow: 0 0 6px var(--nui-era-glow-text);
 }
 
 [data-era='terminal-crt'] .nui-TabIndicator {
@@ -149,7 +153,7 @@
   color: var(--nui-color-text);
 }
 
-[data-era='neubrutalism'] .nui-Tab[data-selected] {
+[data-era='neubrutalism'] .nui-Tab[data-active] {
   background: var(--nui-color-accent);
   color: var(--nui-color-text-on-accent);
   box-shadow: var(--nui-era-shadow-hard-sm);
@@ -170,7 +174,7 @@
   border-radius: var(--nui-radius-sm);
 }
 
-[data-era='neumorphism'] .nui-Tab[data-selected] {
+[data-era='neumorphism'] .nui-Tab[data-active] {
   box-shadow: var(--nui-era-shadow-inset);
 }
 
@@ -192,12 +196,44 @@
   color: var(--nui-color-text);
 }
 
-[data-era='early-mac'] .nui-Tab[data-selected] {
+[data-era='early-mac'] .nui-Tab[data-active] {
   background: var(--nui-color-text);
   color: var(--nui-color-surface);
 }
 
 /* The inverted tab marks the selection, so there is no indicator line. */
 [data-era='early-mac'] .nui-TabIndicator {
+  display: none;
+}
+
+/* ---- Web 1.0: a row of links -------------------------------------------- */
+
+/* Tabs read as a navigation bar of links separated by bars: the selected one
+ * is bold body text with no underline, as the page you were on. */
+[data-era='web-1'] .nui-TabList {
+  gap: 0;
+  border-bottom: 2px groove var(--nui-color-border);
+}
+
+[data-era='web-1'] .nui-Tab {
+  border-radius: 0;
+  color: var(--nui-era-link);
+  text-decoration: underline;
+}
+
+[data-era='web-1'] .nui-Tab + .nui-Tab::before {
+  content: '|';
+  margin-right: calc(var(--nui-spacing-unit) * 2.5);
+  color: var(--nui-color-text-muted);
+  text-decoration: none;
+  display: inline-block;
+}
+
+[data-era='web-1'] .nui-Tab[data-active] {
+  color: var(--nui-color-text);
+  text-decoration: none;
+}
+
+[data-era='web-1'] .nui-TabIndicator {
   display: none;
 }

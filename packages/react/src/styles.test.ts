@@ -92,6 +92,19 @@ describe('component stylesheets', () => {
   });
 });
 
+describe('selected tab', () => {
+  it("is styled by Base UI's data-active, the attribute Base UI 1.9 sets", async () => {
+    // Base UI marks the selected tab with data-active and aria-selected, not
+    // data-selected. Every [data-selected] rule here matched nothing, so no
+    // era drew its selected tab, and eras that hide the indicator showed no
+    // selection at all (#13).
+    const sheets = await readStylesheets();
+    const tabs = sheets.find(([name]) => name === 'components/Tabs/Tabs.css')?.[1] ?? '';
+    expect(tabs).not.toContain('[data-selected]');
+    expect(tabs).toContain('.nui-Tab[data-active]');
+  });
+});
+
 describe('button variants', () => {
   it('styles the danger variant in every era, through tokens only', async () => {
     const sheets = await readStylesheets();
@@ -100,6 +113,7 @@ describe('button variants', () => {
     for (const era of [
       'early-mac',
       'classic-windows',
+      'web-1',
       'frutiger-aero',
       'flat-metro',
       'terminal-crt',

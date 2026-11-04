@@ -203,3 +203,20 @@
   margin: 2px 0;
   border-top: 1px dotted var(--nui-color-text);
 }
+
+/* ---- Web 1.0: a bevelled pop-up list ------------------------------------ */
+
+[data-era='web-1'] .nui-MenuPopup {
+  padding: 2px;
+  border: 2px outset var(--nui-color-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+[data-era='web-1'] .nui-MenuItem {
+  border-radius: 0;
+}
+
+[data-era='web-1'] .nui-MenuSeparator {
+  border-top: 2px groove var(--nui-color-border);
+}

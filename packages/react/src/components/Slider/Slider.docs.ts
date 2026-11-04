@@ -130,6 +130,7 @@ export const sliderDoc = {
       'Wrap the parts into a labeled slider for your app with its own min, max and step. Style the slider through the era rather than per instance, so every era keeps drawing its own.',
   },
   eraNotes: {
+    'web-1': 'An inset groove and an upright thumb.',
     'early-mac':
       'A box track whose range is the era dither, with an upright thumb in the pen color.',
     'classic-windows': 'A thin sunken groove and an upright thumb with a raised bevel.',

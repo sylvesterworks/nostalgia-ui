@@ -61,6 +61,7 @@ describe('era-derived token contract', () => {
       'classic-windows': ['control-face'],
       'frutiger-aero': ['glass-fill'],
       'flat-metro': ['surface-hover'],
+      'web-1': ['tile'],
     });
   });
 

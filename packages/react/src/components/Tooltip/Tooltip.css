@@ -137,3 +137,11 @@
   color: var(--nui-color-text);
   box-shadow: var(--nui-era-shadow-raised);
 }
+
+/* ---- Web 1.0: a plain box ----------------------------------------------- */
+
+[data-era='web-1'] .nui-TooltipPopup {
+  border: 1px solid var(--nui-color-text);
+  border-radius: 0;
+  box-shadow: none;
+}

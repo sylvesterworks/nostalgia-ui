@@ -32,7 +32,7 @@ Eras read only from semantic tokens. No component ever uses a raw color value.
 
 ## Eras
 
-Seven so far, in chronological order: Terminal / CRT, Early Mac, Classic Windows, Frutiger Aero, Flat / Metro, Neumorphism, and Neubrutalism. Web 1.0, Web 2.0, Skeuomorphism, Material, and Glassmorphism are still to come.
+Eight so far, in chronological order: Terminal / CRT, Early Mac, Classic Windows, Web 1.0, Frutiger Aero, Flat / Metro, Neumorphism, and Neubrutalism. Web 2.0, Skeuomorphism, Material, and Glassmorphism are still to come.
 
 ## Palettes
 

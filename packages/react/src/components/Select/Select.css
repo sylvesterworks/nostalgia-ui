@@ -336,3 +336,23 @@
   color: var(--nui-color-surface);
   box-shadow: none;
 }
+
+/* ---- Web 1.0: the browser's drop-down list ------------------------------ */
+
+[data-era='web-1'] .nui-SelectTrigger {
+  border: 2px inset var(--nui-color-border);
+  border-radius: 0;
+  background: var(--nui-color-surface-sunken);
+  box-shadow: none;
+}
+
+[data-era='web-1'] .nui-SelectPopup {
+  padding: 0;
+  border: 1px solid var(--nui-color-text);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+[data-era='web-1'] .nui-SelectItem {
+  border-radius: 0;
+}

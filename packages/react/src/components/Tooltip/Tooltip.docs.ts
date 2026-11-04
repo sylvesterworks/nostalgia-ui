@@ -116,6 +116,7 @@ export const tooltipDoc = {
       'Wrap the parts into a tooltip helper for your app that takes the hint text. An explicit `container` on TooltipPortal still wins over the NostalgiaRoot default if the tooltip must render elsewhere.',
   },
   eraNotes: {
+    'web-1': 'A plain box with a dark edge.',
     'early-mac': 'A plain box with a pen edge and a hard drop shadow.',
     'classic-windows':
       'A square box with a plain dark edge on a warm fill derived from the raised surface and the warning color, so its hue follows the palette.',

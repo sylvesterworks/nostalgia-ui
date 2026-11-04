@@ -392,3 +392,62 @@
   background: var(--nui-color-surface);
   color: var(--nui-color-text-muted);
 }
+
+/* ---- Web 1.0: the browser's own outset button --------------------------- */
+
+/* The bevel is CSS's outset style, shaded by the browser from one border
+ * color, as form buttons were drawn then. Pressed, it turns inset. */
+[data-era='web-1'] .nui-Button {
+  border: 2px outset var(--nui-color-border);
+  border-radius: 0;
+  background: var(--nui-color-surface-raised);
+  color: var(--nui-color-text);
+  box-shadow: none;
+}
+
+[data-era='web-1'] .nui-Button--solid {
+  border-color: var(--nui-color-accent);
+  background: var(--nui-color-accent);
+  color: var(--nui-color-text-on-accent);
+}
+
+/* The outline button's text is the era's link color, which clears 4.5:1,
+ * rather than the accent, which is only held to 3:1. */
+[data-era='web-1'] .nui-Button--outline {
+  border-color: var(--nui-era-link);
+  background: transparent;
+  color: var(--nui-era-link);
+}
+
+/* A ghost button is a text link. */
+[data-era='web-1'] .nui-Button--ghost {
+  border-color: transparent;
+  background: transparent;
+  color: var(--nui-era-link);
+  text-decoration: underline;
+}
+
+[data-era='web-1'] .nui-Button--danger {
+  border-color: var(--nui-color-danger);
+  background: var(--nui-color-danger);
+  color: var(--nui-color-text-on-danger);
+}
+
+[data-era='web-1'] .nui-Button:active {
+  border-style: inset;
+}
+
+[data-era='web-1'] .nui-Button--ghost:active {
+  border-style: solid;
+}
+
+[data-era='web-1'] .nui-Button:disabled,
+[data-era='web-1'] .nui-Button--solid:disabled,
+[data-era='web-1'] .nui-Button--outline:disabled,
+[data-era='web-1'] .nui-Button--danger:disabled {
+  border-style: outset;
+  border-color: var(--nui-color-border);
+  background: var(--nui-color-surface-sunken);
+  color: var(--nui-color-text-muted);
+  text-decoration: none;
+}

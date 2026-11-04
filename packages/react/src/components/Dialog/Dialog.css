@@ -170,3 +170,17 @@
   background-image: var(--nui-era-stripes);
   background-size: 2px 2px;
 }
+
+/* ---- Web 1.0: a bevelled pop-up window ---------------------------------- */
+
+[data-era='web-1'] .nui-DialogPopup {
+  border: 2px outset var(--nui-color-border);
+  border-radius: 0;
+  background: var(--nui-color-surface-raised);
+  box-shadow: var(--nui-era-shadow-overlay);
+}
+
+[data-era='web-1'] .nui-DialogTitle {
+  padding-bottom: var(--nui-spacing-unit);
+  border-bottom: 2px groove var(--nui-color-border);
+}
