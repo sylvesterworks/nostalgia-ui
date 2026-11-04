@@ -1,0 +1,129 @@
+/*
+ * Tooltip. A small box of body text beside the trigger. Each era chooses the
+ * fill, and body text is held to 4.5:1 on each: the raised surface, Classic
+ * Windows' derived tooltip fill, Aero's glass over the surface, Flat /
+ * Metro's inverted block (the surface color on the text color) and the base
+ * surface in Terminal / CRT and Neumorphism. Tooltips never use muted text.
+ *
+ * The arrow is a rotated square that takes the popup's fill and edge with
+ * `inherit`, and draws only the two sides that face away from the popup.
+ * Base UI positions it along the edge and sets data-side to say which edge.
+ */
+
+.nui-TooltipPopup {
+  box-sizing: border-box;
+  max-width: 18rem;
+  padding: calc(var(--nui-spacing-unit) * 1 * var(--nui-density-scale))
+    calc(var(--nui-spacing-unit) * 1.75 * var(--nui-density-scale));
+  border-radius: var(--nui-radius-sm);
+  border: var(--nui-border-width) var(--nui-border-style) var(--nui-color-border);
+  background: var(--nui-color-surface-raised);
+  color: var(--nui-color-text);
+  font-family: var(--nui-font-sans);
+  font-size: 0.875rem;
+  letter-spacing: var(--nui-letter-spacing);
+  line-height: 1.4;
+  box-shadow: var(--nui-era-shadow-raised);
+}
+
+.nui-TooltipArrow {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-style: solid;
+  border-color: inherit;
+  border-width: 0;
+  background: inherit;
+  rotate: 45deg;
+}
+
+.nui-TooltipArrow[data-side='top'] {
+  bottom: -0.3125rem;
+  border-right-width: inherit;
+  border-bottom-width: inherit;
+}
+
+.nui-TooltipArrow[data-side='bottom'] {
+  top: -0.3125rem;
+  border-top-width: inherit;
+  border-left-width: inherit;
+}
+
+.nui-TooltipArrow[data-side='left'] {
+  right: -0.3125rem;
+  border-top-width: inherit;
+  border-right-width: inherit;
+}
+
+.nui-TooltipArrow[data-side='right'] {
+  left: -0.3125rem;
+  border-bottom-width: inherit;
+  border-left-width: inherit;
+}
+
+/* ---- Classic Windows: the warm tooltip with a plain dark edge ---------- */
+
+/* The fill is derived per palette in the era file (tooltip-fill) and listed
+ * as a body-text fill, so the audit holds the text to 4.5:1 on it. */
+[data-era='classic-windows'] .nui-TooltipPopup {
+  border-radius: 0;
+  border: 1px solid var(--nui-color-text);
+  background: var(--nui-era-tooltip-fill);
+  color: var(--nui-color-text);
+  box-shadow: none;
+}
+
+/* ---- Frutiger Aero: glass with a soft shadow --------------------------- */
+
+/* The glass is painted over an opaque surface layer, as Dialog's is, so text
+ * on it is the color the contrast audit measures. */
+[data-era='frutiger-aero'] .nui-TooltipPopup {
+  border-radius: var(--nui-radius-md);
+  border-color: var(--nui-era-glass-border);
+  background:
+    linear-gradient(var(--nui-era-glass-fill), var(--nui-era-glass-fill)), var(--nui-color-surface);
+}
+
+/* ---- Flat / Metro: an inverted solid block ------------------------------ */
+
+/* The surface color on the text color: the same pair as body text on the
+ * surface, so it clears 4.5:1 wherever that does. */
+[data-era='flat-metro'] .nui-TooltipPopup {
+  border: 0;
+  border-radius: 0;
+  background: var(--nui-color-text);
+  color: var(--nui-color-surface);
+  box-shadow: none;
+}
+
+/* ---- Terminal / CRT: an accent-bordered box ----------------------------- */
+
+/* No glow behind the text: it lightens what is behind small text, as on
+ * Select's placeholder. */
+[data-era='terminal-crt'] .nui-TooltipPopup {
+  border-radius: 0;
+  border-color: var(--nui-color-accent);
+  background: var(--nui-color-surface);
+  font-family: var(--nui-font-mono);
+}
+
+/* ---- Neubrutalism: an ink edge and a hard shadow ------------------------ */
+
+[data-era='neubrutalism'] .nui-TooltipPopup {
+  border-width: 2px;
+  border-color: var(--nui-era-ink);
+  box-shadow: var(--nui-era-shadow-hard-sm);
+}
+
+/* ---- Neumorphism: an extruded pill -------------------------------------- */
+
+/* The pill has no edge for an arrow to continue, so the arrow is hidden. */
+[data-era='neumorphism'] .nui-TooltipPopup {
+  border: 0;
+  border-radius: var(--nui-radius-pill);
+  background: var(--nui-color-surface);
+  box-shadow: var(--nui-era-shadow-raised-sm);
+}
+
+[data-era='neumorphism'] .nui-TooltipArrow {
+  display: none;
+}

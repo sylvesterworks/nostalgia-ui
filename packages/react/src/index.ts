@@ -37,6 +37,15 @@ export {
   MenuSeparator,
   MenuTrigger,
 } from './components/Menu/index.js';
+export {
+  Tooltip,
+  TooltipArrow,
+  TooltipPopup,
+  TooltipPortal,
+  TooltipPositioner,
+  TooltipProvider,
+  TooltipTrigger,
+} from './components/Tooltip/index.js';
 
 export {
   Dialog,

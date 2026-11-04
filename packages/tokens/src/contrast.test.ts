@@ -151,6 +151,18 @@ describe('era text fills', () => {
     );
   });
 
+  it('audit body text only on a body-text fill', () => {
+    // Classic Windows' tooltip fill: body text sits on it, muted text never
+    // does, so only body text is checked (#26).
+    const classic = eras.find((era) => era.id === 'classic-windows');
+    if (classic === undefined) throw new Error('no classic-windows era');
+    for (const p of palettes) {
+      const ids = auditContrast(classic, p).findings.map((f) => f.id);
+      expect(ids).toContain('text-on-tooltip-fill');
+      expect(ids).not.toContain('text-muted-on-tooltip-fill');
+    }
+  });
+
   it('reject a fill name the era does not derive', () => {
     expect(() => auditContrast({ ...base, textFills: ['no-such-fill'] }, palette)).toThrow(
       /no-such-fill/,

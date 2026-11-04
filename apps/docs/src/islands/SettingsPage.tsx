@@ -40,6 +40,12 @@ import {
   TabList,
   TabPanel,
   Tabs,
+  Tooltip,
+  TooltipArrow,
+  TooltipPopup,
+  TooltipPortal,
+  TooltipPositioner,
+  TooltipTrigger,
 } from '@nostalgiaui/react';
 import type * as React from 'react';
 
@@ -176,7 +182,17 @@ export function SettingsPage(): React.ReactElement {
       </Tabs>
 
       <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-        <Button variant="solid">Save changes</Button>
+        <Tooltip>
+          <TooltipTrigger render={<Button variant="solid" />}>Save changes</TooltipTrigger>
+          <TooltipPortal>
+            <TooltipPositioner sideOffset={8}>
+              <TooltipPopup>
+                <TooltipArrow />
+                Changes show on your public profile right away.
+              </TooltipPopup>
+            </TooltipPositioner>
+          </TooltipPortal>
+        </Tooltip>
         <Button variant="ghost">Cancel</Button>
         <Button variant="solid" disabled>
           Saved

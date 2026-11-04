@@ -31,6 +31,7 @@ import { nostalgiaRootDoc } from './components/NostalgiaRoot/NostalgiaRoot.docs.
 import { selectDoc } from './components/Select/Select.docs.js';
 import { switchDoc } from './components/Switch/Switch.docs.js';
 import { tabsDoc } from './components/Tabs/Tabs.docs.js';
+import { tooltipDoc } from './components/Tooltip/Tooltip.docs.js';
 import { foundationsDoc } from './docs/foundations.docs.js';
 import type { AnyComponentDoc, PropsTable } from './docs/schema.js';
 
@@ -55,6 +56,7 @@ export const COMPONENTS = [
   'Switch',
   'Select',
   'Menu',
+  'Tooltip',
   'Card',
   'Tabs',
   'Dialog',
@@ -68,6 +70,7 @@ const DOCS: Readonly<Record<(typeof COMPONENTS)[number], AnyComponentDoc>> = {
   Switch: switchDoc,
   Select: selectDoc,
   Menu: menuDoc,
+  Tooltip: tooltipDoc,
   Card: cardDoc,
   Tabs: tabsDoc,
   Dialog: dialogDoc,

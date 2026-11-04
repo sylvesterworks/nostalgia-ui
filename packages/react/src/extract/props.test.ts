@@ -14,6 +14,7 @@ import { nostalgiaRootDoc } from '../components/NostalgiaRoot/NostalgiaRoot.docs
 import { selectDoc } from '../components/Select/Select.docs.js';
 import { switchDoc } from '../components/Switch/Switch.docs.js';
 import { tabsDoc } from '../components/Tabs/Tabs.docs.js';
+import { tooltipDoc } from '../components/Tooltip/Tooltip.docs.js';
 import { findColors } from '../docs/color-rules.js';
 import type { PropsTable } from '../docs/schema.js';
 import * as pkg from '../index.js';
@@ -36,6 +37,7 @@ const docs = [
   switchDoc,
   selectDoc,
   menuDoc,
+  tooltipDoc,
   cardDoc,
   tabsDoc,
   dialogDoc,
@@ -217,6 +219,7 @@ const storyModules = {
   Switch: () => import('../components/Switch/Switch.stories.js'),
   Select: () => import('../components/Select/Select.stories.js'),
   Menu: () => import('../components/Menu/Menu.stories.js'),
+  Tooltip: () => import('../components/Tooltip/Tooltip.stories.js'),
   Card: () => import('../components/Card/Card.stories.js'),
   Tabs: () => import('../components/Tabs/Tabs.stories.js'),
   Dialog: () => import('../components/Dialog/Dialog.stories.js'),
