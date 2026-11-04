@@ -177,3 +177,27 @@
 [data-era='neumorphism'] .nui-TabIndicator {
   display: none;
 }
+
+/* ---- Early Mac: folder tabs, the selected one inverted ------------------ */
+
+[data-era='early-mac'] .nui-TabList {
+  gap: 2px;
+  border-bottom: 1px solid var(--nui-color-text);
+}
+
+[data-era='early-mac'] .nui-Tab {
+  border: 1px solid var(--nui-color-text);
+  border-bottom: 0;
+  border-radius: var(--nui-radius-md) var(--nui-radius-md) 0 0;
+  color: var(--nui-color-text);
+}
+
+[data-era='early-mac'] .nui-Tab[data-selected] {
+  background: var(--nui-color-text);
+  color: var(--nui-color-surface);
+}
+
+/* The inverted tab marks the selection, so there is no indicator line. */
+[data-era='early-mac'] .nui-TabIndicator {
+  display: none;
+}

@@ -339,3 +339,56 @@
   color: var(--nui-color-text-muted);
   box-shadow: none;
 }
+
+/* ---- Early Mac: two tones, a rounded push button ------------------------ */
+
+/* No accent: a plain button is the pen on the surface, a solid one is the
+ * two tones inverted, and a danger button is told apart by a heavier edge
+ * rather than a color. */
+[data-era='early-mac'] .nui-Button {
+  border: 1px solid var(--nui-color-text);
+  border-radius: var(--nui-radius-md);
+  background: var(--nui-color-surface);
+  color: var(--nui-color-text);
+  box-shadow: none;
+}
+
+[data-era='early-mac'] .nui-Button--solid {
+  background: var(--nui-color-text);
+  color: var(--nui-color-surface);
+}
+
+[data-era='early-mac'] .nui-Button--outline {
+  border-color: var(--nui-color-text);
+  color: var(--nui-color-text);
+}
+
+[data-era='early-mac'] .nui-Button--ghost {
+  border-color: transparent;
+}
+
+[data-era='early-mac'] .nui-Button--danger {
+  border-width: 3px;
+  background: var(--nui-color-surface);
+  color: var(--nui-color-text);
+}
+
+/* Pressing inverts the button, as the era drew a click. */
+[data-era='early-mac'] .nui-Button:active {
+  background: var(--nui-color-text);
+  color: var(--nui-color-surface);
+}
+
+[data-era='early-mac'] .nui-Button--solid:active {
+  background: var(--nui-color-surface);
+  color: var(--nui-color-text);
+}
+
+[data-era='early-mac'] .nui-Button:disabled,
+[data-era='early-mac'] .nui-Button--solid:disabled,
+[data-era='early-mac'] .nui-Button--danger:disabled {
+  border-width: 1px;
+  border-color: var(--nui-color-text-muted);
+  background: var(--nui-color-surface);
+  color: var(--nui-color-text-muted);
+}

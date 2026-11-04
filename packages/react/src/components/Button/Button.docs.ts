@@ -95,6 +95,8 @@ export const buttonDoc = {
       'Wrap Button to add behavior such as a loading state, and pass styling through `className`. To change how a variant looks in every era, change the stylesheet rather than overriding per instance.',
   },
   eraNotes: {
+    'early-mac':
+      'Two tones and a rounded push button: solid is inverted, danger has a 3px edge instead of a color, and pressing inverts the button.',
     'classic-windows':
       'A two-tone bevel that inverts on press, and a dotted focus rectangle inside the button.',
     'frutiger-aero': 'A gloss band across the top half, drawn with pseudo-elements.',

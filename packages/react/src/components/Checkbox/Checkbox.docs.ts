@@ -99,6 +99,8 @@ export const checkboxDoc = {
       'Wrap Checkbox and a `<label>` together to make a labeled field for your app, and style the label through `className`. Style the box through the era rather than per instance, so every era keeps drawing its own.',
   },
   eraNotes: {
+    'early-mac':
+      'A square box that is never filled: ticking draws an X from corner to corner, as the era did.',
     'classic-windows':
       'A small sunken well that is never filled: ticking draws a heavy tick in the text color. Disabled turns the well to the button face.',
     'frutiger-aero': 'A rounded glass box that fills with the vivid accent when ticked.',

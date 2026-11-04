@@ -121,3 +121,16 @@
 [data-era='neumorphism'] .nui-Card--elevated {
   box-shadow: var(--nui-era-shadow-overlay);
 }
+
+/* ---- Early Mac: a square window with a drop shadow ---------------------- */
+
+[data-era='early-mac'] .nui-Card {
+  border: 1px solid var(--nui-color-text);
+  border-radius: 0;
+  background: var(--nui-color-surface);
+  box-shadow: var(--nui-era-shadow-raised);
+}
+
+[data-era='early-mac'] .nui-Card--elevated {
+  box-shadow: var(--nui-era-shadow-overlay);
+}

@@ -74,6 +74,8 @@ export const inputDoc = {
       'Build a labeled field component around Input rather than adding label props to it, so Input stays one element.',
   },
   eraNotes: {
+    'early-mac':
+      'A plain box with a pen edge. Invalid gets a double edge, since the era has no danger color.',
     'classic-windows': 'Invalid adds an inset ring in the danger color inside the border.',
     'flat-metro': 'Invalid recolors only the bottom border.',
     'terminal-crt': 'Invalid recolors both the border and the typed text.',

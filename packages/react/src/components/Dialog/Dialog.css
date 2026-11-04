@@ -136,3 +136,37 @@
   background: var(--nui-color-surface);
   opacity: 0.7;
 }
+
+/* ---- Early Mac: a double-edged window with a striped title -------------- */
+
+/* The desktop behind a dialog is the era's dither. */
+[data-era='early-mac'] .nui-DialogBackdrop {
+  background-color: var(--nui-color-surface);
+  background-image: var(--nui-era-dither);
+  background-size: 2px 2px;
+  opacity: 0.5;
+}
+
+[data-era='early-mac'] .nui-DialogPopup {
+  border: 3px double var(--nui-color-text);
+  border-radius: 0;
+  background: var(--nui-color-surface);
+  box-shadow: var(--nui-era-shadow-overlay);
+}
+
+/* The title bar: pinstripes either side of the title, which itself sits on
+ * the plain surface so the text stays readable. */
+[data-era='early-mac'] .nui-DialogTitle {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--nui-spacing-unit) * 2);
+}
+
+[data-era='early-mac'] .nui-DialogTitle::before,
+[data-era='early-mac'] .nui-DialogTitle::after {
+  content: '';
+  flex: 1;
+  height: 0.75em;
+  background-image: var(--nui-era-stripes);
+  background-size: 2px 2px;
+}

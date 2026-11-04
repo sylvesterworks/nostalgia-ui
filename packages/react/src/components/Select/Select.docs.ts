@@ -154,6 +154,8 @@ export const selectDoc = {
       'Wrap the parts into a labeled select for your app, with your options passed in. An explicit `container` on SelectPortal still wins over the NostalgiaRoot default if the list must render elsewhere.',
   },
   eraNotes: {
+    'early-mac':
+      'A pop-up menu with a hard drop shadow and a solid triangle; the highlighted option is the two tones inverted.',
     'classic-windows':
       'A sunken field with a raised arrow button holding a solid triangle, and a flat list with a plain dark edge.',
     'frutiger-aero':

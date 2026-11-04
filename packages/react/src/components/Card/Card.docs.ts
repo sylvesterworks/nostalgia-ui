@@ -81,6 +81,8 @@ export const cardDoc = {
       'Compose new card layouts from the three parts, for example a footer row inside CardBody, rather than adding slots to Card.',
   },
   eraNotes: {
+    'early-mac':
+      'A square window with a 1px pen edge and a hard 1px drop shadow; elevated doubles the shadow.',
     'flat-metro':
       'Flat / Metro forbids shadows, so an elevated card is distinguished by the raised surface fill instead.',
     'terminal-crt': 'CardTitle takes the accent color with a phosphor glow.',
