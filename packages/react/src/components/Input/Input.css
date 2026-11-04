@@ -147,3 +147,16 @@
 [data-era='early-mac'] .nui-Input--invalid {
   border: 3px double var(--nui-color-text);
 }
+
+/* ---- Web 1.0: the inset field browsers drew ----------------------------- */
+
+[data-era='web-1'] .nui-Input {
+  border: 2px inset var(--nui-color-border);
+  border-radius: 0;
+  background: var(--nui-color-surface-sunken);
+  box-shadow: none;
+}
+
+[data-era='web-1'] .nui-Input--invalid {
+  border-color: var(--nui-color-danger);
+}

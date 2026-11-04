@@ -244,3 +244,19 @@
   border-top: 2px solid currentColor;
   background: none;
 }
+
+/* ---- Web 1.0: the browser's inset box ----------------------------------- */
+
+[data-era='web-1'] .nui-Checkbox {
+  border: 2px inset var(--nui-color-border);
+  border-radius: 0;
+  background: var(--nui-color-surface-sunken);
+  color: var(--nui-color-text);
+}
+
+/* Form checkboxes were never filled: the tick appears in the text color. */
+[data-era='web-1'] .nui-Checkbox[data-checked],
+[data-era='web-1'] .nui-Checkbox[data-indeterminate] {
+  border-color: var(--nui-color-border);
+  background: var(--nui-color-surface-sunken);
+}

@@ -7,12 +7,14 @@ import { frutigerAero } from './frutiger-aero.js';
 import { neubrutalism } from './neubrutalism.js';
 import { neumorphism } from './neumorphism.js';
 import { terminalCrt } from './terminal-crt.js';
+import { web1 } from './web-1.js';
 
 // Chronological. The timeline slider walks this order.
 export const eras: readonly Era[] = [
   terminalCrt,
   earlyMac,
   classicWindows,
+  web1,
   frutigerAero,
   flatMetro,
   neumorphism,
@@ -23,6 +25,7 @@ export const ERA_IDS = [
   'terminal-crt',
   'early-mac',
   'classic-windows',
+  'web-1',
   'frutiger-aero',
   'flat-metro',
   'neumorphism',
@@ -46,4 +49,5 @@ export {
   terminalCrt,
   neubrutalism,
   neumorphism,
+  web1,
 };

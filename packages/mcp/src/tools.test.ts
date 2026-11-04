@@ -22,6 +22,7 @@ describe('list_eras and list_palettes', () => {
       'terminal-crt',
       'early-mac',
       'classic-windows',
+      'web-1',
       'frutiger-aero',
       'flat-metro',
       'neumorphism',

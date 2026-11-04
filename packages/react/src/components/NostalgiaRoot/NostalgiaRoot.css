@@ -10,3 +10,20 @@
   font-weight: var(--nui-font-weight-normal);
   letter-spacing: var(--nui-letter-spacing);
 }
+
+/* ---- Web 1.0: a tiled page and underlined links ------------------------- */
+
+/* The tiled background: a checkerboard of the surface and the era's tile
+ * tone, which the audit holds body and muted text to 4.5:1 on. */
+.nui-root[data-era='web-1'] {
+  background-image: repeating-conic-gradient(var(--nui-era-tile) 0% 25%, transparent 0% 50%);
+  background-size: 32px 32px;
+}
+
+/* Plain links read as links: the accent corrected to 4.5:1 on every surface,
+ * underlined. A component rendered as a link keeps its own color, since its
+ * rule is more specific. */
+[data-era='web-1'] a {
+  color: var(--nui-era-link);
+  text-decoration: underline;
+}

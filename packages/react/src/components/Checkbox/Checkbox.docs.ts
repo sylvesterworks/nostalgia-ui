@@ -99,6 +99,7 @@ export const checkboxDoc = {
       'Wrap Checkbox and a `<label>` together to make a labeled field for your app, and style the label through `className`. Style the box through the era rather than per instance, so every era keeps drawing its own.',
   },
   eraNotes: {
+    'web-1': "The browser's inset box, never filled; the tick is drawn in the text color.",
     'early-mac':
       'A square box that is never filled: ticking draws an X from corner to corner, as the era did.',
     'classic-windows':

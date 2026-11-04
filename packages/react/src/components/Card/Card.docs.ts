@@ -81,6 +81,7 @@ export const cardDoc = {
       'Compose new card layouts from the three parts, for example a footer row inside CardBody, rather than adding slots to Card.',
   },
   eraNotes: {
+    'web-1': 'A bevelled table frame with an etched rule under the title.',
     'early-mac':
       'A square window with a 1px pen edge and a hard 1px drop shadow; elevated doubles the shadow.',
     'flat-metro':

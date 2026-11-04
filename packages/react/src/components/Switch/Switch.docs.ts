@@ -92,6 +92,7 @@ export const switchDoc = {
       'Wrap Switch and a `<label>` together to make a labeled setting for your app, and style the label through `className`. Style the switch through the era rather than per instance, so every era keeps drawing its own.',
   },
   eraNotes: {
+    'web-1': 'An inset track and a square thumb.',
     'early-mac':
       'A box track that turns to the era dither when on; the thumb is solid pen when off and a plain box with a pen edge when on.',
     'classic-windows':

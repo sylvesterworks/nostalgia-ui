@@ -117,6 +117,7 @@ export const dialogDoc = {
       'Build specific dialogs, such as a confirmation, by composing the parts. An explicit `container` on DialogPortal still wins over the NostalgiaRoot default if a dialog must render elsewhere.',
   },
   eraNotes: {
+    'web-1': 'A bevelled pop-up window with an etched rule under the title.',
     'early-mac':
       'A double-edged window. DialogTitle gets pinstripes either side of the title, which stays on the plain surface; the backdrop is the era dither.',
     'classic-windows':

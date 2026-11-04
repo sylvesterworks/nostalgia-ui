@@ -247,3 +247,21 @@
   height: 1.25rem;
   border-radius: 0;
 }
+
+/* ---- Web 1.0: an inset groove and an outset thumb ----------------------- */
+
+[data-era='web-1'] .nui-SliderTrack {
+  height: 0.5rem;
+  border: 2px inset var(--nui-color-border);
+  border-radius: 0;
+}
+
+[data-era='web-1'] .nui-SliderIndicator {
+  border-radius: 0;
+}
+
+[data-era='web-1'] .nui-SliderThumb {
+  width: 0.75rem;
+  height: 1.25rem;
+  border-radius: 0;
+}

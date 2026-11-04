@@ -117,6 +117,7 @@ export const menuDoc = {
       'Compose the parts into the menus your app needs, with your own items. An explicit `container` on MenuPortal still wins over the NostalgiaRoot default if the menu must render elsewhere.',
   },
   eraNotes: {
+    'web-1': 'A bevelled pop-up list with an etched separator.',
     'early-mac':
       'A pull-down menu with a hard drop shadow and a dotted separator; the highlighted item is the two tones inverted.',
     'classic-windows':

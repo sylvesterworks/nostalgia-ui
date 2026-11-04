@@ -96,6 +96,8 @@ export const tabsDoc = {
       'Keep the parts separate rather than collapsing them into one convenience component, so the composition Base UI provides stays available.',
   },
   eraNotes: {
+    'web-1':
+      'A row of underlined links separated by bars; the selected one is bold body text with no underline.',
     'early-mac':
       'Folder tabs with a pen edge; the selected tab is inverted and the indicator is hidden.',
     'classic-windows':
