@@ -58,6 +58,11 @@ axes, which decision 0001 rules out.
 - Aero's glass is more subtle, and its card gloss is a thin band.
 - A new era that paints its own fill behind text lists it in `textFills` or
   the react test fails; once listed, the audit holds it to 4.5:1.
+- A fill that only body text sits on, such as Classic Windows' tooltip
+  (#26), is listed in `bodyTextFills` instead. The audit then holds body
+  text to 4.5:1 on it and does not check muted text, so it may be tinted
+  away from the surfaces; the react test fails if the rule that paints it
+  also sets muted text.
 - Aero's Button and selected Tab still lay their gloss over text (#73), and
   Terminal / CRT uses the accent color as text in places (#72). Neither is
   covered here.

@@ -45,7 +45,7 @@ describe('era-derived token contract', () => {
       'name keys the era derives for %s',
       (_paletteId, palette) => {
         const derived = era.derive(toSemantic(palette));
-        for (const key of era.textFills ?? []) {
+        for (const key of [...(era.textFills ?? []), ...(era.bodyTextFills ?? [])]) {
           expect(Object.keys(derived), era.id + ' lists text fill ' + key).toContain(key);
         }
       },
@@ -62,6 +62,15 @@ describe('era-derived token contract', () => {
       'frutiger-aero': ['glass-fill'],
       'flat-metro': ['surface-hover'],
     });
+  });
+
+  it('lists the fills only body text sits on', () => {
+    // A fill that may be tinted away from the surfaces, so only body text is
+    // held to 4.5:1 on it (#26). Adding one is a decision like a text fill.
+    const listed = Object.fromEntries(
+      eras.filter((era) => era.bodyTextFills).map((era) => [era.id, era.bodyTextFills]),
+    );
+    expect(listed).toEqual({ 'classic-windows': ['tooltip-fill'] });
   });
 
   it('types the extras of a concrete era so a stylesheet author can see them', () => {

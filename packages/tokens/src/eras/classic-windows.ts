@@ -1,4 +1,4 @@
-import { darken, lighten, raise, withAlpha } from '../color.js';
+import { darken, ensureContrast, lighten, mix, raise, withAlpha } from '../color.js';
 import { defineEra } from '../types.js';
 
 /**
@@ -53,6 +53,13 @@ export const classicWindows = defineEra({
     'focus-color': s.text,
     'shadow-raised': 'none',
     'shadow-overlay': '2px 2px 0 0 ' + withAlpha(darken(s.surface, 0.7), 0.5),
+    // The tooltip's warm fill. The original was a hand-picked pale yellow;
+    // here it is the raised surface moved toward the warning color, which is
+    // a different hue in each palette, with its tone corrected so body text
+    // clears 4.5:1 on it. A plain 30% mix fell to 3.52:1 in Solarized Light
+    // (#26).
+    'tooltip-fill': ensureContrast(mix(s.surfaceRaised, s.warning, 0.3), s.text, 4.5),
   }),
   textFills: ['control-face'],
+  bodyTextFills: ['tooltip-fill'],
 });

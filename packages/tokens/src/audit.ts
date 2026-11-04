@@ -220,17 +220,25 @@ export function auditContrast(era: Era, palette: Palette): ContrastAudit {
     };
   });
 
-  // The era's own fills that text sits on, painted over the base surface.
+  // The era's own fills that text sits on, painted over the base surface:
+  // body and muted text on its text fills, body text only on its body-text
+  // fills (#26).
   const derived = era.derive(semantic);
-  for (const key of era.textFills ?? []) {
+  const both = [
+    ['text', 'Body text'],
+    ['textMuted', 'Muted text'],
+  ] as const;
+  const bodyOnly = [['text', 'Body text']] as const;
+  const fills = [
+    ...(era.textFills ?? []).map((key) => [key, both] as const),
+    ...(era.bodyTextFills ?? []).map((key) => [key, bodyOnly] as const),
+  ];
+  for (const [key, foregrounds] of fills) {
     const fill = derived[key];
     if (fill === undefined)
       throw new Error(era.id + ' lists text fill ' + key + ' but derives none');
     const background = composite(fill, semantic.surface);
-    for (const [foreground, name] of [
-      ['text', 'Body text'],
-      ['textMuted', 'Muted text'],
-    ] as const) {
+    for (const [foreground, name] of foregrounds) {
       const ratio = contrastRatio(semantic[foreground], background);
       findings.push({
         id: (foreground === 'text' ? 'text-on-' : 'text-muted-on-') + key,

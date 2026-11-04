@@ -25,6 +25,8 @@ import { switchDoc } from '../components/Switch/Switch.docs.js';
 import type * as SwitchStories from '../components/Switch/Switch.stories.js';
 import { tabsDoc } from '../components/Tabs/Tabs.docs.js';
 import type * as TabsStories from '../components/Tabs/Tabs.stories.js';
+import { tooltipDoc } from '../components/Tooltip/Tooltip.docs.js';
+import type * as TooltipStories from '../components/Tooltip/Tooltip.stories.js';
 import * as pkg from '../index.js';
 
 import { findColors } from './color-rules.js';
@@ -56,6 +58,7 @@ const docs = [
   switchDoc,
   selectDoc,
   menuDoc,
+  tooltipDoc,
   cardDoc,
   tabsDoc,
   dialogDoc,
@@ -70,6 +73,7 @@ const FAMILY_PATTERNS: Readonly<Record<string, RegExp>> = {
   Switch: /\bSwitch\w*/,
   Select: /\bSelect\w*/,
   Menu: /\bMenu\w*/,
+  Tooltip: /\bTooltip\w*/,
   Card: /\bCard\w*/,
   Tabs: /\bTab\w*/,
   Dialog: /\bDialog\w*/,
@@ -116,6 +120,7 @@ const storyReferencesTypecheck: readonly true[] = [
   true satisfies RefsExist<typeof switchDoc, typeof SwitchStories>,
   true satisfies RefsExist<typeof selectDoc, typeof SelectStories>,
   true satisfies RefsExist<typeof menuDoc, typeof MenuStories>,
+  true satisfies RefsExist<typeof tooltipDoc, typeof TooltipStories>,
   true satisfies RefsExist<typeof cardDoc, typeof CardStories>,
   true satisfies RefsExist<typeof tabsDoc, typeof TabsStories>,
   true satisfies RefsExist<typeof dialogDoc, typeof DialogStories>,
@@ -227,6 +232,7 @@ const stories = {
   Switch: () => import('../components/Switch/Switch.stories.js'),
   Select: () => import('../components/Select/Select.stories.js'),
   Menu: () => import('../components/Menu/Menu.stories.js'),
+  Tooltip: () => import('../components/Tooltip/Tooltip.stories.js'),
   Card: () => import('../components/Card/Card.stories.js'),
   Tabs: () => import('../components/Tabs/Tabs.stories.js'),
   Dialog: () => import('../components/Dialog/Dialog.stories.js'),

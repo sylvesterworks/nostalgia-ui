@@ -47,6 +47,7 @@ describe('component stylesheets', () => {
       'Switch',
       'Select',
       'Menu',
+      'Tooltip',
       'Card',
       'Tabs',
       'Dialog',
@@ -129,13 +130,15 @@ const FILLS_WITH_OWN_TEXT = new Set([
 ]);
 
 /** Each era fill a rule paints as its background, with the era the rule is scoped to. */
-function eraFills(css: string): { readonly era: string; readonly fill: string }[] {
-  const found: { era: string; fill: string }[] = [];
+function eraFills(
+  css: string,
+): { readonly era: string; readonly fill: string; readonly body: string }[] {
+  const found: { era: string; fill: string; body: string }[] = [];
   for (const rule of stripCssComments(css).matchAll(/([^{}]+)\{([^}]*)\}/g)) {
     const [, selector = '', body = ''] = rule;
     const scoped = [...selector.matchAll(/data-era='([^']+)'/g)].map((m) => m[1] ?? '');
     for (const use of body.matchAll(/background(?:-color)?:\s*var\(--nui-era-([a-z-]+)\)/g)) {
-      for (const era of scoped) found.push({ era, fill: use[1] ?? '' });
+      for (const era of scoped) found.push({ era, fill: use[1] ?? '', body });
     }
   }
   return found;
@@ -148,10 +151,18 @@ describe('era fills behind text', () => {
     // escape it.
     const unaudited: string[] = [];
     for (const [name, css] of await readStylesheets()) {
-      for (const { era, fill } of eraFills(css)) {
+      for (const { era, fill, body } of eraFills(css)) {
         if (FILLS_WITH_OWN_TEXT.has(fill)) continue;
-        const listed = eras.find((e) => e.id === era)?.textFills ?? [];
-        if (!listed.includes(fill)) unaudited.push(name + ': ' + era + ' ' + fill);
+        const known = eras.find((e) => e.id === era);
+        if ((known?.textFills ?? []).includes(fill)) continue;
+        // A body-text fill is audited for body text only (#26), so the rule
+        // that paints it must not set muted text on it.
+        if ((known?.bodyTextFills ?? []).includes(fill)) {
+          if (body.includes('--nui-color-text-muted'))
+            unaudited.push(name + ': ' + era + ' muted text on ' + fill);
+          continue;
+        }
+        unaudited.push(name + ': ' + era + ' ' + fill);
       }
     }
     expect(unaudited).toEqual([]);
@@ -159,8 +170,22 @@ describe('era fills behind text', () => {
 
   it('reject a neutral fill the era does not list', () => {
     const css = "[data-era='flat-metro'] .nui-Card { background: var(--nui-era-divider); }";
-    expect(eraFills(css)).toEqual([{ era: 'flat-metro', fill: 'divider' }]);
+    expect(eraFills(css)).toEqual([
+      { era: 'flat-metro', fill: 'divider', body: ' background: var(--nui-era-divider); ' },
+    ]);
     const listed = eras.find((e) => e.id === 'flat-metro')?.textFills ?? [];
     expect(listed).not.toContain('divider');
+  });
+
+  it('reject muted text on a body-text fill', () => {
+    // Classic Windows lists tooltip-fill for body text only (#26).
+    const css =
+      "[data-era='classic-windows'] .nui-X { background: var(--nui-era-tooltip-fill); color: var(--nui-color-text-muted); }";
+    const [found] = eraFills(css);
+    expect(found?.fill).toBe('tooltip-fill');
+    expect(found?.body).toContain('--nui-color-text-muted');
+    const classic = eras.find((e) => e.id === 'classic-windows');
+    expect(classic?.bodyTextFills).toContain('tooltip-fill');
+    expect(classic?.textFills).not.toContain('tooltip-fill');
   });
 });

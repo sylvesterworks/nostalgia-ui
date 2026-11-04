@@ -138,6 +138,13 @@ export interface Era<Derived extends EraDerivedRequired = EraDerived> {
    * `Era`; the era contract test checks each name against `derive`.
    */
   readonly textFills?: readonly string[];
+  /**
+   * Derived keys that only body text sits on, never muted text, such as
+   * Classic Windows' tooltip fill. These may be tinted away from the three
+   * surfaces, so the audit holds body text to 4.5:1 on each and does not
+   * check muted text (#26). Checked against `derive` like `textFills`.
+   */
+  readonly bodyTextFills?: readonly string[];
 }
 
 /**
