@@ -192,3 +192,28 @@
 [data-era='neumorphism'] .nui-SwitchThumb {
   box-shadow: var(--nui-era-shadow-raised-sm);
 }
+
+/* ---- Early Mac: a box track, dithered when on --------------------------- */
+
+/* No accent: the on track is the era's dither and the thumb a plain box with
+ * a pen edge; off, the thumb is solid pen on the plain track. */
+[data-era='early-mac'] .nui-Switch {
+  border-color: var(--nui-color-text);
+  background: var(--nui-color-surface);
+}
+
+[data-era='early-mac'] .nui-Switch[data-checked] {
+  border-color: var(--nui-color-text);
+  background-color: var(--nui-color-surface);
+  background-image: var(--nui-era-dither);
+  background-size: 2px 2px;
+}
+
+[data-era='early-mac'] .nui-SwitchThumb {
+  background: var(--nui-color-text);
+}
+
+[data-era='early-mac'] .nui-SwitchThumb[data-checked] {
+  border: 1px solid var(--nui-color-text);
+  background: var(--nui-color-surface);
+}

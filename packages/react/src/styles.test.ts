@@ -98,6 +98,7 @@ describe('button variants', () => {
     const button = sheets.find(([name]) => name === 'components/Button/Button.css')?.[1] ?? '';
     expect(button).toContain('.nui-Button--danger {');
     for (const era of [
+      'early-mac',
       'classic-windows',
       'frutiger-aero',
       'flat-metro',

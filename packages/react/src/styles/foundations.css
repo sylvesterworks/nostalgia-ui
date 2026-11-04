@@ -50,3 +50,15 @@
   outline-style: dotted;
   outline-offset: 2px;
 }
+
+/* Early Mac drew no focus ring of its own; a dotted rectangle in the pen
+ * color stands in for one, outside the control. */
+[data-era='early-mac'] .nui-Button:focus-visible,
+[data-era='early-mac'] .nui-Input:focus-visible,
+[data-era='early-mac'] .nui-Checkbox:focus-visible,
+[data-era='early-mac'] .nui-Switch:focus-visible,
+[data-era='early-mac'] .nui-SelectTrigger:focus-visible,
+[data-era='early-mac'] .nui-Tab:focus-visible,
+[data-era='early-mac'] .nui-SliderThumb:has(:focus-visible) {
+  outline-style: dotted;
+}

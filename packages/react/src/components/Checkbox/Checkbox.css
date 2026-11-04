@@ -200,3 +200,47 @@
   background: var(--nui-color-accent);
   box-shadow: var(--nui-era-shadow-raised-sm);
 }
+
+/* ---- Early Mac: a square box with an X ---------------------------------- */
+
+[data-era='early-mac'] .nui-Checkbox {
+  border: 1px solid var(--nui-color-text);
+  border-radius: 0;
+  background: var(--nui-color-surface);
+  color: var(--nui-color-text);
+}
+
+/* The era never filled a ticked box: it drew an X from corner to corner. */
+[data-era='early-mac'] .nui-Checkbox[data-checked],
+[data-era='early-mac'] .nui-Checkbox[data-indeterminate] {
+  border-color: var(--nui-color-text);
+  background: var(--nui-color-surface);
+}
+
+[data-era='early-mac'] .nui-CheckboxIndicator {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  transform: none;
+  background:
+    linear-gradient(
+      45deg,
+      transparent calc(50% - 0.75px),
+      currentColor calc(50% - 0.75px) calc(50% + 0.75px),
+      transparent calc(50% + 0.75px)
+    ),
+    linear-gradient(
+      -45deg,
+      transparent calc(50% - 0.75px),
+      currentColor calc(50% - 0.75px) calc(50% + 0.75px),
+      transparent calc(50% + 0.75px)
+    );
+}
+
+[data-era='early-mac'] .nui-CheckboxIndicator[data-indeterminate] {
+  width: 0.6rem;
+  height: 0;
+  border-top: 2px solid currentColor;
+  background: none;
+}

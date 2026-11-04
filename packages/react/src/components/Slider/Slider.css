@@ -224,3 +224,26 @@
   height: 1.25rem;
   box-shadow: var(--nui-era-shadow-raised-sm);
 }
+
+/* ---- Early Mac: a box track with a dithered range ----------------------- */
+
+[data-era='early-mac'] .nui-SliderTrack {
+  height: 0.5rem;
+  border-radius: 0;
+  border-color: var(--nui-color-text);
+  background: var(--nui-color-surface);
+}
+
+/* No accent: the range is the era's dither. */
+[data-era='early-mac'] .nui-SliderIndicator {
+  border-radius: 0;
+  background-color: var(--nui-color-surface);
+  background-image: var(--nui-era-dither);
+  background-size: 2px 2px;
+}
+
+[data-era='early-mac'] .nui-SliderThumb {
+  width: 0.75rem;
+  height: 1.25rem;
+  border-radius: 0;
+}

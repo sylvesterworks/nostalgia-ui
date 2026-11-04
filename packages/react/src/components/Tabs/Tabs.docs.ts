@@ -96,6 +96,8 @@ export const tabsDoc = {
       'Keep the parts separate rather than collapsing them into one convenience component, so the composition Base UI provides stays available.',
   },
   eraNotes: {
+    'early-mac':
+      'Folder tabs with a pen edge; the selected tab is inverted and the indicator is hidden.',
     'classic-windows':
       'The indicator is hidden: the era had no animation, and an instant slide is still a slide.',
     neubrutalism: 'The indicator is hidden; the selected tab is marked by its own styling.',

@@ -132,3 +132,18 @@
     var(--nui-era-shadow-inset),
     0 0 0 2px var(--nui-color-danger);
 }
+
+/* ---- Early Mac: a plain box --------------------------------------------- */
+
+[data-era='early-mac'] .nui-Input {
+  border: 1px solid var(--nui-color-text);
+  border-radius: 0;
+  background: var(--nui-color-surface);
+  color: var(--nui-color-text);
+  box-shadow: none;
+}
+
+/* No danger color: an invalid field gets a double edge. */
+[data-era='early-mac'] .nui-Input--invalid {
+  border: 3px double var(--nui-color-text);
+}

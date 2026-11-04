@@ -117,6 +117,8 @@ export const dialogDoc = {
       'Build specific dialogs, such as a confirmation, by composing the parts. An explicit `container` on DialogPortal still wins over the NostalgiaRoot default if a dialog must render elsewhere.',
   },
   eraNotes: {
+    'early-mac':
+      'A double-edged window. DialogTitle gets pinstripes either side of the title, which stays on the plain surface; the backdrop is the era dither.',
     'classic-windows':
       'DialogTitle becomes a filled title bar using the accent color, with the markup unchanged.',
     'terminal-crt': 'DialogTitle takes the accent color with a phosphor glow.',

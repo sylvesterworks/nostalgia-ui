@@ -20,6 +20,7 @@ describe('list_eras and list_palettes', () => {
     const result = listEras();
     expect(result.map((era) => era.id)).toEqual([
       'terminal-crt',
+      'early-mac',
       'classic-windows',
       'frutiger-aero',
       'flat-metro',
