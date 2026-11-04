@@ -1892,6 +1892,413 @@ Accepts a \`ReactElement\` or a function that returns the element to render.",
 ]
 `;
 
+exports[`props tables > Slider matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SliderRootState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SliderRootState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SliderRootState) => CSSProperties | undefined)",
+  },
+  {
+    "description": "The uncontrolled value of the slider when it's initially rendered.
+
+To render a controlled slider, use the \`value\` prop instead.",
+    "name": "defaultValue",
+    "origin": "base-ui",
+    "required": false,
+    "type": "number | readonly number[]",
+  },
+  {
+    "default": "false",
+    "description": "Whether the slider should ignore user interaction.",
+    "name": "disabled",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "Options to format the value.",
+    "name": "format",
+    "origin": "base-ui",
+    "required": false,
+    "type": "NumberFormatOptions",
+  },
+  {
+    "description": "The locale used by \`Intl.NumberFormat\` when formatting the value. Defaults to the user's runtime locale.",
+    "name": "locale",
+    "origin": "base-ui",
+    "required": false,
+    "type": "LocalesArgument",
+  },
+  {
+    "default": "100",
+    "description": "The maximum allowed value of the slider. Should not be equal to min.",
+    "name": "max",
+    "origin": "base-ui",
+    "required": false,
+    "type": "number",
+  },
+  {
+    "default": "0",
+    "description": "The minimum allowed value of the slider. Should not be equal to max.",
+    "name": "min",
+    "origin": "base-ui",
+    "required": false,
+    "type": "number",
+  },
+  {
+    "default": "0",
+    "description": "The minimum steps between values in a range slider.",
+    "name": "minStepsBetweenValues",
+    "origin": "base-ui",
+    "required": false,
+    "type": "number",
+  },
+  {
+    "description": "Identifies the field when a form is submitted.",
+    "name": "name",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "description": "Identifies the form that owns the slider inputs. Useful when the slider is rendered outside the form.",
+    "name": "form",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "default": "'horizontal'",
+    "description": "The component orientation.",
+    "name": "orientation",
+    "origin": "base-ui",
+    "required": false,
+    "type": ""horizontal" | "vertical"",
+  },
+  {
+    "default": "1",
+    "description": "The granularity with which the slider can step through values. (A "discrete" slider.) The \`min\` prop serves as the origin for the valid values. We recommend (max - min) to be evenly divisible by the step.",
+    "name": "step",
+    "origin": "base-ui",
+    "required": false,
+    "type": "number",
+  },
+  {
+    "default": "10",
+    "description": "The granularity with which the slider can step through values when using Page Up/Page Down or Shift + Arrow Up/Arrow Down.",
+    "name": "largeStep",
+    "origin": "base-ui",
+    "required": false,
+    "type": "number",
+  },
+  {
+    "default": "'center'",
+    "description": "How the thumb(s) are aligned relative to \`Slider.Control\` when the value is at \`min\` or \`max\`: - \`center\`: The center of the thumb is aligned with the control edge - \`edge\`: The thumb is inset within the control such that its edge is aligned with the control edge - \`edge-client-only\`: Same as \`edge\` but renders after React hydration on the client, reducing bundle size in return",
+    "name": "thumbAlignment",
+    "origin": "base-ui",
+    "required": false,
+    "type": ""center" | "edge" | "edge-client-only"",
+  },
+  {
+    "default": "'push'",
+    "description": "Controls how thumbs behave when they collide during pointer interactions.
+
+- \`'push'\` (default): Thumbs push each other without restoring their previous positions when dragged back. - \`'swap'\`: Thumbs swap places when dragged past each other. - \`'none'\`: Thumbs cannot move past each other; excess movement is ignored.",
+    "name": "thumbCollisionBehavior",
+    "origin": "base-ui",
+    "required": false,
+    "type": ""push" | "none" | "swap"",
+  },
+  {
+    "description": "The value of the slider. For range sliders, provide an array with one value per thumb.",
+    "name": "value",
+    "origin": "base-ui",
+    "required": false,
+    "type": "number | readonly number[]",
+  },
+  {
+    "description": "Callback function that is fired when the slider's value changed. Receives the new value as the first argument; the originating event is available as \`eventDetails.event\`. The value is also reflected on \`eventDetails.event.target.value\` for form integration.
+
+The \`eventDetails.reason\` indicates what triggered the change:
+
+- \`'input-change'\` when the hidden range input emits a change event (for example, via form integration) - \`'track-press'\` when the control track is pressed - \`'drag'\` while dragging a thumb - \`'keyboard'\` for keyboard input - \`'none'\` when the change is triggered without a specific interaction",
+    "name": "onValueChange",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((value: number | readonly number[], eventDetails: SliderRootChangeEventDetails) => void)",
+  },
+  {
+    "description": "Callback function that is fired when a value change is committed. Does not fire if the value did not change, or if the change was canceled. **Warning**: This is a generic event, not a change event.
+
+The \`eventDetails.reason\` indicates what triggered the commit:
+
+- \`'drag'\` while dragging a thumb - \`'track-press'\` when the control track is pressed - \`'keyboard'\` for keyboard input - \`'input-change'\` when the hidden range input emits a change event (for example, via form integration) - \`'none'\` when the commit occurs without a specific interaction",
+    "name": "onValueCommitted",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((value: number | readonly number[], eventDetails: SliderRootCommitEventDetails) => void)",
+  },
+]
+`;
+
+exports[`props tables > SliderControl matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SliderControlState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SliderControlState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SliderControlState) => CSSProperties | undefined)",
+  },
+]
+`;
+
+exports[`props tables > SliderIndicator matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SliderIndicatorState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SliderIndicatorState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SliderIndicatorState) => CSSProperties | undefined)",
+  },
+]
+`;
+
+exports[`props tables > SliderLabel matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SliderRootState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SliderRootState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SliderRootState) => CSSProperties | undefined)",
+  },
+]
+`;
+
+exports[`props tables > SliderThumb matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SliderThumbState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SliderThumbState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SliderThumbState) => CSSProperties | undefined)",
+  },
+  {
+    "default": "false",
+    "description": "Whether the thumb should ignore user interaction.",
+    "name": "disabled",
+    "origin": "base-ui",
+    "required": false,
+    "type": "boolean",
+  },
+  {
+    "description": "A string value forwarded to the [\`aria-valuetext\`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-valuetext) attribute of the \`input\`. Ignored when \`getAriaValueText\` is provided.",
+    "name": "aria-valuetext",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string",
+  },
+  {
+    "description": "A function which returns a string value for the [\`aria-label\`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label) attribute of the \`input\`.",
+    "name": "getAriaLabel",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((index: number) => string) | null",
+  },
+  {
+    "description": "A function which returns a string value for the [\`aria-valuetext\`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-valuetext) attribute of the \`input\`. This is important for screen reader users.",
+    "name": "getAriaValueText",
+    "origin": "base-ui",
+    "required": false,
+    "type": "((formattedValue: string, value: number, index: number) => string) | null",
+  },
+  {
+    "description": "The index of the thumb which corresponds to the index of its value in the \`value\` or \`defaultValue\` array. This prop is required to support server-side rendering for range sliders with multiple thumbs.",
+    "name": "index",
+    "origin": "base-ui",
+    "required": false,
+    "type": "number",
+  },
+  {
+    "description": "A ref to access the nested input element.",
+    "name": "inputRef",
+    "origin": "base-ui",
+    "required": false,
+    "type": "Ref<HTMLInputElement>",
+  },
+  {
+    "description": "A blur handler forwarded to the \`input\`.",
+    "name": "onBlur",
+    "origin": "base-ui",
+    "required": false,
+    "type": "FocusEventHandler<HTMLInputElement>",
+  },
+  {
+    "description": "A focus handler forwarded to the \`input\`.",
+    "name": "onFocus",
+    "origin": "base-ui",
+    "required": false,
+    "type": "FocusEventHandler<HTMLInputElement>",
+  },
+  {
+    "description": "A keydown handler forwarded to the \`input\`.",
+    "name": "onKeyDown",
+    "origin": "base-ui",
+    "required": false,
+    "type": "KeyboardEventHandler<HTMLInputElement>",
+  },
+  {
+    "description": "Optional tab index attribute forwarded to the \`input\`.",
+    "name": "tabIndex",
+    "origin": "base-ui",
+    "required": false,
+    "type": "number",
+  },
+]
+`;
+
+exports[`props tables > SliderTrack matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SliderTrackState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SliderTrackState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SliderTrackState) => CSSProperties | undefined)",
+  },
+]
+`;
+
+exports[`props tables > SliderValue matches its snapshot 1`] = `
+[
+  {
+    "description": "CSS class applied to the element, or a function that returns a class based on the component's state.",
+    "name": "className",
+    "origin": "base-ui",
+    "required": false,
+    "type": "string | ((state: SliderValueState) => string | undefined)",
+  },
+  {
+    "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component.
+
+Accepts a \`ReactElement\` or a function that returns the element to render.",
+    "name": "render",
+    "origin": "base-ui",
+    "required": false,
+    "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SliderValueState>",
+  },
+  {
+    "description": "Style applied to the element, or a function that returns a style object based on the component's state.",
+    "name": "style",
+    "origin": "base-ui",
+    "required": false,
+    "type": "CSSProperties | ((state: SliderValueState) => CSSProperties | undefined)",
+  },
+]
+`;
+
 exports[`props tables > Switch matches its snapshot 1`] = `
 [
   {

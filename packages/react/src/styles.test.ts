@@ -48,6 +48,7 @@ describe('component stylesheets', () => {
       'Select',
       'Menu',
       'Tooltip',
+      'Slider',
       'Card',
       'Tabs',
       'Dialog',

@@ -29,6 +29,7 @@ import { inputDoc } from './components/Input/Input.docs.js';
 import { menuDoc } from './components/Menu/Menu.docs.js';
 import { nostalgiaRootDoc } from './components/NostalgiaRoot/NostalgiaRoot.docs.js';
 import { selectDoc } from './components/Select/Select.docs.js';
+import { sliderDoc } from './components/Slider/Slider.docs.js';
 import { switchDoc } from './components/Switch/Switch.docs.js';
 import { tabsDoc } from './components/Tabs/Tabs.docs.js';
 import { tooltipDoc } from './components/Tooltip/Tooltip.docs.js';
@@ -57,6 +58,7 @@ export const COMPONENTS = [
   'Select',
   'Menu',
   'Tooltip',
+  'Slider',
   'Card',
   'Tabs',
   'Dialog',
@@ -71,6 +73,7 @@ const DOCS: Readonly<Record<(typeof COMPONENTS)[number], AnyComponentDoc>> = {
   Select: selectDoc,
   Menu: menuDoc,
   Tooltip: tooltipDoc,
+  Slider: sliderDoc,
   Card: cardDoc,
   Tabs: tabsDoc,
   Dialog: dialogDoc,
