@@ -12,6 +12,7 @@ import { inputDoc } from '../components/Input/Input.docs.js';
 import { menuDoc } from '../components/Menu/Menu.docs.js';
 import { nostalgiaRootDoc } from '../components/NostalgiaRoot/NostalgiaRoot.docs.js';
 import { selectDoc } from '../components/Select/Select.docs.js';
+import { sliderDoc } from '../components/Slider/Slider.docs.js';
 import { switchDoc } from '../components/Switch/Switch.docs.js';
 import { tabsDoc } from '../components/Tabs/Tabs.docs.js';
 import { tooltipDoc } from '../components/Tooltip/Tooltip.docs.js';
@@ -38,6 +39,7 @@ const docs = [
   selectDoc,
   menuDoc,
   tooltipDoc,
+  sliderDoc,
   cardDoc,
   tabsDoc,
   dialogDoc,
@@ -220,6 +222,7 @@ const storyModules = {
   Select: () => import('../components/Select/Select.stories.js'),
   Menu: () => import('../components/Menu/Menu.stories.js'),
   Tooltip: () => import('../components/Tooltip/Tooltip.stories.js'),
+  Slider: () => import('../components/Slider/Slider.stories.js'),
   Card: () => import('../components/Card/Card.stories.js'),
   Tabs: () => import('../components/Tabs/Tabs.stories.js'),
   Dialog: () => import('../components/Dialog/Dialog.stories.js'),

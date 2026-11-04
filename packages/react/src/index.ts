@@ -46,6 +46,15 @@ export {
   TooltipProvider,
   TooltipTrigger,
 } from './components/Tooltip/index.js';
+export {
+  Slider,
+  SliderControl,
+  SliderIndicator,
+  SliderLabel,
+  SliderThumb,
+  SliderTrack,
+  SliderValue,
+} from './components/Slider/index.js';
 
 export {
   Dialog,

@@ -105,7 +105,7 @@ export function createServer(): McpServer {
         name: z
           .string()
           .describe(
-            'Component name: NostalgiaRoot, Button, Input, Checkbox, Switch, Select, Menu, Tooltip, Card, Tabs or Dialog',
+            'Component name: NostalgiaRoot, Button, Input, Checkbox, Switch, Select, Menu, Tooltip, Slider, Card, Tabs or Dialog',
           ),
         era: z.enum(eraIds as [string, ...string[]]).describe('Era id, from list_eras'),
         section: z

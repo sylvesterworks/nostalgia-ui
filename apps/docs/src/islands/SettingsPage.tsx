@@ -33,6 +33,13 @@ import {
   SelectPositioner,
   SelectTrigger,
   SelectValue,
+  Slider,
+  SliderControl,
+  SliderIndicator,
+  SliderLabel,
+  SliderThumb,
+  SliderTrack,
+  SliderValue,
   Switch,
   SwitchThumb,
   Tab,
@@ -117,6 +124,16 @@ export function SettingsPage(): React.ReactElement {
                   </SelectPositioner>
                 </SelectPortal>
               </Select>
+              <Slider defaultValue={100} min={75} max={150} step={5}>
+                <SliderLabel>Text size (%)</SliderLabel>
+                <SliderValue />
+                <SliderControl>
+                  <SliderTrack>
+                    <SliderIndicator />
+                    <SliderThumb />
+                  </SliderTrack>
+                </SliderControl>
+              </Slider>
               <div>
                 <Menu>
                   <MenuTrigger render={<Button variant="outline" />}>Profile actions</MenuTrigger>

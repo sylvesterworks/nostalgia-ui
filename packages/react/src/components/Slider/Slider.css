@@ -1,0 +1,226 @@
+/*
+ * Slider. No single thumb color stands out from both the sunken track and
+ * the accent range, so the thumb is drawn in the body text color and made
+ * larger than the thin track: its outline sits on the page surface, where
+ * it clears 5.29:1 in every palette. The track keeps a 1px muted edge, since
+ * the sunken fill alone is 1.02:1 against the surface, and the range is the
+ * accent, at least 3:1 against the surface and the track. Each thumb holds a
+ * focusable input, so the focus ring is drawn on the thumb around it.
+ *
+ * Only the horizontal orientation is styled.
+ */
+
+.nui-Slider {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: calc(var(--nui-spacing-unit) * 0.75) var(--nui-spacing-unit);
+  width: 100%;
+  max-width: 20rem;
+  color: var(--nui-color-text);
+  font-family: var(--nui-font-sans);
+}
+
+/* Only the control is dimmed: the label and value stay readable text. */
+.nui-Slider[data-disabled] .nui-SliderControl {
+  opacity: 0.55;
+}
+
+.nui-SliderLabel {
+  grid-column: 1;
+}
+
+.nui-SliderValue {
+  grid-column: 2;
+  font-variant-numeric: tabular-nums;
+}
+
+.nui-SliderControl {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  height: 1.5rem;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.nui-Slider[data-disabled] .nui-SliderControl {
+  cursor: not-allowed;
+}
+
+.nui-SliderTrack {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 0.375rem;
+  border-radius: var(--nui-radius-pill);
+  border: 1px solid var(--nui-color-text-muted);
+  background: var(--nui-color-surface-sunken);
+}
+
+.nui-SliderIndicator {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--nui-color-accent);
+}
+
+.nui-SliderThumb {
+  box-sizing: border-box;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: var(--nui-radius-pill);
+  background: var(--nui-color-text);
+  transition-duration: var(--nui-motion-duration);
+  transition-timing-function: var(--nui-motion-easing);
+  transition-property: box-shadow, outline-color;
+}
+
+.nui-SliderThumb:has(:focus-visible) {
+  outline: var(--nui-focus-width) solid var(--nui-era-focus-color);
+  outline-offset: 2px;
+}
+
+/* ---- Classic Windows: a sunken groove and a bevelled thumb ------------- */
+
+[data-era='classic-windows'] .nui-SliderTrack {
+  height: 0.25rem;
+  border-radius: 0;
+  border: 2px solid;
+  border-top-color: var(--nui-era-bevel-darker);
+  border-left-color: var(--nui-era-bevel-darker);
+  border-right-color: var(--nui-era-bevel-lighter);
+  border-bottom-color: var(--nui-era-bevel-lighter);
+}
+
+[data-era='classic-windows'] .nui-SliderIndicator {
+  border-radius: 0;
+}
+
+/* The era's thumb was an upright block with a raised bevel. */
+[data-era='classic-windows'] .nui-SliderThumb {
+  width: 0.6875rem;
+  height: 1.3125rem;
+  border-radius: 0;
+  border: 1px solid;
+  border-top-color: var(--nui-era-bevel-lighter);
+  border-left-color: var(--nui-era-bevel-lighter);
+  border-right-color: var(--nui-era-bevel-darker);
+  border-bottom-color: var(--nui-era-bevel-darker);
+}
+
+[data-era='classic-windows'] .nui-SliderThumb:has(:focus-visible) {
+  outline-style: dotted;
+}
+
+/* ---- Frutiger Aero: a glossy pill track and a bubble thumb ------------- */
+
+/* The groove stays the sunken surface the audit measures the range against:
+ * on the glass fill the range fell to 2.73:1. The gloss is an inset shadow. */
+[data-era='frutiger-aero'] .nui-SliderTrack {
+  height: 0.5rem;
+  box-shadow: inset 0 1px 3px var(--nui-era-gloss-mid);
+}
+
+/* The gloss uses the soft middle stop: the accent's own top gloss lightened
+ * the range until it fell to 2.31:1 against the track in Nord. */
+[data-era='frutiger-aero'] .nui-SliderIndicator {
+  background-color: var(--nui-color-accent);
+  background-image: linear-gradient(
+    to bottom,
+    var(--nui-era-gloss-mid),
+    var(--nui-era-gloss-bottom) 60%
+  );
+}
+
+/* The bubble's gloss uses the softer middle stop, as Switch's thumb does, so
+ * it does not wash the thumb out. */
+[data-era='frutiger-aero'] .nui-SliderThumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  background-image: linear-gradient(
+    to bottom,
+    var(--nui-era-gloss-mid),
+    var(--nui-era-gloss-bottom) 55%
+  );
+  box-shadow: var(--nui-era-shadow-raised);
+}
+
+/* ---- Flat / Metro: a thin square track and a square thumb -------------- */
+
+[data-era='flat-metro'] .nui-SliderTrack {
+  height: 0.25rem;
+  border-radius: 0;
+}
+
+[data-era='flat-metro'] .nui-SliderIndicator {
+  border-radius: 0;
+  background: var(--nui-era-tile-fill);
+}
+
+[data-era='flat-metro'] .nui-SliderThumb {
+  width: 0.75rem;
+  height: 1.5rem;
+  border-radius: 0;
+}
+
+/* ---- Terminal / CRT: a text-like gauge with glow ----------------------- */
+
+/* The range is a row of solid blocks in the body text color, like a bar of
+ * block characters, and the rest of the track a dotted rule. CSS cannot
+ * print characters that follow the value, so the blocks are a pattern. */
+[data-era='terminal-crt'] .nui-SliderTrack {
+  height: 0.625rem;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px dotted var(--nui-color-text-muted);
+  background: transparent;
+}
+
+[data-era='terminal-crt'] .nui-SliderIndicator {
+  border-radius: 0;
+  background: repeating-linear-gradient(
+    to right,
+    var(--nui-color-text) 0,
+    var(--nui-color-text) 0.375rem,
+    transparent 0.375rem,
+    transparent 0.5rem
+  );
+  filter: drop-shadow(0 0 4px var(--nui-era-glow-text));
+}
+
+[data-era='terminal-crt'] .nui-SliderThumb {
+  width: 0.625rem;
+  height: 1.125rem;
+  border-radius: 0;
+  box-shadow: 0 0 6px var(--nui-era-glow-text);
+}
+
+/* ---- Neubrutalism: an ink track and a thumb with a hard shadow --------- */
+
+[data-era='neubrutalism'] .nui-SliderTrack {
+  height: 0.5rem;
+  border: 2px solid var(--nui-era-ink);
+}
+
+[data-era='neubrutalism'] .nui-SliderThumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--nui-era-ink);
+  box-shadow: var(--nui-era-shadow-hard-sm);
+}
+
+/* ---- Neumorphism: an inset track and an extruded thumb ----------------- */
+
+/* The era's border width is 0, but the track keeps its 1px muted edge so the
+ * boundary does not depend on soft shadows to be seen. */
+[data-era='neumorphism'] .nui-SliderTrack {
+  height: 0.5rem;
+  background: var(--nui-color-surface);
+  box-shadow: var(--nui-era-shadow-inset);
+}
+
+[data-era='neumorphism'] .nui-SliderThumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  box-shadow: var(--nui-era-shadow-raised-sm);
+}

@@ -169,6 +169,25 @@ const CHECKS: readonly Check[] = [
     required: AA_NON_TEXT,
     level: 'AA-large',
   },
+  // A slider's thumb is drawn in the body text color and larger than the
+  // track, so its outline sits on the page surface; the range is the accent
+  // inside the sunken track (WCAG 1.4.11, #24).
+  {
+    id: 'slider-thumb-on-surface',
+    label: 'Slider thumb on the surface',
+    foreground: 'text',
+    background: 'surface',
+    required: AA_NON_TEXT,
+    level: 'AA-large',
+  },
+  {
+    id: 'slider-range-on-track',
+    label: 'Slider range on its track',
+    foreground: 'accent',
+    background: 'surfaceSunken',
+    required: AA_NON_TEXT,
+    level: 'AA-large',
+  },
   // The highlighted item in a Select or Menu popup is drawn on the accent fill
   // rather than the palette's selection color, which neither reads against
   // the popup nor carries text in every palette (#23, #25).
